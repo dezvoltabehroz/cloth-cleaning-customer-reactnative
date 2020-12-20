@@ -37,6 +37,18 @@ export default class Checkout extends Component {
                         :
                         null
                 }
+                 {
+                    activeTab == 1 ?
+                        <Pickup />
+                        :
+                        null
+                }
+                 {
+                    activeTab == 2 ?
+                        <Pickup />
+                        :
+                        null
+                }
 
                 <View onPress={() => { }} style={{ borderRadius: 10, elevation: 1, marginBottom: '5%', marginHorizontal: '5%' }}>
                     <View style={{ flexDirection: 'row', bottom: '5%', justifyContent: 'center', alignItems: 'center', }}>

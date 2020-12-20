@@ -44,5 +44,34 @@ export default StyleSheet.create({
     checkButtonTextStyle: {
         color: 'white',
         textAlign: 'center'
-    }
+    },
+    checkoutInnerContainer: {
+        marginHorizontal: '5%',
+        bottom: '5%'
+    },
+    lineStyle: {
+        borderWidth: 0.5,
+        borderColor: '#7A7A7A'
+    },
+    checkoutItemStyle: {
+        flexDirection: 'row',
+        marginVertical: '2.5%',
+        justifyContent: 'space-between'
+    },
+    checkoutTextStyle: {
+        color: '#7A7A7A'
+    },
+    totalTextStyle: {
+        color: '#374B5C'
+    },
+    totalPriceTextStyle: {
+        color: '#0DA7DF'
+    },
+    checkoutButtonContainer: {
+        borderRadius: 35,
+        height: 40,
+        width: 140,
+        justifyContent: 'center',
+        paddingHorizontal: '5%'
+    },
 })
