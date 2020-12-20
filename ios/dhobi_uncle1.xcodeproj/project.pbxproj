@@ -194,7 +194,6 @@
 				9083CCF77C1E5950BD4CF0D0 /* Pods-dhobi_uncle1-tvOSTests.debug.xcconfig */,
 				7963C1459F01B682B0B494E3 /* Pods-dhobi_uncle1-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -732,6 +731,7 @@
 				PRODUCT_NAME = dhobi_uncle1;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -753,6 +753,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = dhobi_uncle1;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
