@@ -15,15 +15,13 @@ export default function App() {
     });
     return (
         <>
-            <SafeAreaProvider>
-                <Provider store={store}>
-                    <NavigationContainer>
-                        <SafeAreaProvider>
-                            <AppRoutes />
-                        </SafeAreaProvider>
-                    </NavigationContainer>
-                </Provider>
-            </SafeAreaProvider>
+            <Provider store={store}>
+                <NavigationContainer>
+                    <SafeAreaProvider>
+                        <AppRoutes />
+                    </SafeAreaProvider>
+                </NavigationContainer>
+            </Provider>
         </>
     );
 }
