@@ -14,7 +14,12 @@ function HomeRoutes() {
             <Stack.Screen name="Home" component={Home} options={({ navigation, route }) => ({
                 headerBackTitleVisible: false,
                 headerStyle: {
-                    marginTop: Platform.OS == 'ios' ? 25 : 0
+                    backgroundColor: 'transparent',
+                    position: 'absolute',
+                    height: 56,
+                    top: 0,
+                    left: 0,
+                    right: 0,
                 },
                 headerBackground: () => (<Image resizeMode="cover" style={{ height: 56, width: screenWidth }} source={require('../../assets/images/header.png')} />),
                 headerLeft: () => (<TouchableOpacity onPress={() => navigation.toggleDrawer()} style={{ paddingLeft: 15 }}><Icon.MaterialIcons name="menu" color="white" size={30} /></TouchableOpacity>),
@@ -25,9 +30,14 @@ function HomeRoutes() {
                 headerBackTitleVisible: false,
                 headerTitleAlign: 'center',
                 headerStyle: {
-                    marginTop: Platform.OS == 'ios' ? 25 : 0
+                    backgroundColor: 'transparent',
+                    position: 'absolute',
+                    height: 56,
+                    top: 0,
+                    left: 0,
+                    right: 0,
                 },
-                headerBackground: () => (<Image resizeMode="cover" style={{ height: 55, width: screenWidth }} source={require('../../assets/images/header.png')} />),
+                headerBackground: () => (<Image resizeMode="cover" style={{ height: 56, width: screenWidth }} source={require('../../assets/images/header.png')} />),
                 headerLeft: () => (<TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingLeft: 15 }}><Icon.AntDesign name="arrowleft" color="white" size={25} /></TouchableOpacity>),
                 headerRight: () => (<View style={{ marginRight: 20 }}><Text style={styles.headerTextStyle}>Clear All</Text></View>),
                 headerTitle: () => (<View><Text style={styles.headerTitleStyle}>Cart</Text></View>),
@@ -36,7 +46,12 @@ function HomeRoutes() {
                 headerTitleAlign: 'center',
                 headerTintColor: 'white',
                 headerStyle: {
-                    marginTop: Platform.OS == 'ios' ? 25 : 0
+                    backgroundColor: 'transparent',
+                    position: 'absolute',
+                    height: 56,
+                    top: 0,
+                    left: 0,
+                    right: 0,
                 },
                 headerBackground: () => (<Image resizeMode="cover" style={{ height: 56, width: screenWidth }} source={require('../../assets/images/header.png')} />),
                 headerLeft: () => (<TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingLeft: 15 }}><Icon.AntDesign name="arrowleft" color="white" size={25} /></TouchableOpacity>),
@@ -47,7 +62,12 @@ function HomeRoutes() {
                 headerTitleAlign: 'center',
                 headerTintColor: 'white',
                 headerStyle: {
-                    marginTop: Platform.OS == 'ios' ? 25 : 0
+                    backgroundColor: 'transparent',
+                    position: 'absolute',
+                    height: 56,
+                    top: 0,
+                    left: 0,
+                    right: 0,
                 },
                 headerBackground: () => (<Image resizeMode="cover" style={{ height: 56, width: screenWidth }} source={require('../../assets/images/header.png')} />),
                 headerLeft: () => (<TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingLeft: 15 }}><Icon.AntDesign name="arrowleft" color="white" size={25} /></TouchableOpacity>),

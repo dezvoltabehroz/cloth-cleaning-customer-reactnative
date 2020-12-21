@@ -221,7 +221,6 @@ export default class Home extends Component {
                             </View>
                         </ImageBackground>
                         <View style={styles.lowerListContainer}>
-                            {/* <Text>Choose Services</Text> */}
                             <FlatList
                                 data={this.state.list}
                                 showsVerticalScrollIndicator={false}
