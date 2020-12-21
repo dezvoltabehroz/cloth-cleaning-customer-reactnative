@@ -104,7 +104,6 @@ export default class Home extends Component {
         this.setState({ value: text });
     }
 
-
     handleAddToCart = () => {
         this.props.navigation.navigate('Cart')
     }
@@ -114,13 +113,28 @@ export default class Home extends Component {
             <>
                 <View style={{ height: 95, width: 105, }}>
                     <View onPress={() => { }} style={{
-                        borderRadius: 10, elevation: 1, shadowColor: "#000",
-                        shadowOffset: {
-                            width: 0,
-                            height: 1,
-                        },
+                        borderColor:"#EEE",
+                        borderWidth:0.3,
+                        borderRadius: 10, 
+                        elevation: 1, 
+                        shadowColor: "#000",
+                        shadowOffset: { width: 0, height: 1 },
                         shadowOpacity: 0.18,
-                        shadowRadius: 1.00, height: 60, width: 105, justifyContent: 'center', marginTop: '10%', marginBottom: '1%'
+                        shadowRadius: 1.00, height: 60, width: 105, justifyContent: 'center', marginTop: '10%', marginBottom: '1%',
+
+                        // flexDirection: 'row',
+                        // backgroundColor: '#F8F8F8',
+                        // alignItems: 'center',
+                        // justifyContent: 'center',
+                        // height: 60,
+                        // paddingTop: 20,
+                        // borderBottomWidth: 0,
+                        // shadowColor: '#000000',
+                        // shadowOffset: { width: 0, height: 5 },
+                        // shadowRadius: 10,
+                        // shadowOpacity: 0.5,
+                        // elevation: 3,
+                        // position: 'relative',
                     }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: '5%' }}>
                             <Image source={item.imgurl} resizeMode="contain" style={{ height: 50, width: 50 }} />
@@ -188,49 +202,46 @@ export default class Home extends Component {
         )
     }
 
-
     render() {
         return (
-            <>
-                <View style={{ flex: 1, backgroundColor: 'white' }}>
-                    <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: '5%', }}>
-                        <ImageBackground source={require('../../assets/images/header.png')} style={styles.headerImageStyle}>
-                            <View style={{ paddingHorizontal: '2.5%', marginTop: '5%' }}>
-                                <Input placeholder='Search laundry by name....'
-                                    round={true}
-                                    onChangeText={text => this.func_searchFilter(text)}
-                                    value={this.state.value}
-                                    autoCorrect={false}
-                                    leftIcon={{ type: 'feather', name: 'search', size: 20, color: '#7A7A7A' }}
-                                    inputStyle={{ fontSize: 12, marginLeft: '2%' }}
-                                    leftIconContainerStyle={{ padding: 0, borderRightWidth: 0.5, height: 20, borderColor: '#7A7A7A' }}
-                                    rightIconContainerStyle={{ paddingRight: 10 }}
-                                    containerStyle={styles.containerStyle}
-                                    inputContainerStyle={styles.inputContainerStyle} />
+            <View style={{ flex: 1, backgroundColor: 'white' }}>
+                <ImageBackground resizeMode="cover" source={require('../../assets/images/header.png')} style={styles.headerImageStyle}>
+                    <View style={{ paddingHorizontal: '2.5%', marginTop: '5%' }}>
+                        <Input placeholder='Search laundry by name....'
+                            round={true}
+                            onChangeText={text => this.func_searchFilter(text)}
+                            value={this.state.value}
+                            autoCorrect={false}
+                            leftIcon={{ type: 'feather', name: 'search', size: 20, color: '#7A7A7A' }}
+                            inputStyle={{ fontSize: 12, marginLeft: '2%' }}
+                            leftIconContainerStyle={{ padding: 0, borderRightWidth: 0.5, height: 20, borderColor: '#7A7A7A' }}
+                            rightIconContainerStyle={{ paddingRight: 10 }}
+                            containerStyle={styles.containerStyle}
+                            inputContainerStyle={styles.inputContainerStyle} />
 
-                            </View>
-                            <View style={styles.upperListContainer}>
-                                <Text style={styles.headingStyle}>Choose Services</Text>
-                                <FlatList
-                                    data={this.state.data}
-                                    showsHorizontalScrollIndicator={false}
-                                    horizontal={true}
-                                    ItemSeparatorComponent={this._renderSeparator}
-                                    renderItem={({ item }) => this._renderItems(item)}
-                                    keyExtractor={item => item} />
-                            </View>
-                        </ImageBackground>
-                        <View style={styles.lowerListContainer}>
-                            <FlatList
-                                data={this.state.list}
-                                showsVerticalScrollIndicator={false}
-                                ItemSeparatorComponent={this._renderListSeparator}
-                                renderItem={({ item, index }) => this._renderListItems(item, index)}
-                                keyExtractor={item => item} />
-                        </View>
-                    </ScrollView>
-                </View>
-            </>
+                    </View>
+                    <View style={styles.upperListContainer}>
+                        <Text style={styles.headingStyle}>Choose Services</Text>
+                        <FlatList
+                            data={this.state.data}
+                            showsHorizontalScrollIndicator={false}
+                            horizontal={true}
+                            ItemSeparatorComponent={this._renderSeparator}
+                            renderItem={({ item }) => this._renderItems(item)}
+                            keyExtractor={item => item} />
+                    </View>
+                </ImageBackground>
+                <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: '5%', }}>
+                    <View style={styles.lowerListContainer}>
+                        <FlatList
+                            data={this.state.list}
+                            showsVerticalScrollIndicator={false}
+                            ItemSeparatorComponent={this._renderListSeparator}
+                            renderItem={({ item, index }) => this._renderListItems(item, index)}
+                            keyExtractor={item => item} />
+                    </View>
+                </ScrollView>
+            </View>
         )
     }
 
