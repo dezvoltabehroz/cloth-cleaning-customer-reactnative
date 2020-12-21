@@ -50,7 +50,9 @@ export default StyleSheet.create({
         fontWeight: '600'
     },
     lowerListContainer: {
+        // borderColor:'black',
+        // borderWidth:1,
         marginHorizontal: '5%',
-        marginTop: '25%'
+        marginTop: '5%'
     }
 })
