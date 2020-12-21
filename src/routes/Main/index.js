@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     itemStyle: { flexDirection: 'row', height: 54, alignItems: 'center', paddingLeft: '10%' },
-    policyStyles: { height: 54, paddingLeft: '10%', paddingVertical: '10%' }
+    policyStyles: {  paddingLeft: '10%', paddingVertical: '10%' }
 })
 
 export default MainRoutes;
