@@ -34,7 +34,7 @@ export default class OTP extends Component {
     render() {
         const { value } = this.state;
         return (
-            <View style={{ paddingTop: Platform.OS === 'ios' ? 20 : 0, }}>
+            <View>
                 <ImageBackground resizeMode="cover" style={styles.backgroundStyle} source={require('../../assets/images/verification.png')}>
                     <View style={{ flex: 0.95 }}>
                         <View style={{ flex: 0.8, marginTop: '15%', }}>

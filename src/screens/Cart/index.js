@@ -168,7 +168,7 @@ export default class Cart extends Component {
     render() {
 
         return (
-            <View style={{ flex: 1, paddingTop: Platform.OS === 'ios' ? 20 : 0, }}>
+            <View style={{ flex: 1 }}>
                 <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 120 }}>
                     <View style={{ marginHorizontal: '5%', marginTop: '5%' }}>
                         <Text style={{ fontSize: 16 }}>Iron Only</Text>

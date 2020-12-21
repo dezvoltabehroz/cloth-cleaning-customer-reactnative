@@ -13,8 +13,6 @@ function HomeRoutes() {
         <Stack.Navigator>
             <Stack.Screen name="Home" component={Home} options={({ navigation, route }) => ({
                 headerBackTitleVisible: false,
-                // headerTransparent: true,
-                headerStatusBarHeight: 0,
                 headerBackground: () => (<Image resizeMode="cover" style={{ height: 56, width: screenWidth }} source={require('../../assets/images/header.png')} />),
                 headerLeft: () => (<TouchableOpacity onPress={() => navigation.toggleDrawer()} style={{ paddingLeft: 15 }}><Icon.MaterialIcons name="menu" color="white" size={30} /></TouchableOpacity>),
                 headerRight: () => (<View style={{ marginRight: 20 }}><BadgedIcon onPress={() => navigation.navigate('Cart')} type="font-awesome" name="shopping-cart" color='white' /></View>),

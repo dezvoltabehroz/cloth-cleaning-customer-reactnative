@@ -110,7 +110,7 @@ export default class ProductDetail extends Component {
     render() {
         const { title, price, quantity, description, serivceType } = this.state;
         return (
-            <View style={{ flex: 1, paddingTop: Platform.OS === 'ios' ? 20 : 0,  }}>
+            <View style={{ flex: 1 }}>
                 <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
                     <View style={styles.upperContainer}>
                     </View>

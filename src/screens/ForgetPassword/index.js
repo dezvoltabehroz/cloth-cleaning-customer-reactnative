@@ -30,31 +30,29 @@ export default class ForgetPassword extends Component {
         const { email } = this.state;
         return (
             <>
-                <View style={{ paddingTop: Platform.OS === 'ios' ? 20 : 0, }}>
-                    <View style={{ flex: 0.95 }}>
-                        <ImageBackground resizeMode="cover" style={styles.backgroundStyle} source={require('../../assets/images/verification.png')}>
-                            <View style={{ flex: 0.95 }}>
-                                <View style={{ flex: 0.8, marginTop: '15%', }}>
-                                    <View style={styles.innerImageContainer}>
-                                        <Image resizeMode="contain" style={styles.innerImageStyle} source={require('../../assets/images/logo.png')} />
-                                    </View>
-                                    <View style={{ marginTop: '5%', }}>
-                                        <Text style={styles.headingTextStyle}>Enter Email to Reset Password</Text>
-                                    </View>
-                                    <View style={{ marginHorizontal: '5%', marginTop: '5%' }}>
-                                        <Input
-                                            placeholder="Email"
-                                            value={email}
-                                            onChangeText={(email) => this.setState({ email: email })}
-                                        />
-                                    </View>
-                                    <View style={{ marginHorizontal: '25%', marginTop: '5%' }}>
-                                        <Button title='CONFIRM' onPress={() => this.func_HandleResetPassword()} />
-                                    </View>
+                <View style={{ flex: 0.95 }}>
+                    <ImageBackground resizeMode="cover" style={styles.backgroundStyle} source={require('../../assets/images/verification.png')}>
+                        <View style={{ flex: 0.95 }}>
+                            <View style={{ flex: 0.8, marginTop: '15%', }}>
+                                <View style={styles.innerImageContainer}>
+                                    <Image resizeMode="contain" style={styles.innerImageStyle} source={require('../../assets/images/logo.png')} />
+                                </View>
+                                <View style={{ marginTop: '5%', }}>
+                                    <Text style={styles.headingTextStyle}>Enter Email to Reset Password</Text>
+                                </View>
+                                <View style={{ marginHorizontal: '5%', marginTop: '5%' }}>
+                                    <Input
+                                        placeholder="Email"
+                                        value={email}
+                                        onChangeText={(email) => this.setState({ email: email })}
+                                    />
+                                </View>
+                                <View style={{ marginHorizontal: '25%', marginTop: '5%' }}>
+                                    <Button title='CONFIRM' onPress={() => this.func_HandleResetPassword()} />
                                 </View>
                             </View>
-                        </ImageBackground>
-                    </View>
+                        </View>
+                    </ImageBackground>
                 </View>
             </>
         );

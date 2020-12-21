@@ -29,7 +29,7 @@ export default class Checkout extends Component {
 
         return (
             <>
-                <View style={{ flex: 1, paddingTop: Platform.OS === 'ios' ? 20 : 0, }}>
+                <View style={{ flex: 1 }}>
 
 
                     <ImageBackground source={require('../../assets/images/header.png')} style={styles.headerImageStyle}>

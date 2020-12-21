@@ -43,7 +43,7 @@ export default class Signup extends Component {
     render() {
         const { name, phonenumber, email, password, confirmPassword, loading } = this.state;
         return (
-            <View style={{ paddingTop: Platform.OS === 'ios' ? 20 : 0, }}>
+            <View>
                 <ImageBackground resizeMode="cover" style={styles.backgroundStyle} source={require('../../assets/images/login.jpg')}>
                     <View style={{ flex: 0.95, }}>
                         <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>

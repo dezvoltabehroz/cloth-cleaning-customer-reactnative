@@ -5,6 +5,7 @@ import { Input } from 'react-native-elements';
 import { HomeServices } from '../../services';
 import styles from './style';
 import LinearGradient from 'react-native-linear-gradient';
+import { SafeAreaView } from 'react-native-safe-area-context';
 export default class Home extends Component {
     constructor(props) {
         super(props);
@@ -191,11 +192,9 @@ export default class Home extends Component {
     render() {
         return (
             <>
-
-                <View style={{ flex: 1, paddingTop: Platform.OS === 'ios' ? 20 : 0, backgroundColor: 'white' }}>
+                <View style={{ flex: 1, backgroundColor: 'white' }}>
                     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: '5%', }}>
                         <ImageBackground source={require('../../assets/images/header.png')} style={styles.headerImageStyle}>
-
                             <View style={{ paddingHorizontal: '2.5%', marginTop: '5%' }}>
                                 <Input placeholder='Search laundry by name....'
                                     round={true}
@@ -232,7 +231,6 @@ export default class Home extends Component {
                         </View>
                     </ScrollView>
                 </View>
-
             </>
         )
     }

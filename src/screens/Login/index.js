@@ -49,7 +49,7 @@ export default class Login extends Component {
     render() {
         const { email, password, loading } = this.state;
         return (
-            <View style={{ paddingTop: Platform.OS === 'ios' ? 20 : 0, }}>
+            <View>
                 <ImageBackground resizeMode="cover" style={styles.backgroundStyle} source={require('../../assets/images/login.jpg')}>
                     <View style={{ flex: 0.95, }}>
                         <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
