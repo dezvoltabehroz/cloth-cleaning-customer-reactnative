@@ -49,7 +49,7 @@ function CustomDrawerContent({ navigation }) {
                         <Icon.AntDesign name="questioncircleo" size={20} color="#0092C7" />
                         <Text style={{ color: "#0092C7", marginLeft: "10%" }} >About</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.itemStyle}>
+                    <TouchableOpacity onPress={() => navigation.replace('Auth')} style={styles.itemStyle}>
                         <View style={{ transform: [{ rotate: '180deg' }] }}>
                             <Icon.AntDesign name="logout" size={20} color="#0092C7" />
                         </View>

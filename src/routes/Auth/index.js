@@ -14,7 +14,10 @@ function AuthRoutes() {
             <Stack.Screen name="Signup" component={Signup} options={{
                 headerShown: false
             }} />
-             <Stack.Screen name="OTP" component={OTP} options={{
+            <Stack.Screen name="OTP" component={OTP} options={{
+                headerShown: false
+            }} />
+            <Stack.Screen name="ForgetPassword" component={ForgetPassword} options={{
                 headerShown: false
             }} />
         </Stack.Navigator>

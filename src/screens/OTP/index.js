@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, ImageBackground, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ImageBackground, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { Button, Input, ClearButton } from '../../components';
 import styles from './style';
 import CodeInput from 'react-native-confirmation-code-input';
@@ -17,13 +17,12 @@ export default class OTP extends Component {
     func_HandleSubmitVerificationCode = () => {
         // const { token } = this.props.route.params;
         // if (this.state.value == token) {
-        this.props.navigation.replace('Main')
+        this.props.navigation.replace('Auth')
         // }
     }
 
     // ============== func_HandleResendCode - Function Will allow user to resend code to reset his/her email again ==============
     func_HandleResendCode = () => {
-        const { email } = this.props.route.params;
         // AuthServices.getCodeForResetPass(email)
         //     .then((response) => {
         //         console.log(response.data);
@@ -35,10 +34,10 @@ export default class OTP extends Component {
     render() {
         const { value } = this.state;
         return (
-            <>
-                <ImageBackground resizeMode="contain" style={styles.backgroundStyle} source={require('../../assets/images/verification.png')}>
+            <View style={{ paddingTop: Platform.OS === 'ios' ? 20 : 0, }}>
+                <ImageBackground resizeMode="cover" style={styles.backgroundStyle} source={require('../../assets/images/verification.png')}>
                     <View style={{ flex: 0.95 }}>
-                        <View style={{ flex: 0.8,  marginTop: '15%',}}>
+                        <View style={{ flex: 0.8, marginTop: '15%', }}>
                             <View style={styles.innerImageContainer}>
                                 <Image resizeMode="contain" style={styles.innerImageStyle} source={require('../../assets/images/logo.png')} />
                             </View>
@@ -75,7 +74,7 @@ export default class OTP extends Component {
                         </View>
                     </View>
                 </ImageBackground>
-            </>
+            </View>
         );
     }
 }

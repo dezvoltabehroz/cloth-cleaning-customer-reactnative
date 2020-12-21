@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { Component } from 'react';
-import { Image, ScrollView, Text, TouchableOpacity, View, ImageBackground, FlatList } from 'react-native';
+import { Image, ScrollView, Text, TouchableOpacity, View, ImageBackground, FlatList, Platform } from 'react-native';
 import { Input } from 'react-native-elements';
 import { HomeServices } from '../../services';
 import styles from './style';
@@ -112,8 +112,16 @@ export default class Home extends Component {
         return (
             <>
                 <View style={{ height: 95, width: 105, }}>
-                    <View onPress={() => { }} style={{ borderRadius: 10, elevation: 1, height: 60, width: 105, justifyContent: 'center', marginTop: '10%', marginBottom: '1%' }}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center',padding:'5%' }}>
+                    <View onPress={() => { }} style={{
+                        borderRadius: 10, elevation: 1, shadowColor: "#000",
+                        shadowOffset: {
+                            width: 0,
+                            height: 1,
+                        },
+                        shadowOpacity: 0.18,
+                        shadowRadius: 1.00, height: 60, width: 105, justifyContent: 'center', marginTop: '10%', marginBottom: '1%'
+                    }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: '5%' }}>
                             <Image source={item.imgurl} resizeMode="contain" style={{ height: 50, width: 50 }} />
                         </View>
                     </View>
@@ -129,9 +137,25 @@ export default class Home extends Component {
     _renderListItems = (item, index) => {
         return (
             <>
-                <View onPress={() => { }} style={{ borderRadius: 10, elevation: 1, marginBottom: '1%' }}>
+                <View onPress={() => { }} style={{
+                    borderRadius: 10, elevation: 1, shadowColor: "#000",
+                    shadowOffset: {
+                        width: 0,
+                        height: 1,
+                    },
+                    shadowOpacity: 0.18,
+                    shadowRadius: 1.00, marginBottom: '1%'
+                }}>
                     <View style={{ flexDirection: 'row', }}>
-                        <View style={{ elevation: 1, padding: '10%', borderRadius: 10 }}>
+                        <View style={{
+                            elevation: 1, shadowColor: "#000",
+                            shadowOffset: {
+                                width: 0,
+                                height: 1,
+                            },
+                            shadowOpacity: 0.18,
+                            shadowRadius: 1.00, padding: '10%', borderRadius: 10
+                        }}>
                             <Image source={item.imageUrl} resizeMode="contain" style={{ height: 50, width: 50 }} />
                         </View>
                         <View style={{ marginTop: '5%', marginHorizontal: '5%', }}>
@@ -168,7 +192,7 @@ export default class Home extends Component {
         return (
             <>
 
-                <View style={{ flex: 1, backgroundColor: 'white' }}>
+                <View style={{ flex: 1, paddingTop: Platform.OS === 'ios' ? 20 : 0, backgroundColor: 'white' }}>
                     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: '5%', }}>
                         <ImageBackground source={require('../../assets/images/header.png')} style={styles.headerImageStyle}>
 

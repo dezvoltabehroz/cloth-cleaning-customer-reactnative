@@ -43,67 +43,67 @@ export default class Signup extends Component {
     render() {
         const { name, phonenumber, email, password, confirmPassword, loading } = this.state;
         return (
-            <ImageBackground resizeMode="contain" style={styles.backgroundStyle} source={require('../../assets/images/login.jpg')}>
-                <View style={{ flex: 0.95, }}>
-                    <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
-                        <View style={styles.innerImageContainer}>
-                            <Image resizeMode="contain" style={styles.innerImageStyle} source={require('../../assets/images/logo.png')} />
-                        </View>
+            <View style={{ paddingTop: Platform.OS === 'ios' ? 20 : 0, }}>
+                <ImageBackground resizeMode="cover" style={styles.backgroundStyle} source={require('../../assets/images/login.jpg')}>
+                    <View style={{ flex: 0.95, }}>
+                        <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
+                            <View style={styles.innerImageContainer}>
+                                <Image resizeMode="contain" style={styles.innerImageStyle} source={require('../../assets/images/logo.png')} />
+                            </View>
 
-                        <View style={{ marginHorizontal: '5%', marginTop: '10%' }}>
-                            <Input
-                                placeholder="Name *"
-                                value={name}
-                                onChangeText={(name) => this.setState({ name: name })}
-                            />
-                        </View>
-                        <View style={{ marginHorizontal: '5%', }}>
-                            <Input
-                                placeholder="Phone Number *"
-                                value={phonenumber}
-                                onChangeText={(phonenumber) => this.setState({ phonenumber: phonenumber })}
-                            />
-                        </View>
-                        <View style={{ marginHorizontal: '5%', }}>
-                            <Input
-                                placeholder="Email *"
-                                value={email}
-                                onChangeText={(email) => this.setState({ email: email })}
-                            />
-                        </View>
-                        <View style={{ marginHorizontal: '5%', }}>
-                            <Input
-                                placeholder="Password *"
-                                value={password}
-                                secureTextEntry={true}
-                                onChangeText={(password) => this.setState({ password: password })}
-                            />
-                        </View>
-                        <View style={{ marginHorizontal: '5%' }}>
-                            <Input
-                                placeholder="Confirm password *"
-                                value={confirmPassword}
-                                secureTextEntry={true}
-                                onChangeText={(confirmPassword) => this.setState({ confirmPassword: confirmPassword })}
-                            />
-                        </View>
-                        {/* <TouchableOpacity onPress={() => this.props.navigation.replace('ForgetPassword')} style={{ marginHorizontal: '7%', alignItems: 'flex-end' }} >
+                            <View style={{ marginHorizontal: '5%', marginTop: '10%' }}>
+                                <Input
+                                    placeholder="Name *"
+                                    value={name}
+                                    onChangeText={(name) => this.setState({ name: name })}
+                                />
+                            </View>
+                            <View style={{ marginHorizontal: '5%', }}>
+                                <Input
+                                    placeholder="Phone Number *"
+                                    value={phonenumber}
+                                    onChangeText={(phonenumber) => this.setState({ phonenumber: phonenumber })}
+                                />
+                            </View>
+                            <View style={{ marginHorizontal: '5%', }}>
+                                <Input
+                                    placeholder="Email *"
+                                    value={email}
+                                    onChangeText={(email) => this.setState({ email: email })}
+                                />
+                            </View>
+                            <View style={{ marginHorizontal: '5%', }}>
+                                <Input
+                                    placeholder="Password *"
+                                    value={password}
+                                    secureTextEntry={true}
+                                    onChangeText={(password) => this.setState({ password: password })}
+                                />
+                            </View>
+                            <View style={{ marginHorizontal: '5%' }}>
+                                <Input
+                                    placeholder="Confirm password *"
+                                    value={confirmPassword}
+                                    secureTextEntry={true}
+                                    onChangeText={(confirmPassword) => this.setState({ confirmPassword: confirmPassword })}
+                                />
+                            </View>
+                            {/* <TouchableOpacity onPress={() => this.props.navigation.replace('ForgetPassword')} style={{ marginHorizontal: '7%', alignItems: 'flex-end' }} >
                         <Text style={{ color: '' }} >
                             Forget Password?
                         </Text>
                     </TouchableOpacity> */}
-                        <View style={{ marginHorizontal: '25%', marginTop: '5%' }}>
-                            <Button loading={loading} title='Signup' onPress={() => this.func_HandleSignUp()} />
+                            <View style={{ marginHorizontal: '25%', marginTop: '5%' }}>
+                                <Button loading={loading} title='Signup' onPress={() => this.func_HandleSignUp()} />
+                            </View>
+                        </ KeyboardAwareScrollView>
+                        <View style={{ flexDirection: 'row', marginBottom: '5%', alignItems: 'center', justifyContent: 'center' }}>
+                            <Text style={{ color: '#707070', opacity: 0.7 }}>Already have an account?</Text>
+                            <Text onPress={() => this.props.navigation.replace('Auth')} style={{ marginLeft: '5%', fontWeight: 'bold' }}>Login</Text>
                         </View>
-
-
-                    </ KeyboardAwareScrollView>
-                    <View style={{ flexDirection: 'row', marginBottom: '5%', alignItems: 'center', justifyContent: 'center' }}>
-                        <Text style={{ color: '#707070', opacity: 0.7 }}>Already have an account?</Text>
-                        <Text onPress={() => this.props.navigation.replace('Auth')} style={{ marginLeft: '5%', fontWeight: 'bold' }}>Login</Text>
                     </View>
-                </View>
-            </ImageBackground>
+                </ImageBackground>
+            </View>
         );
     }
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, View, Text, Image, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
+import { FlatList, View, Text, Image, TouchableOpacity, Dimensions, ScrollView, Platform } from 'react-native';
 import { Icon } from '../../components';
 import styles from './style';
 import LinearGradient from 'react-native-linear-gradient';
@@ -110,7 +110,7 @@ export default class ProductDetail extends Component {
     render() {
         const { title, price, quantity, description, serivceType } = this.state;
         return (
-            <View style={{ flex: 1, }}>
+            <View style={{ flex: 1, paddingTop: Platform.OS === 'ios' ? 20 : 0,  }}>
                 <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
                     <View style={styles.upperContainer}>
                     </View>

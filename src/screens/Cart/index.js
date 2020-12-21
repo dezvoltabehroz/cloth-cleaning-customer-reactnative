@@ -18,6 +18,7 @@ export default class Cart extends Component {
                     title: 'Lorem Ipsum Dolor',
                     price: 50,
                     quantity: '1',
+                    serviceType: "Iron only"
                 },
                 {
                     id: 2,
@@ -25,6 +26,7 @@ export default class Cart extends Component {
                     title: 'Lorem Ipsum Dolor',
                     price: 50,
                     quantity: '1',
+                    serviceType: "Iron only"
                 },
                 {
                     id: 3,
@@ -32,6 +34,7 @@ export default class Cart extends Component {
                     title: 'Lorem Ipsum Dolor',
                     price: 50,
                     quantity: '1',
+                    serviceType: "Iron only"
                 },
                 {
                     id: 4,
@@ -39,6 +42,7 @@ export default class Cart extends Component {
                     title: 'Lorem Ipsum Dolor',
                     price: 50,
                     quantity: '1',
+                    serviceType: "Iron only"
                 },
                 {
                     id: 5,
@@ -46,6 +50,7 @@ export default class Cart extends Component {
                     title: 'Lorem Ipsum Dolor',
                     price: 50,
                     quantity: '1',
+                    serviceType: "Iron only"
                 },
                 {
                     id: 6,
@@ -53,6 +58,7 @@ export default class Cart extends Component {
                     title: 'Lorem Ipsum Dolor',
                     price: 50,
                     quantity: '1',
+                    serviceType: "Iron only"
                 },
                 {
                     id: 7,
@@ -60,6 +66,7 @@ export default class Cart extends Component {
                     title: 'Lorem Ipsum Dolor',
                     price: 50,
                     quantity: '1',
+                    serviceType: "Iron only"
 
                 },
                 {
@@ -68,6 +75,7 @@ export default class Cart extends Component {
                     title: 'Lorem Ipsum Dolor',
                     price: 50,
                     quantity: '1',
+                    serviceType: "Iron only"
                 },
             ]
         }
@@ -160,7 +168,7 @@ export default class Cart extends Component {
     render() {
 
         return (
-            <View style={{ flex: 1, }}>
+            <View style={{ flex: 1, paddingTop: Platform.OS === 'ios' ? 20 : 0, }}>
                 <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 120 }}>
                     <View style={{ marginHorizontal: '5%', marginTop: '5%' }}>
                         <Text style={{ fontSize: 16 }}>Iron Only</Text>
@@ -176,9 +184,16 @@ export default class Cart extends Component {
                 </ScrollView>
                 <View>
 
-                    <View onPress={() => { }} style={{ borderRadius: 10, elevation: 1, marginBottom: '5%', marginHorizontal: '5%' }}>
+                    <View onPress={() => { }} style={{
+                        borderRadius: 10, elevation: 1, shadowColor: "#000",
+                        shadowOffset: {
+                            width: 0,
+                            height: 1,
+                        }, shadowOpacity: 0.18,
+                        shadowRadius: 1.00, marginBottom: '5%', marginHorizontal: '5%'
+                    }}>
                         <View style={{ flexDirection: 'row', bottom: '5%', justifyContent: 'center', alignItems: 'center', }}>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Checkout')}>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Checkout', { list: this.state.list })}>
                                 <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
                                     <Text style={styles.checkButtonTextStyle}>Checkout</Text>
                                 </LinearGradient>

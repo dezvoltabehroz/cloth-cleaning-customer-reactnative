@@ -35,6 +35,26 @@ export default StyleSheet.create({
     iconImageStyle: {
         height: 20,
         width: 20
-    }
+    },
+    backgroundImageStyle: {
+        height: screenHeight * 0.368,
+        width: screenWidth
+    },
+    backgroundStyle: {
+        height: screenHeight ,
+        width: screenWidth
+    },
+    innerImageContainer: {
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    innerImageStyle: {
+        height: screenHeight * 0.2,
+        width: screenWidth,
+    },
+    logoImageStyle: {
+        height: 90,
+        width: 306
+    },
 
 })
