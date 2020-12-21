@@ -29,17 +29,16 @@ export default class Checkout extends Component {
         return (
             <>
                 <View style={{ flex: 1 }}>
-                    <View style={{ flex: activeTab == 0 ? 0.15 : 0.225 }}>
-                        <ImageBackground source={require('../../assets/images/header.png')} style={styles.headerImageStyle}>
-                            <View style={styles.upperListContainer}>
-                                <View style={styles.tabContainer}>
-                                    <Tabs active={activeTab} tabs={['Account', 'Pick up', 'Payment']} />
-                                </View>
+
+                    <ImageBackground source={require('../../assets/images/header.png')} style={styles.headerImageStyle}>
+                        <View style={styles.upperListContainer}>
+                            <View style={styles.tabContainer}>
+                                <Tabs active={activeTab} tabs={['Account', 'Pick up', 'Payment']} />
                             </View>
-                        </ImageBackground>
-                    </View>
-                    <View style={{ flex: 0.9 }}>
-                        <KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: '10%' }}>
+                        </View>
+                    </ImageBackground>
+                    <View style={{ marginTop: 35 }}>
+                        <KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: '20%' }}>
                             {
                                 activeTab == 0 ?
 
@@ -88,6 +87,7 @@ export default class Checkout extends Component {
                                 height: 1,
                             },
                             borderColor: "#EEE",
+                            backgroundColor:'white',
                             borderWidth: 0.3,
                             shadowOpacity: 0.18,
                             shadowRadius: 1.00,
