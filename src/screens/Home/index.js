@@ -206,7 +206,6 @@ export default class Home extends Component {
     render() {
         return (
             <View style={{ flex: 1, backgroundColor: 'white' }}>
-                <View style={{ flex: 0.44 }}>
                     <ImageBackground resizeMode="cover" source={require('../../assets/images/header.png')} style={styles.headerImageStyle}>
                         <View style={{ paddingHorizontal: '2.5%', marginTop: '5%' }}>
                             <Input placeholder='Search laundry by name....'
@@ -233,8 +232,7 @@ export default class Home extends Component {
                                 keyExtractor={item => item} />
                         </View>
                     </ImageBackground>
-                </View>
-                <View style={{ flex: 0.6, }}>
+                <View style={{ flex: 1 ,marginTop:85}}>
                     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: '5%', }}>
                         <View style={styles.lowerListContainer}>
                             <FlatList
