@@ -22,9 +22,9 @@ function CustomDrawerContent({ navigation }) {
             <View style={{ flex: 1 }} >
 
 
-                <LinearGradient colors={['#27C2FA', '#27C2FA', '#0DA7DF']} style={{ flex: 0.3 }}>
+                <LinearGradient colors={['#27C2FA', '#27C2FA', '#0DA7DF']} style={styles.upperContainer}>
                     <View style={styles.upperContainer}>
-                        <View style={{ flexDirection: 'row' }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                             <View>
                                 <Avatar size={50} rounded={true} source={{ uri: "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png" }} />
                             </View>
@@ -57,18 +57,21 @@ function CustomDrawerContent({ navigation }) {
                     </TouchableOpacity>
                     <View style={styles.policyStyles}>
                         <Text style={{ color: "#707070" }} >Terms & conditions / policy</Text>
-
                     </View>
-
-                </View>
-
-                <View style={{ justifyContent: 'flex-end' }}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', marginBottom: '5%' }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: '10%', height: 54, width: 150, justifyContent: 'space-around', marginBottom: '5%' }}>
                         <Icon.FontAwesome name="facebook" size={20} color="#0092C7" />
                         <Icon.FontAwesome name="instagram" size={20} color="#0092C7" />
                         <Icon.FontAwesome name="twitter" size={20} color="#0092C7" />
                     </View>
                 </View>
+
+                {/* <View style={{ justifyContent: 'flex-end' }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', marginBottom: '5%' }}>
+                        <Icon.FontAwesome name="facebook" size={20} color="#0092C7" />
+                        <Icon.FontAwesome name="instagram" size={20} color="#0092C7" />
+                        <Icon.FontAwesome name="twitter" size={20} color="#0092C7" />
+                    </View>
+                </View> */}
             </View>
 
         </>
@@ -81,12 +84,11 @@ const styles = StyleSheet.create({
         color: "#fff",
     },
     upperContainer: {
-        marginTop: '20%',
-        marginLeft: '10%'
-
+        flex: 0.3,
+        justifyContent: 'center',
     },
     itemStyle: { flexDirection: 'row', height: 54, alignItems: 'center', paddingLeft: '10%' },
-    policyStyles: { height: 54, paddingLeft: '10%', paddingTop: '10%' }
+    policyStyles: { height: 54, paddingLeft: '10%', paddingVertical: '10%' }
 })
 
 export default MainRoutes;
