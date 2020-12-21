@@ -190,7 +190,11 @@ export default class Cart extends Component {
                             width: 0,
                             height: 1,
                         }, shadowOpacity: 0.18,
-                        shadowRadius: 1.00, marginBottom: '5%', marginHorizontal: '5%'
+                        borderColor: "#EEE",
+                        borderWidth: 0.3,
+                        shadowRadius: 1.00,
+                        marginBottom: '5%',
+                        marginHorizontal: '5%'
                     }}>
                         <View style={{ flexDirection: 'row', bottom: '5%', justifyContent: 'center', alignItems: 'center', }}>
                             <TouchableOpacity onPress={() => this.props.navigation.navigate('Checkout', { list: this.state.list })}>

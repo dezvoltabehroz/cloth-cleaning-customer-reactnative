@@ -25,6 +25,8 @@ export default StyleSheet.create({
         shadowRadius: 1.00,
         elevation: 1,
         height: 218,
+        borderColor: "#EEE",
+        borderWidth: 0.3,
         bottom: '11%'
     },
     imageStyle: {

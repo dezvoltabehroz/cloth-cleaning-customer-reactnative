@@ -18,6 +18,8 @@ export default StyleSheet.create({
             width: 0,
             height: 1,
         },
+        borderColor: "#EEE",
+        borderWidth: 0.3,
         shadowOpacity: 0.18,
         shadowRadius: 1.00,
     },
@@ -33,6 +35,8 @@ export default StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 10,
         elevation: 1,
+        borderColor: "#EEE",
+        borderWidth: 0.3,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,

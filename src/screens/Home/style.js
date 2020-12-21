@@ -23,7 +23,7 @@ export default StyleSheet.create({
     textStyle: {
         fontSize: 12, color: 'white',
     },
-    headerImageStyle: { height: 210, width: screenWidth },
+    headerImageStyle: { height: 150, width: screenWidth },
     seperatorStyle: {
         width: 15
     },
@@ -37,6 +37,8 @@ export default StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 10,
         elevation: 1,
+        borderColor: "#EEE",
+        borderWidth: 0.3,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,

@@ -13,6 +13,8 @@ export default StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 10,
         elevation: 1,
+        borderColor: "#EEE",
+        borderWidth: 0.3,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -33,6 +35,8 @@ export default StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 10,
         elevation: 1,
+        borderColor: "#EEE",
+        borderWidth: 0.3,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,

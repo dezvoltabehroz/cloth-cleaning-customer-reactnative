@@ -6,14 +6,16 @@ export default StyleSheet.create({
     headerImageStyle: {
         height: 40,
         width: screenWidth,
-        marginBottom: '12%'
     },
     upperListContainer: {
         marginHorizontal: '5%',
-        paddingVertical: '5%',
+        height: 70,
+        justifyContent: 'center',
         backgroundColor: 'white',
         borderRadius: 10,
         elevation: 1,
+        borderColor: "#EEE",
+        borderWidth: 0.3,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
@@ -25,7 +27,6 @@ export default StyleSheet.create({
     tabContainer: {
         alignItems: 'center',
         justifyContent: 'space-between',
-        paddingBottom: '2%'
     },
     upperContainer: {
         marginHorizontal: '5%',
@@ -39,6 +40,8 @@ export default StyleSheet.create({
             width: 0,
             height: 1,
         },
+        borderColor: "#EEE",
+        borderWidth: 0.3,
         shadowOpacity: 0.18,
         shadowRadius: 1.00,
     },
