@@ -32,8 +32,9 @@ export default StyleSheet.create({
     },
     upperListContainer: {
         marginHorizontal: '5%',
-        padding: '5%',
+        // padding: '5%',
         paddingVertical: '5%',
+        paddingLeft: '5%',
         backgroundColor: 'white',
         borderRadius: 10,
         elevation: 1,
