@@ -16,7 +16,7 @@ export default class Pickup extends Component {
     render() {
         return (
             <>
-                <View style={{ flex: 1, marginTop: '12%', }}>
+                <View style={{ flex: 1 }}>
                     <ScrollView contentContainerStyle={{ paddingBottom: '10%' }}>
 
 

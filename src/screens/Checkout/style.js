@@ -5,7 +5,8 @@ const screenWidth = Dimensions.get('window').width;
 export default StyleSheet.create({
     headerImageStyle: {
         height: 40,
-        width: screenWidth
+        width: screenWidth,
+        marginBottom: '12%'
     },
     upperListContainer: {
         marginHorizontal: '5%',

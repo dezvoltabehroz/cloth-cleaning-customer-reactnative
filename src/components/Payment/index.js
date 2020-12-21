@@ -57,7 +57,7 @@ export default class Payment extends Component {
         const { cashOnDelivery, jazzCash, easyPaisa } = this.state;
         return (
             <>
-                <View style={{ flex: 1, marginTop: '12%', }}>
+                <View style={{ flex: 1, }}>
                     <ScrollView contentContainerStyle={{ paddingBottom: '10%' }}>
                         <View style={{ marginTop: '5%', }}>
                             <View style={styles.upperContainer}>
@@ -125,7 +125,7 @@ export default class Payment extends Component {
                                     <Input placeholder="0000-2233-0000-3455" />
                                 </View>
                             </View>
-                        </View> : null }
+                        </View> : null}
                         <View style={{ marginTop: '5%', }}>
                             <View style={styles.upperContainer}>
                                 <View style={{}}>
