@@ -15,7 +15,7 @@ export default class ForgetPassword extends Component {
 
     // ============== func_HandleResetPassword - Function Will allow user to reset his/her password ==============
     func_HandleResetPassword = () => {
-        this.props.navigation.replace('OTP')
+        this.props.navigation.replace('OTP', { password: true })
         // AuthServices.getCodeForResetPass(this.state.email)
         //     .then((response) => {
         //         console.log(response.data);

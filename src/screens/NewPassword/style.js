@@ -7,7 +7,6 @@ export default StyleSheet.create({
         width: screenWidth
     },
     innerImageContainer: {
-        top: '40%',
         justifyContent: 'center',
         alignItems: 'center'
     },
@@ -35,6 +34,10 @@ export default StyleSheet.create({
     iconImageStyle: {
         height: 20,
         width: 20
+    },
+    backgroundStyle: {
+        height: screenHeight ,
+        width: screenWidth
     },
     codeContainer: {
         justifyContent: 'center',

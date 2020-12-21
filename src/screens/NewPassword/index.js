@@ -16,14 +16,7 @@ export default class NewPassword extends Component {
 
     // ============== func_HandleSetNewPassword - Function Will allow user to update his/her password ==============
     func_HandleSetNewPassword = () => {
-        const { token } = this.props.route.params;
-        AuthServices.updatePassword(token, this.state.password)
-            .then((response) => {
-                this.props.navigation.replace('Login')
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+        this.props.navigation.replace('Login')
     }
 
 
@@ -31,40 +24,40 @@ export default class NewPassword extends Component {
         const { password, confirmPassword } = this.state;
         return (
             <>
-                <KeyboardAwareScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
-                    <View style={{ flex: 1 }}>
-                        {/* <ImageBackground resizeMode="cover" style={styles.backgroundImageStyle} source={require('../../assets/images/border.png')}>
+                <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
+                    <ImageBackground resizeMode="cover" style={styles.backgroundStyle} source={require('../../assets/images/verification.png')}>
+                        <View style={{ marginTop: '15%', }}>
                             <View style={styles.innerImageContainer}>
-                                <Image resizeMode="contain" style={styles.innerImageStyle} source={require('../../assets/images/otp.png')} />
+                                <Image resizeMode="contain" style={styles.innerImageStyle} source={require('../../assets/images/logo.png')} />
                             </View>
-                        </ImageBackground> */}
-                        <View style={{ marginTop: '20%' }}>
-                            <Text style={styles.headingTextStyle}>Enter New Password to Acess Your Account</Text>
-                        </View>
-                        <View style={{ marginHorizontal: '5%', marginTop: '5%' }}>
-                            <Input
-                                secureTextEntry={true}
-                                placeholder="New Password"
-                                value={password}
-                                onChangeText={(text) => this.setState({ password: text })}
+                            <View style={{ marginTop: '5%' }}>
+                                <Text style={styles.headingTextStyle}>Enter New Password to Acess Your Account</Text>
+                            </View>
+                            <View style={{ marginHorizontal: '5%', marginTop: '5%' }}>
+                                <Input
+                                    secureTextEntry={true}
+                                    placeholder="New Password"
+                                    value={password}
+                                    onChangeText={(text) => this.setState({ password: text })}
                                 />
-                        </View>
-                        <View style={{ marginHorizontal: '5%', marginTop: '5%' }}>
-                            <Input
-                                secureTextEntry={true}
-                                placeholder="Confirm New Password"
-                                value={confirmPassword}
-                                onChangeText={(text) => this.setState({ confirmPassword: text })}
+                            </View>
+                            <View style={{ marginHorizontal: '5%', marginTop: '5%' }}>
+                                <Input
+                                    secureTextEntry={true}
+                                    placeholder="Confirm New Password"
+                                    value={confirmPassword}
+                                    onChangeText={(text) => this.setState({ confirmPassword: text })}
                                 />
-                            {password != confirmPassword ?
-                                <Text style={[styles.errorText, { marginVertical: '2%' }]}>Password Mismatch</Text> : null}
+                                {password != confirmPassword ?
+                                    <Text style={[styles.errorText, { marginVertical: '2%' }]}>Password Mismatch</Text> : null}
+                            </View>
+
                         </View>
-                        <View style={{ marginHorizontal: '5%', marginTop: '5%' }}>
+                        <View style={{ marginHorizontal: '25%', marginTop: '5%' }}>
                             <Button disabled={password && confirmPassword && password == confirmPassword ? false : true} title='CONFIRM' onPress={() => this.func_HandleSetNewPassword()} />
                         </View>
-                    </View>
+                    </ImageBackground>
                 </KeyboardAwareScrollView>
-              
             </>
         );
     }

@@ -20,6 +20,9 @@ function AuthRoutes() {
             <Stack.Screen name="ForgetPassword" component={ForgetPassword} options={{
                 headerShown: false
             }} />
+             <Stack.Screen name="NewPassword" component={NewPassword} options={{
+                headerShown: false
+            }} />
         </Stack.Navigator>
     );
 }

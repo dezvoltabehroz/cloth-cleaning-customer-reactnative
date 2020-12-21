@@ -16,23 +16,7 @@ export default class Signup extends Component {
 
     // ============== func_HandleSignUp - Function Will allow user to register himself ==============
     func_HandleSignUp = () => {
-        this.setState({ loading: true });
-        // let userData = {
-        //     email: this.state.email,
-        //     password: this.state.password
-        // }
-        // AuthServices.userLogin(userData)
-        //     .then(async (response) => {
-        //         await AsyncStorage.setItem('USER_TOKEN', JSON.stringify(response.data.login_token));
-        this.props.navigation.replace('Auth', { screen: 'OTP' });
-        //         this.setState({ loading: false });
-        //     })
-        //     .catch((error) => {
-        //         if (error.message == 'Request failed with status code 401') {
-        //             Alert.alert("Attension", "Invalid Credentials");
-        //             this.setState({ loading: false });
-        //         }
-        //     })
+        this.props.navigation.replace('OTP', { password: false });
     }
 
     // ============== func_HandleResetPassword - Function Will allow user to reset his/her password ==============

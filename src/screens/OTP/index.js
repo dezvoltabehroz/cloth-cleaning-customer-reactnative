@@ -15,10 +15,13 @@ export default class OTP extends Component {
 
     // ============== func_HandleSubmitVerificationCode - Function Will allow user to verify the code to reset his/her password ==============
     func_HandleSubmitVerificationCode = () => {
-        // const { token } = this.props.route.params;
-        // if (this.state.value == token) {
-        this.props.navigation.replace('Auth')
-        // }
+        const { password } = this.props.route.params;
+        if (password ) {
+            this.props.navigation.replace('NewPassword')
+        }
+        else {
+            this.props.navigation.replace('Main')
+        }
     }
 
     // ============== func_HandleResendCode - Function Will allow user to resend code to reset his/her email again ==============
