@@ -39,7 +39,11 @@ export default class Pickup extends Component {
                     timing: '04pm-06pm',
                     selected: false
                 }
-            ]
+            ],
+            today: true,
+            tommorrow: false,
+            regular: true,
+            express: false
         }
     }
 
@@ -67,7 +71,7 @@ export default class Pickup extends Component {
     }
 
     render() {
-        const { address, region } = this.state;
+        const { address, region, regular, express, today, tommorrow } = this.state;
         return (
             <>
                 <View style={{ flex: 1 }}>
@@ -153,24 +157,24 @@ export default class Pickup extends Component {
                                     <Icon.MaterialIcons name="edit" color={'#7A7A7A'} size={20} />
                                 </TouchableOpacity>
                             </View>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%' }}>
+                            <TouchableOpacity onPress={() => this.setState({ today: true, tommorrow: false })} style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%' }}>
                                 <View>
-                                    <Icon.AntDesign name="checkcircle" color={'#0DA7DF'} size={20} />
+                                    <Icon.MaterialCommunityIcons name={today ? "checkbox-marked-circle" : "checkbox-blank-circle-outline"} color={today ? '#0DA7DF' : '#707070'} size={20} />
                                 </View>
                                 <View style={{ marginLeft: '5%' }}>
                                     <Text style={{ color: '#374B5C', fontWeight: 'bold' }}>Today</Text>
                                     <Text style={{ color: '#7A7A7A', fontSize: 12 }}>Pickup on {this.state.pickUpShift}, 8 Dec 2020</Text>
                                 </View>
-                            </View>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%' }}>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.setState({ today: false, tommorrow: true })} style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%' }}>
                                 <View>
-                                    <Icon.MaterialCommunityIcons name="checkbox-blank-circle-outline" color={'#707070'} size={20} />
+                                    <Icon.MaterialCommunityIcons name={tommorrow ? "checkbox-marked-circle" : "checkbox-blank-circle-outline"} color={tommorrow ? '#0DA7DF' : '#707070'} size={20} />
                                 </View>
                                 <View style={{ marginLeft: '5%' }}>
                                     <Text style={{ color: '#374B5C', fontWeight: 'bold' }}>Tomorrow</Text>
-                                    <Text style={{ color: '#7A7A7A', fontSize: 12 }}>Pickup on Morning (8am-10am), 9 Dec 2020</Text>
+                                    <Text style={{ color: '#7A7A7A', fontSize: 12 }}>Pickup on {this.state.pickUpShift}, 9 Dec 2020</Text>
                                 </View>
-                            </View>
+                            </TouchableOpacity>
 
                         </View>
                     </View>
@@ -180,13 +184,10 @@ export default class Pickup extends Component {
                                 <View>
                                     <Text>Delivery options</Text>
                                 </View>
-                                <View>
-                                    <Icon.MaterialIcons name="edit" color={'#7A7A7A'} size={20} />
-                                </View>
                             </View>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%' }}>
+                            <TouchableOpacity onPress={() => this.setState({ regular: true, express: false })} style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%' }}>
                                 <View>
-                                    <Icon.AntDesign name="checkcircle" color={'#0DA7DF'} size={20} />
+                                    <Icon.MaterialCommunityIcons name={regular ? "checkbox-marked-circle" : "checkbox-blank-circle-outline"} color={regular ? '#0DA7DF' : '#707070'} size={20} />
                                 </View>
                                 <View style={{ marginLeft: '5%', marginRight: '5%' }}>
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -195,10 +196,10 @@ export default class Pickup extends Component {
                                     </View>
                                     <Text style={{ color: '#7A7A7A', fontSize: 12 }}>You will receive laundry within 3 to 4 working days</Text>
                                 </View>
-                            </View>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%' }}>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.setState({ regular: false, express: true })} style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%' }}>
                                 <View>
-                                    <Icon.MaterialCommunityIcons name="checkbox-blank-circle-outline" color={'#707070'} size={20} />
+                                    <Icon.MaterialCommunityIcons name={express ? "checkbox-marked-circle" : "checkbox-blank-circle-outline"} color={express ? '#0DA7DF' : '#707070'} size={20} />
                                 </View>
                                 <View style={{ marginLeft: '5%', marginRight: '5%' }}>
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -207,17 +208,14 @@ export default class Pickup extends Component {
                                     </View>
                                     <Text style={{ color: '#7A7A7A', fontSize: 12 }}>You will receive laundry within 1 to 2 working days</Text>
                                 </View>
-                            </View>
+                            </TouchableOpacity>
                         </View>
                     </View>
                     <View style={{ marginTop: '5%', }}>
                         <View style={styles.upperContainer}>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <View style={{}}>
                                 <View>
                                     <Text>Optional note</Text>
-                                </View>
-                                <View>
-                                    <Icon.MaterialIcons name="edit" color={'#7A7A7A'} size={20} />
                                 </View>
                             </View>
                             <View style={{ marginTop: '5%', borderRadius: 10, overflow: 'hidden' }}>
@@ -241,7 +239,7 @@ export default class Pickup extends Component {
                                 {
                                     this.state.shift.map((item, index) => {
                                         return (
-                                            <TouchableOpacity onPress={() => this.handleshift(item, index)} style={{ flexDirection: 'row' }}>
+                                            <TouchableOpacity onPress={() => this.handleshift(item, index)} style={{ flexDirection: 'row', marginBottom: '5%' }}>
                                                 <View>
                                                     <Icon.MaterialIcons name={item.selected ? "radio-button-checked" : "radio-button-unchecked"} color={item.selected ? '#0DA7DF' : '#707070'} size={20} />
                                                 </View>

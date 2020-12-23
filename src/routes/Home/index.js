@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator, useHeaderHeight } from '@react-navigation/stack';
 import { View, Text, StyleSheet, Image, TouchableOpacity, Alert, Dimensions, Platform } from 'react-native';
-import { Cart, Home, ProductDetail, Checkout, Orders, OrdersDetail, MapScreen, Search } from '../../screens';
+import { Cart, Home, ProductDetail, Checkout, Orders, OrdersDetail, MapScreen, Search, Profile, About } from '../../screens';
 import { withBadge, Icon as Icons } from 'react-native-elements'
 import { Icon } from '../../components';
 import MapRoutes from '../Map';
@@ -56,6 +56,20 @@ function HomeRoutes() {
                 headerLeft: () => (<TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingLeft: 15 }}><Icon.AntDesign name="arrowleft" color="white" size={25} /></TouchableOpacity>),
                 // headerRight: () => (<View style={{ marginRight: 20 }}><BadgedIcon onPress={() => navigation.navigate('Cart')} type="font-awesome" name="shopping-cart" color='white' /></View>),
                 headerTitle: () => (<View><Text style={styles.headerTitleStyle}>Orders</Text></View>),
+            })} />
+            <Stack.Screen name="Profile" component={Profile} options={({ navigation, route }) => ({
+                headerTitleAlign: 'center',
+                headerBackground: () => (<Image resizeMode="cover" style={{ height: '100%', width: screenWidth }} source={require('../../assets/images/header.png')} />),
+                headerLeft: () => (<TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingLeft: 15 }}><Icon.AntDesign name="arrowleft" color="white" size={25} /></TouchableOpacity>),
+                // headerRight: () => (<View style={{ marginRight: 20 }}><BadgedIcon onPress={() => navigation.navigate('Cart')} type="font-awesome" name="shopping-cart" color='white' /></View>),
+                headerTitle: () => (<View><Text style={styles.headerTitleStyle}>Profile</Text></View>),
+            })} />
+             <Stack.Screen name="About" component={About} options={({ navigation, route }) => ({
+                headerTitleAlign: 'center',
+                headerBackground: () => (<Image resizeMode="cover" style={{ height: '100%', width: screenWidth }} source={require('../../assets/images/header.png')} />),
+                headerLeft: () => (<TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingLeft: 15 }}><Icon.AntDesign name="arrowleft" color="white" size={25} /></TouchableOpacity>),
+                // headerRight: () => (<View style={{ marginRight: 20 }}><BadgedIcon onPress={() => navigation.navigate('Cart')} type="font-awesome" name="shopping-cart" color='white' /></View>),
+                headerTitle: () => (<View><Text style={styles.headerTitleStyle}>About</Text></View>),
             })} />
         </Stack.Navigator>
     );

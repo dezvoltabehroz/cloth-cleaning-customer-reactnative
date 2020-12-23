@@ -40,3 +40,9 @@ export const MapScreen = _MapScreen;
 
 import _Search from './Search';
 export const Search = _Search;
+
+import _Profile from './Profile';
+export const Profile = _Profile;
+
+import _About from './About';
+export const About = _About;

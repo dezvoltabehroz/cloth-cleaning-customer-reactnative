@@ -11,7 +11,9 @@ const BadgedIcon = withBadge(1)(Icons);
 function MainRoutes() {
     return (
         <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />} initialRouteName="Home" >
-            <Drawer.Screen name="Home" component={HomeRoutes} />
+            <Drawer.Screen name="Home" component={HomeRoutes} options={{
+                swipeEnabled: false
+            }} />
         </Drawer.Navigator>
     );
 }
@@ -20,10 +22,8 @@ function CustomDrawerContent({ navigation }) {
     return (
         <>
             <View style={{ flex: 1 }} >
-
-
                 <LinearGradient colors={['#27C2FA', '#27C2FA', '#0DA7DF']} style={styles.upperContainer}>
-                    <View style={styles.upperContainer}>
+                    <TouchableOpacity onPress={() => navigation.replace('Home')} style={styles.upperContainer}>
                         <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                             <View>
                                 <Avatar size={50} rounded={true} source={{ uri: "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png" }} />
@@ -33,19 +33,18 @@ function CustomDrawerContent({ navigation }) {
                                 <Text style={{ color: "white", marginLeft: "10%" }} >San Francisco, CA</Text>
                             </View>
                         </View>
-                    </View>
+                    </TouchableOpacity>
                 </LinearGradient>
-
                 <View style={{ flex: 0.7, paddingTop: '10%' }}>
                     <TouchableOpacity onPress={() => navigation.navigate('Orders')} style={styles.itemStyle}>
                         <Icon.SimpleLineIcons name="handbag" size={20} color="#0092C7" />
                         <Text style={{ color: "#0092C7", marginLeft: "10%" }} >Orders</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.itemStyle}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.itemStyle}>
                         <Icon.Feather name="user" size={20} color="#0092C7" />
                         <Text style={{ color: "#0092C7", marginLeft: "10%" }} >Profile</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress style={styles.itemStyle}>
+                    <TouchableOpacity onPress={() => navigation.navigate('About')} style={styles.itemStyle}>
                         <Icon.AntDesign name="questioncircleo" size={20} color="#0092C7" />
                         <Text style={{ color: "#0092C7", marginLeft: "10%" }} >About</Text>
                     </TouchableOpacity>

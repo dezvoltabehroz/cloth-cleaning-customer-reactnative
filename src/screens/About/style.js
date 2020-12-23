@@ -1,0 +1,42 @@
+import { StyleSheet } from 'react-native'
+
+export default StyleSheet.create({
+    mainView: {
+        flex: 1,
+        backgroundColor: 'white',
+        // marginTop: StatusBar.currentHeight,
+    },
+
+    aboutTitleStyle: {
+        fontSize: 20,
+        marginLeft: 15,
+        marginTop: 8
+    },
+    aboutcontentmainStyle: {
+        marginBottom: 60
+    },
+    aboutcontentStyle: {
+        fontSize: 15,
+        textAlign: "justify",
+        alignSelf: 'center',
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        letterSpacing: 1,
+        marginTop: 6,
+    },
+    contact: {
+        marginTop: 6,
+        marginLeft: 15,
+        width: "100%",
+        marginBottom: 30
+    },
+    contacttype1: {
+        textAlign: 'left',
+        fontSize: 15,
+    },
+    contacttype2: {
+        textAlign: 'left',
+        marginTop: 4,
+        fontSize: 15,
+    }
+})
