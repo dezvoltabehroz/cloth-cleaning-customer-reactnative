@@ -44,5 +44,51 @@ export default StyleSheet.create({
         },
         shadowOpacity: 0.18,
         shadowRadius: 1.00,
-    }
+    },
+    content: {
+        backgroundColor: 'white',
+        padding: 22,
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        borderRadius: 10,
+        borderColor: 'rgba(0, 0, 0, 0.1)',
+    },
+    contentTitle: {
+        fontSize: 20,
+        marginBottom: 12,
+    },
+    tipContainer: {
+        height: 54,
+        // backgroundColor: THEME.PRIMARY_COLOR,
+        justifyContent: "center",
+        alignItems: "center",
+        width: screenWidth * 0.35,
+        borderRadius: 7
+    },
+    checkButtonTextStyle: {
+        color: 'white',
+        textAlign: 'center'
+    },
+    checkoutButtonContainer: {
+        borderRadius: 35,
+        height: 40,
+        width: 140,
+        justifyContent: 'center',
+        paddingHorizontal: '5%'
+    },
+    iconContainer: {
+        backgroundColor: '#E2E2E2',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 15,
+        height: 25,
+        width: 25
+    },
+    discountTextStyle: {
+        color: '#A50808'
+    },
+    lineStyle: {
+        borderWidth: 0.5,
+        borderColor: '#7A7A7A'
+    },
 })

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.dhobi_uncle1">
+  package="com.infinitybits.dhobiuncle">
 
     <uses-permission android:name="android.permission.INTERNET" />
 

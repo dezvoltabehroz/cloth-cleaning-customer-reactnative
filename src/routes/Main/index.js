@@ -37,7 +37,7 @@ function CustomDrawerContent({ navigation }) {
                 </LinearGradient>
 
                 <View style={{ flex: 0.7, paddingTop: '10%' }}>
-                    <TouchableOpacity style={styles.itemStyle}>
+                    <TouchableOpacity onPress={() => navigation.navigate('Orders')} style={styles.itemStyle}>
                         <Icon.SimpleLineIcons name="handbag" size={20} color="#0092C7" />
                         <Text style={{ color: "#0092C7", marginLeft: "10%" }} >Orders</Text>
                     </TouchableOpacity>
@@ -58,7 +58,7 @@ function CustomDrawerContent({ navigation }) {
                     <View style={styles.policyStyles}>
                         <Text style={{ color: "#707070" }} >Terms & conditions / policy</Text>
                     </View>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: '10%', height: 54, width: 150, justifyContent: 'space-between',}}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: '10%', height: 54, width: 150, justifyContent: 'space-between', }}>
                         <Icon.FontAwesome name="facebook" size={20} color="#0092C7" />
                         <Icon.FontAwesome name="instagram" size={20} color="#0092C7" />
                         <Icon.FontAwesome name="twitter" size={20} color="#0092C7" />
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     itemStyle: { flexDirection: 'row', height: 54, alignItems: 'center', paddingLeft: '10%' },
-    policyStyles: {  paddingLeft: '10%', paddingVertical: '10%' }
+    policyStyles: { paddingLeft: '10%', paddingVertical: '10%' }
 })
 
 export default MainRoutes;

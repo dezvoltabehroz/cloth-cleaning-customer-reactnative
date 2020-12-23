@@ -129,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.dhobi_uncle1"
+        applicationId "com.infinitybits.dhobiuncle"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

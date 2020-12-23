@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, ImageBackground, TouchableOpacity, Dimensions, Image } from 'react-native';
-import { Icon, Tabs, Pickup, Payment } from '../../components';
+import { Icon, Tabs, Pickup, Payment, Input } from '../../components';
 import styles from './style';
 import LinearGradient from 'react-native-linear-gradient'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import Modal from 'react-native-modal';
 const screenHeight = Dimensions.get('window').height;
 export default class Checkout extends Component {
     constructor(props) {
@@ -13,18 +14,21 @@ export default class Checkout extends Component {
             totalPrice: 350,
             discount: false,
             delivery: 50,
-            orderList: []
+            code: '',
+            orderList: [],
+            discountValue: 50,
+            discountModal: false,
         }
     }
 
     componentDidMount = () => {
-        const { list } = this.props.route.params;
+        const { list, } = this.props.route.params;
         this.setState({ orderList: list })
     }
 
 
     render() {
-        const { activeTab, discount, delivery } = this.state;
+        const { activeTab, discount, delivery, code, discountValue } = this.state;
 
         return (
             <>
@@ -42,7 +46,7 @@ export default class Checkout extends Component {
                             {
                                 activeTab == 0 ?
 
-                                    <Pickup />
+                                    <Pickup navigation={this.props.navigation} route={this.props.route.params} />
                                     :
                                     null
                             }
@@ -87,7 +91,7 @@ export default class Checkout extends Component {
                                 height: 1,
                             },
                             borderColor: "#EEE",
-                            backgroundColor:'white',
+                            backgroundColor: 'white',
                             borderWidth: 0.3,
                             shadowOpacity: 0.18,
                             shadowRadius: 1.00,
@@ -113,10 +117,16 @@ export default class Checkout extends Component {
                                                     <View style={{ backgroundColor: '#0DA7DF', alignItems: 'center', justifyContent: 'center', height: 20, width: 20, borderRadius: 10 }}>
                                                         <Icon.Feather name="percent" size={15} color="white" />
                                                     </View>
-                                                    <Text style={{ color: '#7A7A7A', fontSize: 12, marginLeft: '5%' }}>Use coupon to get discount</Text>
+                                                    <Text style={{ color: '#7A7A7A', fontSize: 12, marginLeft: '5%' }}>{discount ? 'Get 10 discount' : 'Use coupon to get discount'}</Text>
                                                 </View>
                                                 <View style={{ justifyContent: 'center' }}>
-                                                    <Text style={styles.totalPriceTextStyle}>Choose</Text>
+                                                    {
+                                                        discount ?
+                                                            <Icon.AntDesign name='checkcircle' color='#0DA7DF' size={15} />
+                                                            :
+                                                            <Text onPress={() => this.setState({ discountModal: true })} style={styles.totalPriceTextStyle}>Choose</Text>
+                                                    }
+
                                                 </View>
                                             </View>
                                             <View style={styles.checkoutItemStyle}>
@@ -129,7 +139,13 @@ export default class Checkout extends Component {
                                             </View>
                                             <View style={styles.checkoutItemStyle}>
                                                 <View>
-                                                    <Text style={styles.checkoutTextStyle}>Delivery Charges</Text>
+                                                    {
+                                                        discount ?
+                                                            <Text style={styles.checkoutTextStyle}>Shipping</Text>
+                                                            :
+                                                            <Text style={styles.checkoutTextStyle}>Delivery Charges</Text>
+                                                    }
+
                                                 </View>
                                                 <View>
                                                     <Text style={styles.checkoutTextStyle}>Rs.{delivery}</Text>
@@ -141,7 +157,7 @@ export default class Checkout extends Component {
                                                         <Text style={styles.checkoutTextStyle}>Discount</Text>
                                                     </View>
                                                     <View>
-                                                        <Text style={styles.checkoutTextStyle}>Rs.{'50'}</Text>
+                                                        <Text style={styles.discountTextStyle}>Rs.{'50'}</Text>
                                                     </View>
                                                 </View>
                                                 :
@@ -154,7 +170,7 @@ export default class Checkout extends Component {
                                         <Text style={styles.totalTextStyle}>Total</Text>
                                     </View>
                                     <View>
-                                        <Text style={styles.totalPriceTextStyle}>Rs. {activeTab == 0 ? this.state.totalPrice : this.state.totalPrice + delivery}</Text>
+                                        <Text style={styles.totalPriceTextStyle}>Rs. {activeTab == 0 ? this.state.totalPrice : discount ? this.state.totalPrice + delivery - discountValue : this.state.totalPrice + delivery}</Text>
                                     </View>
                                 </View>
                             </View>
@@ -168,6 +184,25 @@ export default class Checkout extends Component {
                             </TouchableOpacity>
                         </View>
                 }
+                <Modal isVisible={this.state.discountModal}  >
+                    <View style={styles.content}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: '5%' }}>
+                            <Text style={styles.headingText}>Discount Code</Text>
+                            <TouchableOpacity onPress={() => this.setState({ discountModal: false })} style={styles.iconContainer}>
+                                <Icon.Ionicons name='close-outline' size={15} color={'#7A7A7A'} />
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.lineStyle}></View>
+                        <View style={{ marginTop: '5%' }}>
+                            <Input placeholder="Discount code" value={code} onChangeText={(code) => this.setState({ code })} />
+                        </View>
+                        <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => this.setState({ discount: true, discountModal: false })}>
+                            <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
+                                <Text style={styles.checkButtonTextStyle}>{'Apply'}</Text>
+                            </LinearGradient>
+                        </TouchableOpacity>
+                    </View>
+                </Modal>
             </>
         )
     }

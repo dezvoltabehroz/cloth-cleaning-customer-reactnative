@@ -1,4 +1,4 @@
-package com.dhobi_uncle1;
+package com.infinitybits.dhobiuncle;
 
 import com.facebook.react.ReactActivity;
 

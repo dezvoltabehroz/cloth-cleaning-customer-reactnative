@@ -78,4 +78,36 @@ export default StyleSheet.create({
         justifyContent: 'center',
         paddingHorizontal: '5%'
     },
+    content: {
+        backgroundColor: 'white',
+        padding: 22,
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        borderRadius: 10,
+        borderColor: 'rgba(0, 0, 0, 0.1)',
+    },
+    contentTitle: {
+        fontSize: 20,
+        marginBottom: 12,
+    },
+    tipContainer: {
+        height: 54,
+        // backgroundColor: THEME.PRIMARY_COLOR,
+        justifyContent: "center",
+        alignItems: "center",
+        width: screenWidth * 0.35,
+        borderRadius: 7
+    },
+
+    iconContainer: {
+        backgroundColor: '#E2E2E2',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 15,
+        height: 25,
+        width: 25
+    },
+    discountTextStyle: {
+        color: '#A50808'
+    }
 })

@@ -27,3 +27,16 @@ export const ProductDetail = _ProductDetail;
 
 import _Checkout from './Checkout';
 export const Checkout = _Checkout;
+
+import _Orders from './Orders';
+export const Orders = _Orders;
+
+import _OrdersDetail from './OrdersDetail';
+export const OrdersDetail = _OrdersDetail;
+
+
+import _MapScreen from './MapScreen';
+export const MapScreen = _MapScreen;
+
+import _Search from './Search';
+export const Search = _Search;
