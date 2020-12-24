@@ -4,7 +4,7 @@ import { Button, Input, ClearButton } from '../../components';
 import styles from './style';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { AuthServices } from '../../services';
-
+import Logo from '../../assets/svg/logo.svg'
 export default class ForgetPassword extends Component {
     constructor(props) {
         super(props);
@@ -35,7 +35,7 @@ export default class ForgetPassword extends Component {
                         <View style={{ flex: 0.95 }}>
                             <View style={{ flex: 0.8, marginTop: '15%', }}>
                                 <View style={styles.innerImageContainer}>
-                                    <Image resizeMode="contain" style={styles.innerImageStyle} source={require('../../assets/images/logo.png')} />
+                                    <Logo />
                                 </View>
                                 <View style={{ marginTop: '5%', }}>
                                     <Text style={styles.headingTextStyle}>Enter Email to Reset Password</Text>
@@ -48,7 +48,7 @@ export default class ForgetPassword extends Component {
                                     />
                                 </View>
                                 <View style={{ marginHorizontal: '25%', marginTop: '5%' }}>
-                                    <Button title='CONFIRM' onPress={() => this.func_HandleResetPassword()} />
+                                    <Button title='Confirm' onPress={() => this.func_HandleResetPassword()} />
                                 </View>
                             </View>
                         </View>

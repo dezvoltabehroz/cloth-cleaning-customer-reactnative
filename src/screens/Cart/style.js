@@ -48,38 +48,43 @@ export default StyleSheet.create({
     },
     listTextStyle: {
         fontSize: 12,
-        color: '#7A7A7A'
+        color: '#7A7A7A',
+        fontFamily: 'Roboto-Regular'
     },
     listContentContainer: {
         borderRadius: 10,
         elevation: 1,
-        marginBottom: '1%', shadowColor: "#000",
+        shadowColor: "#000",
         shadowOffset: {
             width: 0,
             height: 1,
         },
+        shadowOpacity: 0.18,
+        shadowRadius: 1.00, marginBottom: '1%',
         borderColor: "#EEE",
         borderWidth: 0.3,
-        shadowOpacity: 0.18,
-        shadowRadius: 1.00,
     },
     imageContainer: {
         elevation: 1,
-        padding: '7%',
-        borderRadius: 10,
+        shadowColor: "#000",
         shadowOffset: {
             width: 0,
             height: 1,
         },
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 96,
+        width: 122,
+        shadowOpacity: 0.18,
+        shadowRadius: 1.00, padding: '10%',
         borderColor: "#EEE",
         borderWidth: 0.3,
-        shadowOpacity: 0.18,
-        shadowRadius: 1.00,
+        borderRadius: 10
     },
     itemContainer: {
-        marginTop: '2.5%',
-        width: screenWidth * 0.5,
+        flex: 1,
         marginHorizontal: '5%',
+        justifyContent: 'space-evenly'
     },
     itemNameContainer: {
         flexDirection: 'row',
@@ -87,8 +92,8 @@ export default StyleSheet.create({
         alignItems: 'center'
     },
     itemNameTextStyle: {
-        fontWeight: 'bold',
-        marginVertical: '5%'
+        fontFamily: 'Roboto-Medium',
+        lineHeight: 22,
     },
     itemQuantityContainer: {
         flexDirection: 'row',
@@ -96,26 +101,27 @@ export default StyleSheet.create({
     },
     itemQuantityButtonContainer: {
         width: 80,
-        marginVertical: '5%',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center'
     },
     checkoutTextStyle: {
-        color: '#7A7A7A'
+        color: '#7A7A7A',
+        fontFamily: 'Roboto-Light'
     },
     totalTextStyle: {
-        color: '#374B5C'
+        color: '#374B5C',
+        fontFamily: 'Roboto-Medium'
     },
     totalPriceTextStyle: {
-        color: '#0DA7DF'
+        color: '#0DA7DF',
+        fontFamily: 'Roboto-Medium'
     },
     checkoutButtonContainer: {
         borderRadius: 35,
-        height: 40,
+        height: 33,
         width: 140,
         justifyContent: 'center',
-        paddingHorizontal: '5%'
     },
     checkoutInnerContainer: {
         marginHorizontal: '5%',
@@ -132,7 +138,8 @@ export default StyleSheet.create({
     },
     checkButtonTextStyle: {
         color: 'white',
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily: 'Roboto-Medium'
     }
 
 })

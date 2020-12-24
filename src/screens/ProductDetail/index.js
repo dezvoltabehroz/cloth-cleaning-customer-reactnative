@@ -3,8 +3,7 @@ import { FlatList, View, Text, Image, TouchableOpacity, Dimensions, ScrollView, 
 import { Icon } from '../../components';
 import styles from './style';
 import LinearGradient from 'react-native-linear-gradient';
-import style from '../../components/Input/style';
-
+import Fraq from '../../assets/svg/fraq.svg';
 const screenWidth = Dimensions.get('window').width;
 
 export default class ProductDetail extends Component {
@@ -115,9 +114,9 @@ export default class ProductDetail extends Component {
                     <View style={styles.upperContainer}>
                     </View>
                     <View style={styles.imageContainer}>
-                        <Image source={require('../../assets/images/fraq.png')} style={styles.imageStyle} />
+                        <Fraq height={146} width={140} />
                         <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonStyle} >
-                            <TouchableOpacity><Text style={styles.checkoutTextStyle}>Checkout</Text></TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Checkout', { list: this.props.route.params.list })}><Text style={styles.checkoutTextStyle}>Checkout</Text></TouchableOpacity>
                         </LinearGradient>
                     </View>
                     <View style={styles.lowerContainer}>

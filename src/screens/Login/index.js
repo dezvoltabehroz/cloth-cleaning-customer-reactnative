@@ -5,7 +5,8 @@ import styles from './style';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { AuthServices } from '../../services';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import Logo from '../../assets/svg/logo.svg';
+import Google from '../../assets/svg/google.svg';
 export default class Login extends Component {
     constructor(props) {
         super(props);
@@ -54,7 +55,7 @@ export default class Login extends Component {
                     <View style={{ flex: 0.95, }}>
                         <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
                             <View style={styles.innerImageContainer}>
-                                <Image resizeMode="contain" style={styles.innerImageStyle} source={require('../../assets/images/logo.png')} />
+                                <Logo />
                             </View>
                             <View style={{ marginHorizontal: '5%', marginTop: '5%' }}>
                                 <Input
@@ -72,26 +73,23 @@ export default class Login extends Component {
                                 />
                             </View>
                             <TouchableOpacity onPress={() => this.props.navigation.navigate('ForgetPassword')} style={{ marginHorizontal: '7%', alignItems: 'flex-end' }} >
-                                <Text style={{ color: '' }} >Forget Password?</Text>
+                                <Text style={{ fontFamily: 'Nunito-Regular' }} >Forget Password?</Text>
                             </TouchableOpacity>
                             <View style={{ marginHorizontal: '25%', marginTop: '5%' }}>
                                 <Button loading={loading} title='Login' onPress={() => this.func_HandleLogin()} />
                             </View>
-                            <View style={{ marginHorizontal: '25%', marginTop: '2.5%' }}>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 10, borderWidth: 0.5, borderColor: 'red', height: 54 }}>
-                                    <Image resizeMode="cover" style={{ height: 30, width: 30 }} source={require('../../assets/images/google_icon.png')} />
-                                    <Text style={{ marginLeft: '10%', }}>Google</Text>
+                            <View style={{ marginHorizontal: '25%', marginTop: '5%' }}>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 5, borderWidth: 0.5, borderColor: 'red', height: 44, width: 180 }}>
+                                    <Google />
+                                    <Text style={{ marginLeft: '10%', fontFamily: 'Nunito-Regular', fontSize: 16 }}>Google</Text>
                                 </View>
                             </View>
 
                         </ KeyboardAwareScrollView>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                            <Text style={{ color: '#29B1DB', marginRight: '5%' }}>Weblink</Text>
-                            <Text style={{ color: '#29B1DB', marginRight: '5%' }}>Rider</Text>
-                        </View>
+
                         <View style={{ flexDirection: 'row', marginBottom: '5%', alignItems: 'center', justifyContent: 'center' }}>
-                            <Text style={{ color: '#707070', opacity: 0.7 }}>Don't have an account?</Text>
-                            <Text onPress={() => this.props.navigation.navigate('Signup')} style={{ marginLeft: '5%', fontWeight: 'bold' }}>Signup</Text>
+                            <Text style={{ color: '#707070', opacity: 0.7, fontFamily: 'Nunito-Regular' }}>Don't have an account?</Text>
+                            <Text onPress={() => this.props.navigation.navigate('Signup')} style={{ marginLeft: '5%', fontFamily: 'Nunito-SemiBold', fontSize: 15 }}>Signup</Text>
                         </View>
                     </View>
                 </ImageBackground>

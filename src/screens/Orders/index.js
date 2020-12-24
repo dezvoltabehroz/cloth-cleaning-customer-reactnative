@@ -126,6 +126,7 @@ export default class Orders extends Component {
                 <View style={styles.listContainer}>
                     <FlatList
                         data={ordersList}
+                        contentContainerStyle={{paddingBottom:80}}
                         showsVerticalScrollIndicator={false}
                         ItemSeparatorComponent={this._renderListSeparator}
                         renderItem={({ item, index }) => this._renderItems(item, index)} />

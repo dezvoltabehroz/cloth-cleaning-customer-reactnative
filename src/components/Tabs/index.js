@@ -35,7 +35,7 @@ const Tabs = ({ tabs, active, onTabChange }) => {
                                                 '#B5B5B5'
                                                 :
                                                 null,
-                                fontWeight: 'bold', marginLeft: '2%'
+                                fontWeight: 'bold', marginLeft: '2%',fontFamily:'Roboto-Medium'
                             }}>{tab}</Text>
                         </View>
                     </React.Fragment>

@@ -50,7 +50,7 @@ export default StyleSheet.create({
     },
     headingStyle: {
         fontSize: 16,
-        fontWeight: '600'
+        fontFamily: 'Roboto-Medium'
     },
     lowerListContainer: {
         // borderColor:'black',

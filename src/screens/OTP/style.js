@@ -7,7 +7,7 @@ export default StyleSheet.create({
         width: screenWidth
     },
     backgroundStyle: {
-        height: screenHeight ,
+        height: screenHeight,
         width: screenWidth
     },
     innerImageContainer: {
@@ -25,7 +25,8 @@ export default StyleSheet.create({
     headingTextStyle: {
         fontSize: 14,
         textAlign: "center",
-        color:'#707070'
+        fontFamily: 'Roboto-Regular',
+        color: '#707070'
     },
     headingTextStyle1: {
         fontSize: 14,
@@ -54,7 +55,9 @@ export default StyleSheet.create({
         marginLeft: 8,
         marginRight: 8,
         backgroundColor: '#F0F1F3',
+        height: 40, width: 30,
         fontSize: 13,
+        fontFamily: 'Roboto-Regular',
         color: '#3F4B59'
     },
 

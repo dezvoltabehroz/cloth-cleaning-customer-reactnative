@@ -19,6 +19,7 @@ export default StyleSheet.create({
         fontSize: 15,
         textAlign: "justify",
         alignSelf: 'center',
+        fontFamily:'Roboto-Light',
         paddingVertical: 10,
         paddingHorizontal: 15,
         letterSpacing: 1,
@@ -33,10 +34,12 @@ export default StyleSheet.create({
     contacttype1: {
         textAlign: 'left',
         fontSize: 15,
+        fontFamily:'Roboto-Medium'
     },
     contacttype2: {
         textAlign: 'left',
         marginTop: 4,
+        fontFamily:'Roboto-Medium',
         fontSize: 15,
     }
 })

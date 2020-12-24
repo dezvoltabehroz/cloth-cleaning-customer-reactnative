@@ -4,7 +4,7 @@ const screenWidth = Dimensions.get('window').width;
 
 export default StyleSheet.create({
     container: {
-        marginTop: '5%'
+        marginTop: '15%'
     },
     cardContainer: {
         paddingVertical: '5%',
@@ -31,7 +31,7 @@ export default StyleSheet.create({
     },
     headingTitleStyle: {
         fontSize: 16,
-        fontWeight: 'bold'
+        fontFamily: 'Roboto-Medium'
     },
     lineStyle: {
         marginTop: '5%',
@@ -40,25 +40,20 @@ export default StyleSheet.create({
     },
     listTextStyle: {
         lineHeight: 25,
-        fontSize: 12,
-        color: '#7A7A7A'
+        fontSize: 10,
+        color: '#7A7A7A',
+        fontFamily: 'Roboto-Regular'
     },
-    content: {
-        backgroundColor: 'white',
-        padding: 22,
-        // justifyContent: 'center',
-        // alignItems: 'center',
-        borderRadius: 10,
-        borderColor: 'rgba(0, 0, 0, 0.1)',
-    },
+
     checkButtonTextStyle: {
         color: 'white',
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily: 'Nunito-SemiBold'
     },
     checkoutButtonContainer: {
         borderRadius: 35,
-        height: 40,
-        width: 140,
+        height: 33,
+        width: 120,
         justifyContent: 'center',
         paddingHorizontal: '5%'
     },

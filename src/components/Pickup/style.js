@@ -67,14 +67,15 @@ export default StyleSheet.create({
     },
     checkButtonTextStyle: {
         color: 'white',
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily: 'Nunito-SemiBold'
     },
     checkoutButtonContainer: {
         borderRadius: 35,
-        height: 40,
-        width: 140,
+        height: 30,
+        width: 95,
         justifyContent: 'center',
-        paddingHorizontal: '5%'
+        alignItems: 'center'
     },
     iconContainer: {
         backgroundColor: '#E2E2E2',
@@ -91,4 +92,8 @@ export default StyleSheet.create({
         borderWidth: 0.5,
         borderColor: '#7A7A7A'
     },
+    headingText: {
+        fontSize: 16,
+        fontFamily: 'Roboto-Regular'
+    }
 })

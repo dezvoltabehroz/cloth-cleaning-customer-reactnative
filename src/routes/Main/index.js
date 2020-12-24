@@ -6,6 +6,10 @@ import { Button, Icon } from '../../components';
 import LinearGradient from 'react-native-linear-gradient';
 import { Avatar, withBadge, Icon as Icons } from 'react-native-elements';
 import HomeRoutes from '../Home';
+import User from '../../assets/svg/user.svg';
+import Bag from '../../assets/svg/bag.svg';
+import Question from '../../assets/svg/question.svg';
+import Logout from '../../assets/svg/logout.svg';
 const Drawer = createDrawerNavigator();
 const BadgedIcon = withBadge(1)(Icons);
 function MainRoutes() {
@@ -29,33 +33,31 @@ function CustomDrawerContent({ navigation }) {
                                 <Avatar size={50} rounded={true} source={{ uri: "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png" }} />
                             </View>
                             <View style={{ justifyContent: 'center', marginLeft: '5%' }}>
-                                <Text style={{ color: "white", marginLeft: "10%", fontWeight: 'bold', fontSize: 16 }} >John Doe</Text>
-                                <Text style={{ color: "white", marginLeft: "10%" }} >San Francisco, CA</Text>
+                                <Text style={{ color: "white", marginLeft: "10%", fontFamily: 'Roboto-Bold', }} >John Doe</Text>
+                                <Text style={{ color: "white", marginLeft: "10%", fontFamily: 'Roboto-Regular', fontSize: 10 }} >San Francisco, CA</Text>
                             </View>
                         </View>
                     </TouchableOpacity>
                 </LinearGradient>
                 <View style={{ flex: 0.7, paddingTop: '10%' }}>
                     <TouchableOpacity onPress={() => navigation.navigate('Orders')} style={styles.itemStyle}>
-                        <Icon.SimpleLineIcons name="handbag" size={20} color="#0092C7" />
-                        <Text style={{ color: "#0092C7", marginLeft: "10%" }} >Orders</Text>
+                        <Bag height={16} width={16} />
+                        <Text style={{ color: "#0092C7", marginLeft: "10%",fontFamily: 'Roboto-Regular', fontSize: 12 }}>Orders</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.itemStyle}>
-                        <Icon.Feather name="user" size={20} color="#0092C7" />
-                        <Text style={{ color: "#0092C7", marginLeft: "10%" }} >Profile</Text>
+                        <User height={16} width={16} />
+                        <Text style={{ color: "#0092C7", marginLeft: "10%",fontFamily: 'Roboto-Regular', fontSize: 12 }} >Profile</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => navigation.navigate('About')} style={styles.itemStyle}>
-                        <Icon.AntDesign name="questioncircleo" size={20} color="#0092C7" />
-                        <Text style={{ color: "#0092C7", marginLeft: "10%" }} >About</Text>
+                        <Question height={16} width={16} />
+                        <Text style={{ color: "#0092C7", marginLeft: "10%",fontFamily: 'Roboto-Regular', fontSize: 12 }} >About</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => navigation.replace('Auth')} style={styles.itemStyle}>
-                        <View style={{ transform: [{ rotate: '180deg' }] }}>
-                            <Icon.AntDesign name="logout" size={20} color="#0092C7" />
-                        </View>
-                        <Text style={{ color: "#0092C7", marginLeft: "10%" }} >Logout</Text>
+                        <Logout height={16} width={16} />
+                        <Text style={{ color: "#0092C7", marginLeft: "10%",fontFamily: 'Roboto-Regular', fontSize: 12 }} >Logout</Text>
                     </TouchableOpacity>
                     <View style={styles.policyStyles}>
-                        <Text style={{ color: "#707070" }} >Terms & conditions / policy</Text>
+                        <Text style={{ color: "#707070",fontFamily: 'Roboto-Regular', fontSize: 12 }} >Terms & conditions / policy</Text>
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: '10%', height: 54, width: 150, justifyContent: 'space-between', }}>
                         <Icon.FontAwesome name="facebook" size={20} color="#0092C7" />

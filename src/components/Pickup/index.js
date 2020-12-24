@@ -48,9 +48,12 @@ export default class Pickup extends Component {
     }
 
     componentDidMount = () => {
-        const { region, address } = this.props.route;
-        console.log("region:", region)
-        this.setState({ region: region != undefined ? region : this.state.region, address: address != undefined ? address : this.state.address })
+        if (this.props.route != undefined) {
+            const { region, address } = this.props.route;
+            console.log("region:", region)
+            this.setState({ region: region != undefined ? region : this.state.region, address: address != undefined ? address : this.state.address })
+        }
+
     }
 
     handleshift = (item, index) => {
@@ -79,7 +82,7 @@ export default class Pickup extends Component {
                         <View style={styles.upperContainer}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <View>
-                                    <Text>Your Address</Text>
+                                    <Text style={{ fontFamily: 'Roboto-Medium', color: '#1E2123' }}>Your Address</Text>
                                 </View>
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('Map', {
                                     screen: 'Map',
@@ -101,15 +104,15 @@ export default class Pickup extends Component {
                             </View>
                             <View style={{ flex: 1, flexDirection: 'row', justifyContent: "space-between" }}>
                                 <View style={{ flex: 0.5, flexDirection: 'column', marginTop: '2%' }}>
-                                    <Text style={{ color: '#7A7A7A' }}>{this.truncateString(address, 28)}</Text>
+                                    <Text style={{ color: '#7A7A7A', fontFamily: 'Roboto-Regular', }}>{this.truncateString(address, 28)}</Text>
                                 </View>
-                                <View style={{ flex: 0.5, flexDirection: 'column', justifyContent: 'flex-end' }}>
-                                    <View style={{ flexDirection: 'row', }}>
+                                <View style={{ flex: 0.5, flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-end' }}>
+                                    <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
                                         <View>
                                             <Icon.AntDesign name="checkcircle" color={'#0DA7DF'} size={20} />
                                         </View>
-                                        <View style={{ marginLeft: '10%' }}>
-                                            <Text style={{ color: '#7A7A7A' }}>Delivery Address</Text>
+                                        <View style={{ marginLeft: '5%' }}>
+                                            <Text style={{ color: '#7A7A7A', fontFamily: 'Roboto-Regular', fontSize: 12 }}>Delivery Address</Text>
                                         </View>
                                     </View>
                                 </View>
@@ -120,14 +123,14 @@ export default class Pickup extends Component {
                         <View style={styles.upperContainer}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <View>
-                                    <Text>Name</Text>
+                                    <Text style={{ fontFamily: 'Roboto-Medium', color: '#1E2123' }}>Name</Text>
                                 </View>
                                 <View>
                                     <Icon.MaterialIcons name="edit" color={'#7A7A7A'} size={20} />
                                 </View>
                             </View>
                             <View style={{ marginTop: '5%' }}>
-                                <Text style={{ color: '#7A7A7A' }}>Lorem ipsum dolor</Text>
+                                <Text style={{ color: '#7A7A7A', fontFamily: 'Roboto-Regular', fontSize: 12 }}>Lorem ipsum dolor</Text>
                             </View>
 
                         </View>
@@ -136,14 +139,14 @@ export default class Pickup extends Component {
                         <View style={styles.upperContainer}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <View>
-                                    <Text>Phone number</Text>
+                                    <Text style={{ fontFamily: 'Roboto-Medium', color: '#1E2123' }}>Phone number</Text>
                                 </View>
                                 <View>
                                     <Icon.MaterialIcons name="edit" color={'#7A7A7A'} size={20} />
                                 </View>
                             </View>
                             <View style={{ marginTop: '5%' }}>
-                                <Text style={{ color: '#7A7A7A' }}>+92 3456 8798</Text>
+                                <Text style={{ color: '#7A7A7A', fontFamily: 'Roboto-Regular', fontSize: 12 }}>+92 3456 8798</Text>
                             </View>
                         </View>
                     </View>
@@ -151,7 +154,7 @@ export default class Pickup extends Component {
                         <View style={styles.upperContainer}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <View>
-                                    <Text>Pickup options</Text>
+                                    <Text style={{ fontFamily: 'Roboto-Medium', color: '#1E2123' }}>Pickup options</Text>
                                 </View>
                                 <TouchableOpacity onPress={() => this.setState({ editPickUpShift: true })}>
                                     <Icon.MaterialIcons name="edit" color={'#7A7A7A'} size={20} />
@@ -163,7 +166,7 @@ export default class Pickup extends Component {
                                 </View>
                                 <View style={{ marginLeft: '5%' }}>
                                     <Text style={{ color: '#374B5C', fontWeight: 'bold' }}>Today</Text>
-                                    <Text style={{ color: '#7A7A7A', fontSize: 12 }}>Pickup on {this.state.pickUpShift}, 8 Dec 2020</Text>
+                                    <Text style={{ color: '#7A7A7A', fontSize: 12, fontFamily: 'Roboto-Regular' }}>Pickup on {this.state.pickUpShift}, 8 Dec 2020</Text>
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => this.setState({ today: false, tommorrow: true })} style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%' }}>
@@ -172,7 +175,7 @@ export default class Pickup extends Component {
                                 </View>
                                 <View style={{ marginLeft: '5%' }}>
                                     <Text style={{ color: '#374B5C', fontWeight: 'bold' }}>Tomorrow</Text>
-                                    <Text style={{ color: '#7A7A7A', fontSize: 12 }}>Pickup on {this.state.pickUpShift}, 9 Dec 2020</Text>
+                                    <Text style={{ color: '#7A7A7A', fontSize: 12, fontFamily: 'Roboto-Regular' }}>Pickup on {this.state.pickUpShift}, 9 Dec 2020</Text>
                                 </View>
                             </TouchableOpacity>
 
@@ -182,7 +185,7 @@ export default class Pickup extends Component {
                         <View style={styles.upperContainer}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <View>
-                                    <Text>Delivery options</Text>
+                                    <Text style={{ fontFamily: 'Roboto-Medium', color: '#1E2123' }}>Delivery options</Text>
                                 </View>
                             </View>
                             <TouchableOpacity onPress={() => this.setState({ regular: true, express: false })} style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%' }}>
@@ -194,7 +197,7 @@ export default class Pickup extends Component {
                                         <Text style={{ color: '#374B5C', fontWeight: 'bold' }}>Regular</Text>
                                         <Text style={{ color: '#374B5C', fontWeight: 'bold' }}>Rs.50</Text>
                                     </View>
-                                    <Text style={{ color: '#7A7A7A', fontSize: 12 }}>You will receive laundry within 3 to 4 working days</Text>
+                                    <Text style={{ color: '#7A7A7A', fontSize: 12, fontFamily: 'Roboto-Regular' }}>You will receive laundry within 3 to 4 working days</Text>
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => this.setState({ regular: false, express: true })} style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%' }}>
@@ -203,10 +206,10 @@ export default class Pickup extends Component {
                                 </View>
                                 <View style={{ marginLeft: '5%', marginRight: '5%' }}>
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                        <Text style={{ color: '#374B5C', fontWeight: 'bold' }}>Express</Text>
+                                        <Text style={{ color: '#374B5C', fontFamily: 'Roboto-Medium', fontSize: 13 }}>Express</Text>
                                         <Text style={{ color: '#374B5C', fontWeight: 'bold' }}>Rs.200</Text>
                                     </View>
-                                    <Text style={{ color: '#7A7A7A', fontSize: 12 }}>You will receive laundry within 1 to 2 working days</Text>
+                                    <Text style={{ color: '#7A7A7A', fontSize: 12, fontFamily: 'Roboto-Regular' }}>You will receive laundry within 1 to 2 working days</Text>
                                 </View>
                             </TouchableOpacity>
                         </View>
@@ -215,7 +218,7 @@ export default class Pickup extends Component {
                         <View style={styles.upperContainer}>
                             <View style={{}}>
                                 <View>
-                                    <Text>Optional note</Text>
+                                    <Text style={{ fontFamily: 'Roboto-Medium', color: '#1E2123' }}>Optional note</Text>
                                 </View>
                             </View>
                             <View style={{ marginTop: '5%', borderRadius: 10, overflow: 'hidden' }}>
@@ -244,7 +247,7 @@ export default class Pickup extends Component {
                                                     <Icon.MaterialIcons name={item.selected ? "radio-button-checked" : "radio-button-unchecked"} color={item.selected ? '#0DA7DF' : '#707070'} size={20} />
                                                 </View>
                                                 <View style={{ marginLeft: '5%' }}>
-                                                    <Text style={{ color: "#7A7A7A", fontSize: 12, }}>{item.shiftName} ({item.timing})</Text>
+                                                    <Text style={{ color: "#7A7A7A", fontSize: 12,fontFamily:'Roboto-Regular' }}>{item.shiftName} ({item.timing})</Text>
                                                 </View>
                                             </TouchableOpacity>
                                         )

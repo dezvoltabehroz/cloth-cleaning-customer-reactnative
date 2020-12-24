@@ -6,6 +6,7 @@ import LinearGradient from 'react-native-linear-gradient'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import Modal from 'react-native-modal';
 const screenHeight = Dimensions.get('window').height;
+import ThankYou from '../../assets/svg/thankyou.svg';
 export default class Checkout extends Component {
     constructor(props) {
         super(props);
@@ -61,18 +62,18 @@ export default class Checkout extends Component {
                                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
 
                                         <View style={{ marginTop: '20%' }}>
-                                            <Image source={require('../../assets/images/tick.png')} style={{ height: 120, width: 136 }} />
+                                            <ThankYou />
                                         </View>
-                                        <Text style={{ color: '#374B5C', fontWeight: 'bold' }}>THANK YOU</Text>
+                                        <Text style={{ marginTop: '5%', color: '#374B5C', fontFamily: 'Roboto-Bold' }}>THANK YOU!</Text>
                                         <View style={{ marginTop: '2.5%' }}>
                                             <View style={{ flexDirection: 'row' }}>
-                                                <Text style={{ color: '#7A7A7A', fontSize: 12 }}>Order Number:</Text>
-                                                <Text style={{ color: '#374B5C', fontWeight: 'bold', fontSize: 12 }}>  #00000456</Text>
+                                                <Text style={{ color: '#7A7A7A', fontSize: 12, fontFamily: 'Roboto-Regular' }}>Order Number:</Text>
+                                                <Text style={{ color: '#374B5C', fontWeight: 'bold', fontSize: 12, fontFamily: 'Roboto-Medium' }}>  #00000456</Text>
                                             </View>
                                         </View>
                                         <View style={{ marginTop: '2.5%' }}>
-                                            <Text style={{ color: '#7A7A7A', textAlign: 'center', fontSize: 12 }}>Oder details will be send to your email address</Text>
-                                            <Text style={{ color: '#374B5C', textAlign: 'center', fontSize: 12 }}>JohnDoe@example.com</Text>
+                                            <Text style={{ color: '#7A7A7A', textAlign: 'center', fontSize: 12, fontFamily: 'Roboto-Regular' }}>Oder details will be send to your email address</Text>
+                                            <Text style={{ color: '#374B5C', textAlign: 'center', fontSize: 12, fontFamily: 'Roboto-Medium' }}>JohnDoe@example.com</Text>
                                         </View>
                                     </View>
                                     :
@@ -117,7 +118,7 @@ export default class Checkout extends Component {
                                                     <View style={{ backgroundColor: '#0DA7DF', alignItems: 'center', justifyContent: 'center', height: 20, width: 20, borderRadius: 10 }}>
                                                         <Icon.Feather name="percent" size={15} color="white" />
                                                     </View>
-                                                    <Text style={{ color: '#7A7A7A', fontSize: 12, marginLeft: '5%' }}>{discount ? 'Get 10 discount' : 'Use coupon to get discount'}</Text>
+                                                    <Text style={{ color: '#7A7A7A', fontSize: 12, marginLeft: '5%', fontFamily: 'Roboto-Light' }}>{discount ? 'Get 10 discount' : 'Use coupon to get discount'}</Text>
                                                 </View>
                                                 <View style={{ justifyContent: 'center' }}>
                                                     {

@@ -63,20 +63,25 @@ export default StyleSheet.create({
         justifyContent: 'space-between'
     },
     checkoutTextStyle: {
-        color: '#7A7A7A'
+        color: '#7A7A7A',
+        fontFamily: 'Roboto-Light'
+       
     },
     totalTextStyle: {
-        color: '#374B5C'
+        color: '#374B5C',
+        fontSize: 14,
+        fontFamily: 'Roboto-Medium'
     },
     totalPriceTextStyle: {
-        color: '#0DA7DF'
+        color: '#0DA7DF',
+        fontSize: 14,
+        fontFamily: 'Roboto-Medium'
     },
     checkoutButtonContainer: {
         borderRadius: 35,
-        height: 40,
+        height: 33,
         width: 140,
         justifyContent: 'center',
-        paddingHorizontal: '5%'
     },
     content: {
         backgroundColor: 'white',
@@ -109,5 +114,9 @@ export default StyleSheet.create({
     },
     discountTextStyle: {
         color: '#A50808'
+    },
+    headingText:{
+        fontSize:16,
+        fontFamily:'Roboto-Regular'
     }
 })

@@ -37,7 +37,7 @@ export default class Payment extends Component {
                         </View>
                         <View style={styles.itemNameContainer}>
                             <View>
-                                <Text style={{ color: '#000000', fontWeight: 'bold' }}>Rs. {item.price * item.quantity}</Text>
+                                <Text style={{ color: '#000000', fontFamily: 'Roboto-Medium', fontSize: 12 }}>Rs. {item.price * item.quantity}</Text>
                             </View>
                             <View>
                                 <Text style={styles.listTextStyle}>{item.serviceType}</Text>
@@ -64,12 +64,12 @@ export default class Payment extends Component {
                         <View style={styles.upperContainer}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <View>
-                                    <Text>Select payment method</Text>
+                                    <Text style={{ fontFamily: 'Roboto-Medium', color: '#1E2123' }}>Select payment method</Text>
                                 </View>
                             </View>
                             <View style={{ flexDirection: 'row', marginTop: '5%', justifyContent: 'space-between', paddingHorizontal: '5%', backgroundColor: cashOnDelivery ? '#29B1DB' : null, borderRadius: 10, alignItems: 'center', height: 50 }}>
                                 <View>
-                                    <Text style={{ color: cashOnDelivery ? 'white' : '#7A7A7A' }}>Cash on Delivery</Text>
+                                    <Text style={{ color: cashOnDelivery ? 'white' : '#7A7A7A', fontFamily: 'Roboto-Medium', fontSize: 12 }}>Cash on Delivery</Text>
                                 </View>
                                 <TouchableOpacity onPress={() => this.setState({ cashOnDelivery: true, jazzCash: false, easyPaisa: false })}>
                                     <Icon.MaterialCommunityIcons name={cashOnDelivery ? "checkbox-marked-circle" : "checkbox-blank-circle-outline"} color={cashOnDelivery ? 'white' : '#7A7A7A'} size={20} />
@@ -77,7 +77,7 @@ export default class Payment extends Component {
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: '5%', backgroundColor: easyPaisa ? '#29B1DB' : null, borderRadius: 10, alignItems: 'center', height: 50 }}>
                                 <View>
-                                    <Text style={{ color: easyPaisa ? 'white' : '#7A7A7A' }}>Easypaisa</Text>
+                                    <Text style={{ color: easyPaisa ? 'white' : '#7A7A7A', fontFamily: 'Roboto-Medium', fontSize: 12 }}>Easypaisa</Text>
                                 </View>
                                 <TouchableOpacity onPress={() => this.setState({ cashOnDelivery: false, jazzCash: false, easyPaisa: true })}>
                                     <Icon.MaterialCommunityIcons name={easyPaisa ? "checkbox-marked-circle" : "checkbox-blank-circle-outline"} color={easyPaisa ? 'white' : '#7A7A7A'} size={20} />
@@ -85,7 +85,7 @@ export default class Payment extends Component {
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: '5%', backgroundColor: jazzCash ? '#29B1DB' : null, borderRadius: 10, alignItems: 'center', height: 50 }}>
                                 <View>
-                                    <Text style={{ color: jazzCash ? 'white' : '#7A7A7A' }}>Jazz cash</Text>
+                                    <Text style={{ color: jazzCash ? 'white' : '#7A7A7A', fontFamily: 'Roboto-Medium', fontSize: 12 }}>Jazz cash</Text>
                                 </View>
                                 <TouchableOpacity onPress={() => this.setState({ cashOnDelivery: false, jazzCash: true, easyPaisa: false })}>
                                     <Icon.MaterialCommunityIcons name={jazzCash ? "checkbox-marked-circle" : "checkbox-blank-circle-outline"} color={jazzCash ? 'white' : '#7A7A7A'} size={20} />
@@ -97,7 +97,7 @@ export default class Payment extends Component {
                         <View style={styles.upperContainer}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <View>
-                                    <Text>Jazz Cash Transaction</Text>
+                                    <Text style={{ fontFamily: 'Roboto-Medium', color: '#1E2123' }}>Jazz Cash Transaction</Text>
                                 </View>
                             </View>
                             <View style={{ marginTop: '5%' }}>
@@ -114,7 +114,7 @@ export default class Payment extends Component {
                         <View style={styles.upperContainer}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <View>
-                                    <Text>Easypaisa Transaction</Text>
+                                    <Text style={{ fontFamily: 'Roboto-Medium', color: '#1E2123' }}>Easypaisa Transaction</Text>
                                 </View>
                             </View>
                             <View style={{ marginTop: '5%' }}>
@@ -131,7 +131,7 @@ export default class Payment extends Component {
                         <View style={styles.upperContainer}>
                             <View style={{}}>
                                 <View>
-                                    <Text>Order Summary</Text>
+                                    <Text style={{ fontFamily: 'Roboto-Medium', color: '#1E2123' }}>Order Summary</Text>
                                 </View>
                             </View>
                             <View style={{ marginTop: '5%' }}>

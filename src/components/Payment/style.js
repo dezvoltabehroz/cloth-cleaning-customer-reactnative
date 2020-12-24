@@ -47,7 +47,8 @@ export default StyleSheet.create({
     },
     listTextStyle: {
         fontSize: 12,
-        color: '#7A7A7A'
+        color: '#7A7A7A',
+        fontFamily: 'Roboto-Regular'
     },
     itemContainer: {
         marginTop: '2.5%',
@@ -59,8 +60,10 @@ export default StyleSheet.create({
         justifyContent: 'space-between',
     },
     itemNameTextStyle: {
-        color: '#7A7A7A',
-        marginVertical: '5%'
+        color: '#000',
+        marginVertical: '5%',
+        fontSize: 12,
+        fontFamily: 'Roboto-Regular'
     },
     itemQuantityContainer: {
         flexDirection: 'column',
@@ -70,6 +73,6 @@ export default StyleSheet.create({
         height: 15,
         marginTop: '5%',
         borderTopWidth: 0.5,
-        borderTopColor:'#707070'
+        borderTopColor: '#707070'
     },
 })

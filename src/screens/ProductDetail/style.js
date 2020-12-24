@@ -38,12 +38,13 @@ export default StyleSheet.create({
         alignItems: 'center',
         width: 140,
         top: '15%',
-        height: 35,
-        borderRadius: 17
+        height: 33,
+        borderRadius: 35
     },
     checkoutTextStyle: {
         color: 'white',
-        fontSize: 16
+        fontSize: 16,
+        fontFamily: 'Roboto-Regular'
     },
     lowerContainer: {
         marginTop: '5%',
@@ -52,8 +53,8 @@ export default StyleSheet.create({
     },
     headingTitleStyle: {
         fontSize: 16,
+        fontFamily: 'Roboto-Medium',
         paddingBottom: '5%',
-        fontWeight: 'bold'
     },
     lineStyle: {
         borderWidth: 0.2,
@@ -73,11 +74,13 @@ export default StyleSheet.create({
     },
     listTextStyle: {
         lineHeight: 25,
+        fontFamily: 'Roboto-Regular',
         fontSize: 12,
         color: '#7A7A7A'
     },
     totalPriceTextStyle: {
-        color: '#0DA7DF'
+        color: '#0DA7DF',
+        fontFamily: 'Roboto-Medium'
     },
     quantityButtonStyle: {
         borderRadius: 15,

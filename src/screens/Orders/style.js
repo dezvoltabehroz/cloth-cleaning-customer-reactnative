@@ -12,7 +12,7 @@ export default StyleSheet.create({
     },
     headingTextStyle: {
         fontSize: 16,
-        fontWeight: 'bold'
+        fontFamily:'Roboto-Medium'
     },
     listContainer: {
         marginTop: '5%'
@@ -20,16 +20,18 @@ export default StyleSheet.create({
     listTextStyle: {
         fontSize: 12,
         marginVertical: 5,
-        fontWeight: 'bold'
+        fontFamily:'Roboto-Medium'
     },
     listColorTextStyle: {
         fontSize: 12,
         marginVertical: 5,
-        color: '#7A7A7A'
+        color: '#7A7A7A',
+        fontFamily:'Roboto-Regular'
     },
     lineStyle: {
         borderWidth: 0.5,
-        borderColor: '#7A7A7A'
+        borderColor: '#7A7A7A',
+        opacity:0.1
     },
     listSeperatorStyle: {
         height: 5

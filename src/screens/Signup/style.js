@@ -7,7 +7,7 @@ export default StyleSheet.create({
         width: screenWidth
     },
     backgroundStyle: {
-        height: screenHeight ,
+        height: '100%' ,
         width: screenWidth
     },
     innerImageContainer: {

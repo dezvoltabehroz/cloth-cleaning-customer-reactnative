@@ -5,6 +5,8 @@ import styles from './style';
 import CodeInput from 'react-native-confirmation-code-input';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import { AuthServices } from '../../services';
+import Logo from '../../assets/svg/logo.svg';
+
 export default class OTP extends Component {
     constructor(props) {
         super(props);
@@ -16,7 +18,7 @@ export default class OTP extends Component {
     // ============== func_HandleSubmitVerificationCode - Function Will allow user to verify the code to reset his/her password ==============
     func_HandleSubmitVerificationCode = () => {
         const { password } = this.props.route.params;
-        if (password ) {
+        if (password) {
             this.props.navigation.replace('NewPassword')
         }
         else {
@@ -42,7 +44,7 @@ export default class OTP extends Component {
                     <View style={{ flex: 0.95 }}>
                         <View style={{ flex: 0.8, marginTop: '15%', }}>
                             <View style={styles.innerImageContainer}>
-                                <Image resizeMode="contain" style={styles.innerImageStyle} source={require('../../assets/images/logo.png')} />
+                                <Logo />
                             </View>
                             <View style={{ marginTop: '5%', }}>
                                 <Text style={styles.headingTextStyle}>Lorem Verification code send to your email</Text>
@@ -72,7 +74,7 @@ export default class OTP extends Component {
                                 <Button disabled={value != '' ? false : true} loading={this.state.loading} title='Verify' onPress={this.func_HandleSubmitVerificationCode} />
                             </View>
                             <TouchableOpacity onPress={this.func_HandleResendCode} style={{ alignItems: 'center', marginTop: '5%' }} >
-                                <Text style={{ color: '#707070' }}>Resend Code</Text>
+                                <Text style={{ color: '#707070', fontFamily: 'Roboto-Regular', }}>Resend Code</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

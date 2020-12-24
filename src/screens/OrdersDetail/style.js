@@ -27,7 +27,7 @@ export default StyleSheet.create({
         height: 218,
         borderColor: "#EEE",
         borderWidth: 0.3,
-        bottom: '9.5%'
+        bottom: '10%'
     },
     imageStyle: {
         height: 146,
@@ -65,14 +65,15 @@ export default StyleSheet.create({
         paddingVertical: '5%'
     },
     headingTitleStyle: {
-        fontSize: 16,
+        fontSize: 14,
         marginTop: '5%',
-        fontWeight: 'bold'
+        fontFamily: 'Roboto-Medium'
     },
     lineStyle: {
         marginTop: '5%',
         borderWidth: 0.2,
-        color: '#7A7A7A'
+        color: '#7A7A7A',
+        opacity: 0.1,
     },
     itemQuantityContainer: {
         flexDirection: 'row',
@@ -89,7 +90,8 @@ export default StyleSheet.create({
     listTextStyle: {
         lineHeight: 25,
         fontSize: 12,
-        color: '#7A7A7A'
+        color: '#7A7A7A',
+        fontFamily: 'Roboto-Regular'
     },
     totalPriceTextStyle: {
         color: '#0DA7DF'

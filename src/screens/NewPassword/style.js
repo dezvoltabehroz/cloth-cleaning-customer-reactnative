@@ -21,7 +21,7 @@ export default StyleSheet.create({
     headingTextStyle: {
         fontSize: 16,
         textAlign: "center",
-        fontWeight: 'bold'
+        fontFamily: 'Nunito-Regular',
     },
     googleImageContainer: {
         alignItems: 'center',

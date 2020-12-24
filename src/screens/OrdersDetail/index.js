@@ -4,7 +4,7 @@ import { Icon } from '../../components';
 import styles from './style';
 import LinearGradient from 'react-native-linear-gradient';
 import style from '../../components/Input/style';
-
+import Fraq from '../../assets/svg/fraq.svg';
 const screenWidth = Dimensions.get('window').width;
 
 export default class ProductDetail extends Component {
@@ -42,7 +42,7 @@ export default class ProductDetail extends Component {
                     <View style={styles.upperContainer}>
                     </View>
                     <View style={styles.imageContainer}>
-                        <Image source={require('../../assets/images/fraq.png')} style={styles.imageStyle} />
+                        <Fraq width={140} height={146} />
                     </View>
                     <View style={styles.lowerContainer}>
                         <View style={styles.itemQuantityContainer}>
@@ -50,7 +50,7 @@ export default class ProductDetail extends Component {
                                 <Text style={styles.headingTitleStyle}>Order Details</Text>
                             </View>
                             <View>
-                                <Text style={[styles.totalPriceTextStyle, { fontSize: 16, fontWeight: 'bold' }]}>{status}</Text>
+                                <Text style={[styles.totalPriceTextStyle, { fontSize: 14, fontFamily: 'Roboto-Medium' }]}>{status}</Text>
                             </View>
                         </View>
                         <View style={styles.lineStyle}></View>
@@ -59,7 +59,7 @@ export default class ProductDetail extends Component {
                                 <Text style={styles.listTextStyle}>Your order number:</Text>
                             </View>
                             <View>
-                                <Text style={styles.listTextStyle}>{orderNumber}</Text>
+                                <Text style={[styles.listTextStyle, { fontFamily: 'Roboto-Medium' }]}>{orderNumber}</Text>
                             </View>
                         </View>
                         <View style={styles.itemQuantityContainer}>
@@ -67,7 +67,7 @@ export default class ProductDetail extends Component {
                                 <Text style={styles.listTextStyle}>Address</Text>
                             </View>
                             <View>
-                                <Text style={styles.listTextStyle}>{address}</Text>
+                                <Text style={[styles.listTextStyle, { fontFamily: 'Roboto-Medium' }]}>{address}</Text>
                             </View>
                         </View>
                         <View style={styles.itemQuantityContainer}>
@@ -75,7 +75,7 @@ export default class ProductDetail extends Component {
                                 <Text style={styles.listTextStyle}>Delivery date:</Text>
                             </View>
                             <View>
-                                <Text style={styles.listTextStyle}>{date}</Text>
+                                <Text style={[styles.listTextStyle, { fontFamily: 'Roboto-Medium' }]}>{date}</Text>
                             </View>
                         </View>
                         <View style={styles.lineStyle}></View>
@@ -92,7 +92,7 @@ export default class ProductDetail extends Component {
                                 <Text style={styles.listTextStyle}>Rs. {price} X {quantity}</Text>
                             </View>
                             <View>
-                                <Text style={styles.listTextStyle}>{serivceType}</Text>
+                                <Text style={[styles.listTextStyle, { fontFamily: 'Roboto-Medium' }]}>{serivceType}</Text>
                             </View>
                         </View>
                         <View style={styles.lineStyle}></View>

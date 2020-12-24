@@ -46,3 +46,6 @@ export const Profile = _Profile;
 
 import _About from './About';
 export const About = _About;
+
+import _ResetPassword from './ResetPassword';
+export const ResetPassword = _ResetPassword;

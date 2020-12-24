@@ -3,7 +3,14 @@ import { FlatList, View, Text, Image, TouchableOpacity, Dimensions, ScrollView }
 import { Icon } from '../../components';
 import styles from './style';
 import LinearGradient from 'react-native-linear-gradient';
-import style from '../../components/Input/style';
+import Fraq from '../../assets/svg/fraq.svg';
+import TShirt from '../../assets/svg/t-shirt.svg';
+import Bedsheet from '../../assets/svg/bedsheet.svg';
+import Shirt from '../../assets/svg/shirt.svg';
+import Pent from '../../assets/svg/pent.svg';
+import Skert from '../../assets/svg/skert.svg';
+import HandBag from '../../assets/svg/handbag.svg';
+import JNamaz from '../../assets/svg/jnamaz.svg';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -112,8 +119,24 @@ export default class Cart extends Component {
             <>
                 <View style={styles.listContentContainer}>
                     <View style={{ flexDirection: 'row', }}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('ProductDetail')} style={styles.imageContainer}>
-                            <Image source={item.imageUrl} resizeMode="contain" style={{ height: 40, width: 70 }} />
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('ProductDetail', { list: this.state.list })} style={styles.imageContainer}>
+                            {
+                                index == 0 ?
+                                    <Fraq />
+                                    : index == 1 ?
+                                        <TShirt />
+                                        : index == 2 ?
+                                            <Shirt />
+                                            : index == 3 ?
+                                                <Bedsheet />
+                                                : index == 4 ?
+                                                    <Pent />
+                                                    : index == 5 ?
+                                                        <Skert />
+                                                        : index == 6 ?
+                                                            <HandBag />
+                                                            : <JNamaz />
+                            }
                         </TouchableOpacity>
                         <View style={styles.itemContainer}>
                             <View style={styles.itemNameContainer}>
@@ -134,11 +157,11 @@ export default class Cart extends Component {
                             </View>
                             <View style={styles.itemQuantityButtonContainer}>
                                 <TouchableOpacity style={styles.quantityButtonStyle} onPress={() => this.handleMinusQuantity(item, index)}>
-                                    <Icon.Feather name='minus' size={20} color={'#fff'} />
+                                    <Icon.Feather name='minus' size={10} color={'#fff'} />
                                 </TouchableOpacity>
-                                <Text style={{ color: '#0DA7DF' }}>{item.quantity}</Text>
+                                <Text style={{ color: '#0DA7DF', fontFamily: 'Roboto-Regular', fontSize: 11 }}>{item.quantity}</Text>
                                 <TouchableOpacity style={styles.quantityButtonStyle} onPress={() => this.handleAddQuantity(item, index)}>
-                                    <Icon.Feather name='plus' size={20} color={'#fff'} />
+                                    <Icon.Feather name='plus' size={10} color={'#fff'} />
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -171,7 +194,7 @@ export default class Cart extends Component {
             <View style={{ flex: 1 }}>
                 <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 120 }}>
                     <View style={{ marginHorizontal: '5%', marginTop: '5%' }}>
-                        <Text style={{ fontSize: 16 }}>Iron Only</Text>
+                        <Text style={{ fontSize: 16, fontFamily: 'Roboto-Medium' }}>Iron Only</Text>
                     </View>
                     <View style={{ marginHorizontal: '5%', marginTop: '5%' }}>
                         <FlatList

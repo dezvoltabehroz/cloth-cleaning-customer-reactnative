@@ -4,6 +4,7 @@ import { Button, Input, ClearButton } from '../../components';
 import styles from './style';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { AuthServices } from '../../services';
+import Logo from '../../assets/svg/logo.svg';
 
 export default class NewPassword extends Component {
     constructor(props) {
@@ -28,7 +29,7 @@ export default class NewPassword extends Component {
                     <ImageBackground resizeMode="cover" style={styles.backgroundStyle} source={require('../../assets/images/verification.png')}>
                         <View style={{ marginTop: '15%', }}>
                             <View style={styles.innerImageContainer}>
-                                <Image resizeMode="contain" style={styles.innerImageStyle} source={require('../../assets/images/logo.png')} />
+                                <Logo />
                             </View>
                             <View style={{ marginTop: '5%' }}>
                                 <Text style={styles.headingTextStyle}>Enter New Password to Acess Your Account</Text>
@@ -54,7 +55,7 @@ export default class NewPassword extends Component {
 
                         </View>
                         <View style={{ marginHorizontal: '25%', marginTop: '5%' }}>
-                            <Button disabled={password && confirmPassword && password == confirmPassword ? false : true} title='CONFIRM' onPress={() => this.func_HandleSetNewPassword()} />
+                            <Button disabled={password && confirmPassword && password == confirmPassword ? false : true} title='Confirm' onPress={() => this.func_HandleSetNewPassword()} />
                         </View>
                     </ImageBackground>
                 </KeyboardAwareScrollView>

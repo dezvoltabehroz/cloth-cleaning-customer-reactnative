@@ -12,6 +12,7 @@ export default StyleSheet.create({
     },
     inputStyle: {
         fontSize: 14,
+        fontFamily: 'Nunito-Regular',
         marginLeft: '2.5%'
     },
 }
