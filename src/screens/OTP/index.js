@@ -70,7 +70,7 @@ export default class OTP extends Component {
                             </View>
                         </View>
                         <View style={{ flex: 0.8, justifyContent: 'flex-end', marginBottom: '5%' }} >
-                            <View style={{ marginHorizontal: '25%', marginTop: '5%' }}>
+                            <View style={{ alignItems: 'center', marginTop: '5%' }}>
                                 <Button disabled={value != '' ? false : true} loading={this.state.loading} title='Verify' onPress={this.func_HandleSubmitVerificationCode} />
                             </View>
                             <TouchableOpacity onPress={this.func_HandleResendCode} style={{ alignItems: 'center', marginTop: '5%' }} >

@@ -54,7 +54,7 @@ export default class NewPassword extends Component {
                             </View>
 
                         </View>
-                        <View style={{ marginHorizontal: '25%', marginTop: '5%' }}>
+                        <View style={{ alignItems: 'center', marginTop: '5%' }}>
                             <Button disabled={password && confirmPassword && password == confirmPassword ? false : true} title='Confirm' onPress={() => this.func_HandleSetNewPassword()} />
                         </View>
                     </ImageBackground>

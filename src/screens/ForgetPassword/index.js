@@ -47,7 +47,7 @@ export default class ForgetPassword extends Component {
                                         onChangeText={(email) => this.setState({ email: email })}
                                     />
                                 </View>
-                                <View style={{ marginHorizontal: '25%', marginTop: '5%' }}>
+                                <View style={{ alignItems: 'center', marginTop: '5%' }}>
                                     <Button title='Confirm' onPress={() => this.func_HandleResetPassword()} />
                                 </View>
                             </View>

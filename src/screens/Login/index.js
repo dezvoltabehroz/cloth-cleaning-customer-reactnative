@@ -75,10 +75,10 @@ export default class Login extends Component {
                             <TouchableOpacity onPress={() => this.props.navigation.navigate('ForgetPassword')} style={{ marginHorizontal: '7%', alignItems: 'flex-end' }} >
                                 <Text style={{ fontFamily: 'Nunito-Regular' }} >Forget Password?</Text>
                             </TouchableOpacity>
-                            <View style={{ marginHorizontal: '25%', marginTop: '5%' }}>
+                            <View style={{ alignItems: 'center', marginTop: '5%' }}>
                                 <Button loading={loading} title='Login' onPress={() => this.func_HandleLogin()} />
                             </View>
-                            <View style={{ marginHorizontal: '25%', marginTop: '5%' }}>
+                            <View style={{ alignItems: 'center', marginTop: '5%' }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 5, borderWidth: 0.5, borderColor: 'red', height: 44, width: 180 }}>
                                     <Google />
                                     <Text style={{ marginLeft: '10%', fontFamily: 'Nunito-Regular', fontSize: 16 }}>Google</Text>
