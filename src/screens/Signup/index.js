@@ -25,9 +25,9 @@ export default class Signup extends Component {
     render() {
         const { name, phonenumber, email, password, confirmPassword, loading } = this.state;
         return (
-            <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
-                <ImageBackground resizeMode="cover" style={styles.backgroundStyle} source={require('../../assets/images/signup.jpg')}>
 
+            <ImageBackground resizeMode="cover" style={styles.backgroundStyle} source={require('../../assets/images/signup.jpg')}>
+                <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.innerImageContainer}>
                         <Logo />
                     </View>
@@ -69,11 +69,6 @@ export default class Signup extends Component {
                             onChangeText={(confirmPassword) => this.setState({ confirmPassword: confirmPassword })}
                         />
                     </View>
-                    {/* <TouchableOpacity onPress={() => this.props.navigation.replace('ForgetPassword')} style={{ marginHorizontal: '7%', alignItems: 'flex-end' }} >
-                        <Text style={{ color: '' }} >
-                            Forget Password?
-                        </Text>
-                    </TouchableOpacity> */}
                     <View style={{ marginHorizontal: '25%', marginVertical: '5%' }}>
                         <Button loading={loading} title='Signup' onPress={() => this.func_HandleSignUp()} />
                     </View>
@@ -81,8 +76,8 @@ export default class Signup extends Component {
                         <Text style={{ color: '#707070', opacity: 0.7, fontFamily: 'Nunito-Regular', }}>Already have an account?</Text>
                         <Text onPress={() => this.props.navigation.replace('Auth')} style={{ marginLeft: '5%', fontFamily: 'Nunito-SemiBold', }}>Login</Text>
                     </View>
-                </ImageBackground>
-            </ KeyboardAwareScrollView>
+                </KeyboardAwareScrollView>
+            </ImageBackground>
         );
     }
 }
