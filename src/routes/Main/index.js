@@ -1,8 +1,7 @@
 import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Home } from '../../screens';
-import { Button, Icon } from '../../components';
+import { Icon } from '../../components';
 import LinearGradient from 'react-native-linear-gradient';
 import { Avatar, withBadge, Icon as Icons } from 'react-native-elements';
 import HomeRoutes from '../Home';
@@ -42,22 +41,22 @@ function CustomDrawerContent({ navigation }) {
                 <View style={{ flex: 0.7, paddingTop: '10%' }}>
                     <TouchableOpacity onPress={() => navigation.navigate('Orders')} style={styles.itemStyle}>
                         <Bag height={16} width={16} />
-                        <Text style={{ color: "#0092C7", marginLeft: "10%",fontFamily: 'Roboto-Regular', fontSize: 12 }}>Orders</Text>
+                        <Text style={{ color: "#0092C7", marginLeft: "10%", fontFamily: 'Roboto-Regular', fontSize: 12 }}>Orders</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.itemStyle}>
                         <User height={16} width={16} />
-                        <Text style={{ color: "#0092C7", marginLeft: "10%",fontFamily: 'Roboto-Regular', fontSize: 12 }} >Profile</Text>
+                        <Text style={{ color: "#0092C7", marginLeft: "10%", fontFamily: 'Roboto-Regular', fontSize: 12 }} >Profile</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => navigation.navigate('About')} style={styles.itemStyle}>
                         <Question height={16} width={16} />
-                        <Text style={{ color: "#0092C7", marginLeft: "10%",fontFamily: 'Roboto-Regular', fontSize: 12 }} >About</Text>
+                        <Text style={{ color: "#0092C7", marginLeft: "10%", fontFamily: 'Roboto-Regular', fontSize: 12 }} >About</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => navigation.replace('Auth')} style={styles.itemStyle}>
                         <Logout height={16} width={16} />
-                        <Text style={{ color: "#0092C7", marginLeft: "10%",fontFamily: 'Roboto-Regular', fontSize: 12 }} >Logout</Text>
+                        <Text style={{ color: "#0092C7", marginLeft: "10%", fontFamily: 'Roboto-Regular', fontSize: 12 }} >Logout</Text>
                     </TouchableOpacity>
                     <View style={styles.policyStyles}>
-                        <Text style={{ color: "#707070",fontFamily: 'Roboto-Regular', fontSize: 12 }} >Terms & conditions / policy</Text>
+                        <Text style={{ color: "#707070", fontFamily: 'Roboto-Regular', fontSize: 12 }} >Terms & conditions / policy</Text>
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: '10%', height: 54, width: 150, justifyContent: 'space-between', }}>
                         <Icon.FontAwesome name="facebook" size={20} color="#0092C7" />
@@ -65,14 +64,6 @@ function CustomDrawerContent({ navigation }) {
                         <Icon.FontAwesome name="twitter" size={20} color="#0092C7" />
                     </View>
                 </View>
-
-                {/* <View style={{ justifyContent: 'flex-end' }}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', marginBottom: '5%' }}>
-                        <Icon.FontAwesome name="facebook" size={20} color="#0092C7" />
-                        <Icon.FontAwesome name="instagram" size={20} color="#0092C7" />
-                        <Icon.FontAwesome name="twitter" size={20} color="#0092C7" />
-                    </View>
-                </View> */}
             </View>
 
         </>

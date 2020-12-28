@@ -13,7 +13,6 @@ export default class ProductDetail extends Component {
         this.state = {
 
             id: 7,
-            imageUrl: require('../../assets/images/google_icon.png'),
             title: 'Lorem Ipsum Dolor',
             price: 50,
             quantity: 1,

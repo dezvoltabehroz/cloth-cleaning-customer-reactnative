@@ -30,23 +30,18 @@ export default class Home extends Component {
             index: 0,
             data: [
                 {
-                    imgurl: require('../../assets/images/iron.png'),
                     title: 'Iron Only'
                 },
                 {
-                    imgurl: require('../../assets/images/laundry.png'),
                     title: 'Dry Clean'
                 },
                 {
-                    imgurl: require('../../assets/images/washing-machine.png'),
                     title: 'Linen & Bedsheet'
                 },
                 {
-                    imgurl: require('../../assets/images/folding-clothes.png'),
                     title: 'Wash & Iron'
                 },
                 {
-                    imgurl: require('../../assets/images/basket.png'),
                     title: 'Wash & Fold'
                 },
             ],

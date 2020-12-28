@@ -13,42 +13,36 @@ export default class ProductDetail extends Component {
             list: [
                 {
                     id: 1,
-                    imageUrl: require('../../assets/images/google_icon.png'),
                     title: 'Lorem Ipsum Dolor',
                     price: 50,
                     quantity: '1',
                 },
                 {
                     id: 2,
-                    imageUrl: require('../../assets/images/google_icon.png'),
                     title: 'Lorem Ipsum Dolor',
                     price: 50,
                     quantity: '1',
                 },
                 {
                     id: 3,
-                    imageUrl: require('../../assets/images/google_icon.png'),
                     title: 'Lorem Ipsum Dolor',
                     price: 50,
                     quantity: '1',
                 },
                 {
                     id: 4,
-                    imageUrl: require('../../assets/images/google_icon.png'),
                     title: 'Lorem Ipsum Dolor',
                     price: 50,
                     quantity: '1',
                 },
                 {
                     id: 5,
-                    imageUrl: require('../../assets/images/google_icon.png'),
                     title: 'Lorem Ipsum Dolor',
                     price: 50,
                     quantity: '1',
                 },
                 {
                     id: 6,
-                    imageUrl: require('../../assets/images/google_icon.png'),
                     title: 'Lorem Ipsum Dolor',
                     price: 50,
                     quantity: '1',
@@ -56,14 +50,12 @@ export default class ProductDetail extends Component {
 
                 {
                     id: 8,
-                    imageUrl: require('../../assets/images/google_icon.png'),
                     title: 'Lorem Ipsum Dolor',
                     price: 50,
                     quantity: '1',
                 },
             ],
             id: 7,
-            imageUrl: require('../../assets/images/google_icon.png'),
             title: 'Lorem Ipsum Dolor',
             price: 50,
             quantity: 1,
@@ -77,10 +69,6 @@ export default class ProductDetail extends Component {
 
     handleAddQuantity = () => {
         this.setState({ quantity: this.state.quantity + 1 })
-        // let array = [...this.state.list];
-        // array[index] = { ...array[index], quantity: (parseInt(item.quantity) + 1) };
-        // this.setState({ list: array })
-        // this.handleTotalPrice(array)
     }
 
     handleMinusQuantity = () => {
@@ -88,7 +76,7 @@ export default class ProductDetail extends Component {
         // let array = [...this.state.list];
         // array[index] = { ...array[index], quantity: item.quantity == '1' ? item.quantity : (parseInt(item.quantity) - 1) };
         // this.setState({ list: array });
-        // this.handleTotalPrice(array)
+        // this.handleTotalPrice(array)   
     }
     handlePressDelete = async (item, index) => {
         this.setState({ list: this.state.list.filter((obj => obj.id != item.id)) });

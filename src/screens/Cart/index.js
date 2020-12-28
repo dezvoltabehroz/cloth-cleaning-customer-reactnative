@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, View, Text, Image, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
+import { FlatList, View, Text, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import { Icon } from '../../components';
 import styles from './style';
 import LinearGradient from 'react-native-linear-gradient';
@@ -21,7 +21,6 @@ export default class Cart extends Component {
             list: [
                 {
                     id: 1,
-                    imageUrl: require('../../assets/images/fraq.png'),
                     title: 'Lorem Ipsum Dolor',
                     price: 50,
                     quantity: '1',
@@ -29,7 +28,6 @@ export default class Cart extends Component {
                 },
                 {
                     id: 2,
-                    imageUrl: require('../../assets/images/h-shirt.png'),
                     title: 'Lorem Ipsum Dolor',
                     price: 50,
                     quantity: '1',
@@ -37,7 +35,6 @@ export default class Cart extends Component {
                 },
                 {
                     id: 3,
-                    imageUrl: require('../../assets/images/t-shirt.png'),
                     title: 'Lorem Ipsum Dolor',
                     price: 50,
                     quantity: '1',
@@ -45,7 +42,6 @@ export default class Cart extends Component {
                 },
                 {
                     id: 4,
-                    imageUrl: require('../../assets/images/bedsheet.png'),
                     title: 'Lorem Ipsum Dolor',
                     price: 50,
                     quantity: '1',
@@ -53,7 +49,6 @@ export default class Cart extends Component {
                 },
                 {
                     id: 5,
-                    imageUrl: require('../../assets/images/pent.png'),
                     title: 'Lorem Ipsum Dolor',
                     price: 50,
                     quantity: '1',
@@ -61,7 +56,6 @@ export default class Cart extends Component {
                 },
                 {
                     id: 6,
-                    imageUrl: require('../../assets/images/skert.png'),
                     title: 'Lorem Ipsum Dolor',
                     price: 50,
                     quantity: '1',
@@ -69,7 +63,6 @@ export default class Cart extends Component {
                 },
                 {
                     id: 7,
-                    imageUrl: require('../../assets/images/bag.png'),
                     title: 'Lorem Ipsum Dolor',
                     price: 50,
                     quantity: '1',
@@ -78,7 +71,6 @@ export default class Cart extends Component {
                 },
                 {
                     id: 8,
-                    imageUrl: require('../../assets/images/jnamaz.png'),
                     title: 'Lorem Ipsum Dolor',
                     price: 50,
                     quantity: '1',
@@ -104,6 +96,7 @@ export default class Cart extends Component {
         this.setState({ list: array });
         this.handleTotalPrice(array)
     }
+
     handlePressDelete = async (item, index) => {
         this.setState({ list: this.state.list.filter((obj => obj.id != item.id)) });
         // await AsyncStorage.setItem('CARTITEMS', JSON.stringify(this.state.list))

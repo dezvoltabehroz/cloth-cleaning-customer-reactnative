@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { Image, ImageBackground, TouchableOpacity, Text, View, Alert } from 'react-native';
-import { Button, Input, ClearButton } from '../../components';
+import { Image, ImageBackground, Text, View, } from 'react-native';
+import { Button, Input, } from '../../components';
 import styles from './style';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
-import { AuthServices } from '../../services';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Logo from '../../assets/svg/logo.svg';
 export default class Signup extends Component {
     constructor(props) {
@@ -28,7 +26,7 @@ export default class Signup extends Component {
         const { name, phonenumber, email, password, confirmPassword, loading } = this.state;
         return (
             <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
-                <ImageBackground resizeMode="cover" style={styles.backgroundStyle} source={require('../../assets/images/login.jpg')}>
+                <ImageBackground resizeMode="cover" style={styles.backgroundStyle} source={require('../../assets/images/signup.jpg')}>
 
                     <View style={styles.innerImageContainer}>
                         <Logo />
