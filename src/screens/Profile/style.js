@@ -50,11 +50,27 @@ export default StyleSheet.create({
         textAlign: 'center',
         fontFamily: 'Nunito-SemiBold'
     },
+    clearTextStyle: {
+        color: '#0DA7DF',
+        textAlign: 'center',
+        fontFamily: 'Nunito-SemiBold'
+    },
     checkoutButtonContainer: {
         borderRadius: 35,
         height: 33,
-        width: 120,
+        width: 80,
         justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: '5%'
+    },
+    clearButtonContainer: {
+        borderRadius: 35,
+        height: 33,
+        width: 80,
+        borderWidth: 1,
+        borderColor: '#0DA7DF',
+        justifyContent: 'center',
+        alignItems: 'center',
         paddingHorizontal: '5%'
     },
     iconContainer: {

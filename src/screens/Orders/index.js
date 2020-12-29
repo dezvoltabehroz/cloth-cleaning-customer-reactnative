@@ -87,14 +87,14 @@ export default class Orders extends Component {
         return (
             <TouchableOpacity  onPress={() =>  this.props.navigation.navigate('OrdersDetail')} style={{
                 borderRadius: 10,
-                elevation: 1,
+                elevation: 3,
                 shadowColor: "#000",
                 shadowOffset: {
                     width: 0,
                     height: 1,
                 },
-                shadowOpacity: 0.18,
-                shadowRadius: 1.00, marginBottom: '1%',
+                shadowOpacity: 0.22,
+                shadowRadius: 2.22, marginBottom: '1%',
                 borderColor: "#EEE",
                 borderWidth: 0.3,
                 paddingHorizontal: '5%',

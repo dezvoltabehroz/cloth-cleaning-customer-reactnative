@@ -97,12 +97,12 @@ export default class ProductDetail extends Component {
     render() {
         const { title, price, quantity, description, serivceType } = this.state;
         return (
-            <View style={{ flex: 1 }}>
-                <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
+            <View style={{ flex: 1, backgroundColor: 'white' }}>
+                <ScrollView contentContainerStyle={{ paddingBottom: 80 }} showsVerticalScrollIndicator={false}>
                     <View style={styles.upperContainer}>
                     </View>
                     <View style={styles.imageContainer}>
-                        <Fraq height={146} width={140} />
+                        <Fraq height={126} width={120} />
                         <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonStyle} >
                             <TouchableOpacity onPress={() => this.props.navigation.navigate('Checkout', { list: this.props.route.params.list })}><Text style={styles.checkoutTextStyle}>Checkout</Text></TouchableOpacity>
                         </LinearGradient>
@@ -122,26 +122,26 @@ export default class ProductDetail extends Component {
                         </View>
                         <View style={styles.itemQuantityButtonContainer}>
                             <TouchableOpacity style={styles.quantityButtonStyle} onPress={() => this.handleMinusQuantity()}>
-                                <Icon.Feather name='minus' size={20} color={'#fff'} />
+                                <Icon.Feather name='minus' size={10} color={'#fff'} />
                             </TouchableOpacity>
                             <Text style={{ color: '#0DA7DF' }}>{quantity}</Text>
                             <TouchableOpacity style={styles.quantityButtonStyle} onPress={() => this.handleAddQuantity()}>
-                                <Icon.Feather name='plus' size={20} color={'#fff'} />
+                                <Icon.Feather name='plus' size={10} color={'#fff'} />
                             </TouchableOpacity>
                         </View>
-                        <View style={{ marginTop: '5%' }}>
+                        <View style={{ marginTop: '2.5%' }}>
                             <Text style={styles.headingTitleStyle}>Service </Text>
                             <View style={styles.lineStyle}></View>
-                            <View style={{ marginTop: '5%' }}>
+                            <View style={{ marginTop: '2.5%' }}>
                                 <Text style={styles.listTextStyle}>
                                     {serivceType}
                                 </Text>
                             </View>
                         </View>
-                        <View style={{ marginTop: '5%' }}>
+                        <View style={{ marginTop: '2.5%' }}>
                             <Text style={styles.headingTitleStyle}>Description </Text>
                             <View style={styles.lineStyle}></View>
-                            <View style={{ marginTop: '5%' }}>
+                            <View style={{ marginTop: '2.5%' }}>
                                 <Text style={styles.listTextStyle}>
                                     {description}
                                 </Text>

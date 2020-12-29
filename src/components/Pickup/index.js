@@ -232,7 +232,7 @@ export default class Pickup extends Component {
                     <View style={styles.content}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: '5%' }}>
                             <Text style={styles.headingText}>Shift</Text>
-                            <TouchableOpacity onPress={() => this.setState({ discountModal: false })} style={styles.iconContainer}>
+                            <TouchableOpacity onPress={() => this.setState({ editPickUpShift: false })} style={styles.iconContainer}>
                                 <Icon.Ionicons name='close-outline' size={15} color={'#7A7A7A'} />
                             </TouchableOpacity>
                         </View>
@@ -247,7 +247,7 @@ export default class Pickup extends Component {
                                                     <Icon.MaterialIcons name={item.selected ? "radio-button-checked" : "radio-button-unchecked"} color={item.selected ? '#0DA7DF' : '#707070'} size={20} />
                                                 </View>
                                                 <View style={{ marginLeft: '5%' }}>
-                                                    <Text style={{ color: "#7A7A7A", fontSize: 12,fontFamily:'Roboto-Regular' }}>{item.shiftName} ({item.timing})</Text>
+                                                    <Text style={{ color: "#7A7A7A", fontSize: 12, fontFamily: 'Roboto-Regular' }}>{item.shiftName} ({item.timing})</Text>
                                                 </View>
                                             </TouchableOpacity>
                                         )

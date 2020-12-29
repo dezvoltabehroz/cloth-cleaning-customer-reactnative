@@ -6,6 +6,7 @@ export default StyleSheet.create({
     headerImageStyle: {
         height: 40,
         width: screenWidth,
+        backgroundColor: '#29B1DB'
     },
     upperListContainer: {
         marginHorizontal: '5%',
@@ -13,16 +14,16 @@ export default StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: 'white',
         borderRadius: 10,
-        elevation: 1,
+        elevation: 3,
         borderColor: "#EEE",
-        borderWidth: 0.3,
+        borderWidth: 1,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
             height: 1,
         },
-        shadowOpacity: 0.18,
-        shadowRadius: 1.00,
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
     },
     tabContainer: {
         alignItems: 'center',
@@ -65,7 +66,7 @@ export default StyleSheet.create({
     checkoutTextStyle: {
         color: '#7A7A7A',
         fontFamily: 'Roboto-Light'
-       
+
     },
     totalTextStyle: {
         color: '#374B5C',
@@ -81,6 +82,14 @@ export default StyleSheet.create({
         borderRadius: 35,
         height: 33,
         width: 140,
+        elevation: 3,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
         justifyContent: 'center',
     },
     content: {
@@ -115,8 +124,8 @@ export default StyleSheet.create({
     discountTextStyle: {
         color: '#A50808'
     },
-    headingText:{
-        fontSize:16,
-        fontFamily:'Roboto-Regular'
+    headingText: {
+        fontSize: 16,
+        fontFamily: 'Roboto-Regular'
     }
 })

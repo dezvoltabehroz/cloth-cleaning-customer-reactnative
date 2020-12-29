@@ -57,10 +57,10 @@ export default StyleSheet.create({
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 0,
+            height: 1,
         },
-        shadowOpacity: 0.5,
-        shadowRadius: 2.50,
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
         backgroundColor: 'white',
         borderColor: "#EEE",
         borderWidth: 1,

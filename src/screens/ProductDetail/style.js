@@ -8,23 +8,25 @@ export default StyleSheet.create({
     },
     upperContainer: {
         height: 80,
-        backgroundColor: '#0DA7DF'
+        backgroundColor: '#29B1DB',
     },
     imageContainer: {
+        marginTop: 5,
+        paddingTop: '5%',
         backgroundColor: 'white',
         marginHorizontal: '5%',
         borderRadius: 10,
+        elevation: 2.5,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
             height: 1,
         },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
         justifyContent: 'center',
         alignItems: 'center',
-        shadowOpacity: 0.18,
-        shadowRadius: 1.00,
-        elevation: 1,
-        height: 218,
+        height: 180,
         borderColor: "#EEE",
         borderWidth: 0.3,
         bottom: '11%'
@@ -37,7 +39,15 @@ export default StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: 140,
-        top: '15%',
+        top: '10%',
+        elevation: 2.5,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
         height: 33,
         borderRadius: 35
     },
@@ -47,8 +57,9 @@ export default StyleSheet.create({
         fontFamily: 'Roboto-Regular'
     },
     lowerContainer: {
+        backgroundColor: 'white',
         marginTop: '5%',
-        // bottom: '11%',
+        bottom: '5%',
         marginHorizontal: '5%',
     },
     headingTitleStyle: {
@@ -67,7 +78,7 @@ export default StyleSheet.create({
     },
     itemQuantityButtonContainer: {
         width: 80,
-        marginVertical: '5%',
+        marginTop: '2.5%',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center'

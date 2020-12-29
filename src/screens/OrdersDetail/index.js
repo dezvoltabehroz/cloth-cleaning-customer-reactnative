@@ -36,7 +36,7 @@ export default class ProductDetail extends Component {
     render() {
         const { title, price, quantity, description, serivceType, status, orderNumber, address, date, shipping, discount, totalPrice } = this.state;
         return (
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, backgroundColor: 'white' }}>
                 <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
                     <View style={styles.upperContainer}>
                     </View>

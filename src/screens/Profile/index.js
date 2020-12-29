@@ -31,16 +31,16 @@ export default class profile extends Component {
 
                                 <View style={{}}>
                                     <Input label="Name" value={name}
-                                         labelStyle={{ fontSize: 10, color: email ? '#0DA7DF' : '#374B5C',fontFamily:'Roboto-Regular' }}
-                                         inputStyle={{ fontSize: 12,fontFamily:'Roboto-Medium' }}
+                                        labelStyle={{ fontSize: 10, color: email ? '#0DA7DF' : '#374B5C', fontFamily: 'Roboto-Regular' }}
+                                        inputStyle={{ fontSize: 12, fontFamily: 'Roboto-Medium' }}
                                         onChangeText={(name) => this.setState({ name })}
                                         inputContainerStyle={{ height: 30 }}
                                         placeholder="" />
                                 </View>
                                 <View style={{ marginTop: '5%' }}>
                                     <Input label="Email address" value={email}
-                                        labelStyle={{ fontSize: 10, color: email ? '#0DA7DF' : '#374B5C',fontFamily:'Roboto-Regular' }}
-                                        inputStyle={{ fontSize: 12,fontFamily:'Roboto-Medium' }}
+                                        labelStyle={{ fontSize: 10, color: email ? '#0DA7DF' : '#374B5C', fontFamily: 'Roboto-Regular' }}
+                                        inputStyle={{ fontSize: 12, fontFamily: 'Roboto-Medium' }}
                                         inputContainerStyle={{ height: 30 }}
                                         onChangeText={(email) => this.setState({ email })}
                                         placeholder="Enter email address"
@@ -49,18 +49,19 @@ export default class profile extends Component {
                                 </View>
                                 <View style={{ marginTop: '5%' }}>
                                     <Input label="Mobile Number" value={phone}
-                                        labelStyle={{ fontSize: 10, color: email ? '#0DA7DF' : '#374B5C',fontFamily:'Roboto-Regular' }}
-                                        inputStyle={{ fontSize: 12,fontFamily:'Roboto-Medium' }}
+                                        labelStyle={{ fontSize: 10, color: email ? '#0DA7DF' : '#374B5C', fontFamily: 'Roboto-Regular' }}
+                                        inputStyle={{ fontSize: 12, fontFamily: 'Roboto-Medium' }}
                                         inputContainerStyle={{ height: 30 }}
                                         onChangeText={(phone) => this.setState({ phone })}
                                         placeholder="Enter phone number" />
                                 </View>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                    <TouchableOpacity style={{ alignSelf: 'flex-start' }} onPress={() => this.setState({ updateContactInfo: false })}>
-                                        <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
-                                            <Text style={styles.checkButtonTextStyle}>{'Cancel'}</Text>
+                                <View style={{ flexDirection: 'row', justifyContent: 'flex-end', }}>
+                                    <TouchableOpacity style={{ alignSelf: 'flex-end', }} onPress={() => this.setState({ updateContactInfo: false })}>
+                                        <LinearGradient colors={['#FFF', '#FFF']} style={styles.clearButtonContainer}>
+                                            <Text style={styles.clearTextStyle}>{'Cancel'}</Text>
                                         </LinearGradient>
                                     </TouchableOpacity>
+                                    <View style={{ width: 15 }}></View>
                                     <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => this.setState({ updateContactInfo: false })}>
                                         <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
                                             <Text style={styles.checkButtonTextStyle}>{'Update'}</Text>

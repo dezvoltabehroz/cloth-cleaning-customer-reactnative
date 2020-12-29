@@ -27,9 +27,9 @@ function CustomDrawerContent({ navigation }) {
             <View style={{ flex: 1 }} >
                 <LinearGradient colors={['#27C2FA', '#27C2FA', '#0DA7DF']} style={styles.upperContainer}>
                     <TouchableOpacity onPress={() => navigation.replace('Home')} style={styles.upperContainer}>
-                        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-start', paddingLeft: '10%', alignItems: 'center' }}>
                             <View>
-                                <Avatar size={50} rounded={true} source={{ uri: "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_male2-512.png" }} />
+                                <Avatar containerStyle={{ backgroundColor: 'white' }} size={50} title="J" titleStyle={{ color: '#0092C7' }} rounded={true} />
                             </View>
                             <View style={{ justifyContent: 'center', marginLeft: '5%' }}>
                                 <Text style={{ color: "white", marginLeft: "10%", fontFamily: 'Roboto-Bold', }} >John Doe</Text>

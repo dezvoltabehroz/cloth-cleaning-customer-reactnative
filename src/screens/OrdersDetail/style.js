@@ -8,7 +8,7 @@ export default StyleSheet.create({
     },
     upperContainer: {
         height: 80,
-        backgroundColor: '#0DA7DF'
+        backgroundColor: '#29B1DB'
     },
     imageContainer: {
         backgroundColor: 'white',
@@ -19,14 +19,15 @@ export default StyleSheet.create({
             width: 0,
             height: 1,
         },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
         justifyContent: 'center',
         alignItems: 'center',
-        shadowOpacity: 0.18,
-        shadowRadius: 1.00,
-        elevation: 1,
-        height: 218,
+
+        elevation: 3,
+        height: 180,
         borderColor: "#EEE",
-        borderWidth: 0.3,
+        borderWidth: 1,
         bottom: '10%'
     },
     imageStyle: {
@@ -55,11 +56,11 @@ export default StyleSheet.create({
             width: 0,
             height: 1,
         },
-        shadowOpacity: 0.18,
-        shadowRadius: 1.00,
-        elevation: 1,
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
+        elevation: 3,
         borderColor: "#EEE",
-        borderWidth: 0.3,
+        borderWidth: 1,
         bottom: '10%',
         paddingHorizontal: '5%',
         paddingVertical: '5%'
@@ -77,7 +78,7 @@ export default StyleSheet.create({
     },
     itemQuantityContainer: {
         flexDirection: 'row',
-        marginTop: '5%',
+        marginTop: '2.5%',
         justifyContent: 'space-between'
     },
     itemQuantityButtonContainer: {
@@ -88,7 +89,7 @@ export default StyleSheet.create({
         alignItems: 'center'
     },
     listTextStyle: {
-        lineHeight: 25,
+        lineHeight: 20,
         fontSize: 12,
         color: '#7A7A7A',
         fontFamily: 'Roboto-Regular'
