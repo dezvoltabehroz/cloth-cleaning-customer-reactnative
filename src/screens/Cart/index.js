@@ -184,7 +184,7 @@ export default class Cart extends Component {
     render() {
 
         return (
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, backgroundColor: 'white' }}>
                 <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 120 }}>
                     <View style={{ marginHorizontal: '5%', marginTop: '5%' }}>
                         <Text style={{ fontSize: 16, fontFamily: 'Roboto-Medium' }}>Iron Only</Text>
@@ -201,7 +201,10 @@ export default class Cart extends Component {
                 <View>
 
                     <View onPress={() => { }} style={{
-                        borderRadius: 10, elevation: 1, shadowColor: "#000",
+                        backgroundColor: 'white',
+                        borderRadius: 10,
+                        elevation: 3,
+                        shadowColor: "#000",
                         shadowOffset: {
                             width: 0,
                             height: 1,
@@ -232,7 +235,7 @@ export default class Cart extends Component {
                                 <View>
                                     <Text style={styles.checkoutTextStyle}>Delivery Charges</Text>
                                 </View>
-                                <View>
+                                <View style={{ marginBottom: '2.5%' }}>
                                     <Text style={styles.checkoutTextStyle}>Rs.{'00'}</Text>
                                 </View>
                             </View>

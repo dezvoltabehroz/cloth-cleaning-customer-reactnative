@@ -254,7 +254,7 @@ export default class Home extends Component {
                             value={this.state.value}
                             autoCorrect={false}
                             leftIcon={{ type: 'feather', name: 'search', size: 20, color: '#7A7A7A' }}
-                            inputStyle={{ fontFamily: 'Nunito-Regulaar', fontSize: 14, marginLeft: '2%', }}
+                            inputStyle={{ fontFamily: 'Nunito-Regular', fontSize: 14, marginLeft: '2%', }}
                             leftIconContainerStyle={{ padding: 0, borderRightWidth: 0.5, height: 20, backgroundColor: 'white', borderColor: '#7A7A7A' }}
                             rightIconContainerStyle={{ paddingRight: 10 }}
                             containerStyle={styles.containerStyle}

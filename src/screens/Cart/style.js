@@ -53,33 +53,28 @@ export default StyleSheet.create({
     },
     listContentContainer: {
         borderRadius: 10,
-        elevation: 1,
+        elevation: 3,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
-            height: 1,
+            height: 0,
         },
-        shadowOpacity: 0.18,
-        shadowRadius: 1.00, marginBottom: '1%',
+        shadowOpacity: 0.5,
+        shadowRadius: 2.50,
+        backgroundColor: 'white',
         borderColor: "#EEE",
-        borderWidth: 0.3,
+        borderWidth: 1,
     },
     imageContainer: {
-        elevation: 1,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 1,
-        },
+
         justifyContent: 'center',
         alignItems: 'center',
         height: 96,
         width: 122,
-        shadowOpacity: 0.18,
-        shadowRadius: 1.00, padding: '10%',
+        backgroundColor: 'white',
         borderColor: "#EEE",
-        borderWidth: 0.3,
-        borderRadius: 10
+        borderWidth: 1,
+        borderRadius: 9
     },
     itemContainer: {
         flex: 1,
@@ -107,19 +102,30 @@ export default StyleSheet.create({
     },
     checkoutTextStyle: {
         color: '#7A7A7A',
+        height: 22,
         fontFamily: 'Roboto-Light'
     },
     totalTextStyle: {
         color: '#374B5C',
+        height: 22,
         fontFamily: 'Roboto-Medium'
     },
     totalPriceTextStyle: {
         color: '#0DA7DF',
+        height: 22,
         fontFamily: 'Roboto-Medium'
     },
     checkoutButtonContainer: {
         borderRadius: 35,
         height: 33,
+        elevation: 2.5,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.22,
+        shadowRadius: 2.22,
         width: 140,
         justifyContent: 'center',
     },
@@ -129,11 +135,11 @@ export default StyleSheet.create({
     },
     lineStyle: {
         borderWidth: 0.5,
+        marginBottom: '2.5%',
         borderColor: '#7A7A7A'
     },
     checkoutItemStyle: {
         flexDirection: 'row',
-        marginVertical: '2.5%',
         justifyContent: 'space-between'
     },
     checkButtonTextStyle: {
