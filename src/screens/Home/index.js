@@ -247,7 +247,7 @@ export default class Home extends Component {
         return (
             <View style={{ flex: 1, backgroundColor: 'white' }}>
                 <View style={styles.headerImageStyle}>
-                    <View style={{ paddingHorizontal: '2.5%', marginTop: '2%' }}>
+                    <View style={{ paddingHorizontal: '2.5%', marginTop: '5%' }}>
                         <Input placeholder='Search laundry by name....'
                             round={true}
                             onChangeText={text => this.func_searchFilter(text)}
