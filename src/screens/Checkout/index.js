@@ -23,28 +23,28 @@ export default class Checkout extends Component {
         }
     }
 
-  
-    componentWillMount () {
+
+    componentWillMount() {
         this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
         this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
-      }
-    
-      componentWillUnmount () {
+    }
+
+    componentWillUnmount() {
         this.keyboardDidShowListener.remove();
         this.keyboardDidHideListener.remove();
-      }
-    
-      _keyboardDidShow = () => {
+    }
+
+    _keyboardDidShow = () => {
         this.setState({
             keyboardState: true
         });
-      }
-    
-      _keyboardDidHide = () => {
+    }
+
+    _keyboardDidHide = () => {
         this.setState({
             keyboardState: false
         });
-      }
+    }
 
     componentDidMount = () => {
         const { list, } = this.props.route.params;
@@ -195,7 +195,7 @@ export default class Checkout extends Component {
                                                     <View style={styles.lineStyle}></View>
                                                 </>
                                         }
-                                        <View style={styles.checkoutItemStyle}>
+                                        <View style={[styles.checkoutItemStyle, { bottom: activeTab == 0 ? '3%' : 0 }]}>
                                             <View>
                                                 <Text style={styles.totalTextStyle}>Total</Text>
                                             </View>
