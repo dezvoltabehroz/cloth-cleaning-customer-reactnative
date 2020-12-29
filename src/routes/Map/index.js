@@ -11,21 +11,22 @@ const BadgedIcon = withBadge(1)(Icons);
 function MapRoutes() {
     return (
         <Stack.Navigator initialRouteName="Map">
-
             <Stack.Screen name="Map" component={MapScreen} options={({ navigation, route }) => {
-               return ({
-                    // headerTitleAlign: 'center',
-                    headerBackground: () => (<Image resizeMode="cover" style={{ height: '100%', width: screenWidth }} source={require('../../assets/images/header.png')} />),
+                return ({
+                    headerStyle: {
+                        backgroundColor: '#29B1DB',
+                        elevation: 0
+                    },
                     headerLeft: () => (<TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingLeft: 15 }}><Icon.AntDesign name="arrowleft" color="white" size={25} /></TouchableOpacity>),
-                    // headerRight: () => (<View style={{ marginRight: 20 }}><BadgedIcon onPress={() => navigation.navigate('Cart')} type="font-awesome" name="shopping-cart" color='white' /></View>),
                     headerTitle: () => (<View><Text style={styles.headerMapTitleStyle}>{truncateString(route.params.address, 28)}</Text></View>),
                 })
             }} />
             <Stack.Screen name="Search" component={Search} options={({ navigation, route }) => ({
-                // headerTitleAlign: 'center',
-                headerBackground: () => (<Image resizeMode="cover" style={{ height: '100%', width: screenWidth }} source={require('../../assets/images/header.png')} />),
+                headerStyle: {
+                    backgroundColor: '#29B1DB',
+                    elevation: 0
+                },
                 headerLeft: () => (<TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingLeft: 15 }}><Icon.AntDesign name="arrowleft" color="white" size={25} /></TouchableOpacity>),
-                // headerRight: () => (<View style={{ marginRight: 20 }}><BadgedIcon onPress={() => navigation.navigate('Cart')} type="font-awesome" name="shopping-cart" color='white' /></View>),
                 headerTitle: () => (<View><Text style={styles.headerMapTitleStyle}></Text></View>),
             })} />
 
