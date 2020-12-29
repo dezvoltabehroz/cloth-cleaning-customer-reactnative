@@ -116,10 +116,10 @@ export default class Home extends Component {
             <>
                 <TouchableOpacity onPress={() => { this.setState({ index: index }) }} style={{ height: 95, width: 105, }}>
                     <View style={{
-                        borderColor: "#EEE",
+                        borderColor: index == this.state.index ? '#EAF7FB' :"#EEE",
                         borderWidth: 0.3,
                         borderRadius: 10,
-                        elevation: 1,
+                        elevation: 3,
                         shadowColor: index == this.state.index ? '#EAF7FB' : "#000",
                         shadowOffset: { width: 0, height: 1 },
                         shadowOpacity: 0.18,
@@ -155,38 +155,35 @@ export default class Home extends Component {
 
     _renderListItems = (item, index) => {
         return (
-            <>
+            <View style={{
+                elevation: 3,
+                shadowColor: "#000",
+                shadowOffset: {
+                    width: 0,
+                    height: 1,
+                },
+                shadowOpacity: 0.22,
+                shadowRadius: 2.22,
+            }}>
+
                 <View style={{
                     borderRadius: 10,
-                    elevation: 1,
-                    shadowColor: "#000",
-                    shadowOffset: {
-                        width: 0,
-                        height: 1,
-                    },
-                    shadowOpacity: 0.18,
-                    shadowRadius: 1.00,
-                    marginBottom: '1%',
-                    borderColor: "#EEE",
-                    borderWidth: 0.3,
+                    elevation: 3,
+                    borderColor: "#EEEEEE",
+                    borderWidth: 0.5,
+                    // marginBottom: '1%',
+
                 }}>
-                    <View style={{ flexDirection: 'row', }}>
+                    <View style={{ flexDirection: 'row', margin: 0, backgroundColor: 'white', borderRadius: 10 }}>
                         <View style={{
-                            elevation: 1,
-                            shadowColor: "#000",
-                            shadowOffset: {
-                                width: 0,
-                                height: 1,
-                            },
                             justifyContent: 'center',
+                            backgroundColor: 'white',
                             alignItems: 'center',
                             height: 96,
                             width: 122,
-                            shadowOpacity: 0.18,
-                            shadowRadius: 1.00, padding: '10%',
-                            borderColor: "#EEE",
-                            borderWidth: 0.3,
-                            borderRadius: 10
+                            borderColor: "#EEEEEE",
+                            borderWidth: 1,
+                            borderRadius: 9
                         }}>
                             {
                                 index == 0 ?
@@ -206,21 +203,32 @@ export default class Home extends Component {
                                                             : <JNamaz />
                             }
                         </View>
-                        <View style={{ marginHorizontal: '5%', justifyContent: 'center', }}>
-                            <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 13, marginVertical: '5%' }}>{item.title}</Text>
-                            <Text style={{ fontSize: 12, color: '#7A7A7A', fontFamily: 'Roboto-Regular' }}>Rs. {item.price}</Text>
-                            <View style={{ flexDirection: 'row', marginVertical: '5%' }}>
-                                <TouchableOpacity style={{ marginTop: 10 }} onPress={() => this.handleAddToCart(item, index)}>
-                                    <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={{ justifyContent: 'center', alignItems: 'center', height: 25, width: 105, borderRadius: 20, }}>
-                                        <Text style={{ fontSize: 11, color: 'white', textAlign: 'center', fontFamily: 'Roboto-Regular' }}>ADD TO CART</Text>
-                                    </LinearGradient>
-                                </TouchableOpacity>
-
-                            </View>
+                        <View style={{ marginHorizontal: '5%', flexDirection: 'column', justifyContent: 'center' }}>
+                            <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 13, height: 18 }}>{item.title}</Text>
+                            <Text style={{ fontSize: 12, color: '#7A7A7A', fontFamily: 'Roboto-Regular', height: 16 }}>Rs. {item.price}</Text>
+                            <TouchableOpacity onPress={() => this.handleAddToCart(item, index)}>
+                                <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={{
+                                    justifyContent: 'center', elevation: 2.5,
+                                    shadowColor: "#000",
+                                    shadowOffset: {
+                                        width: 0,
+                                        height: 1,
+                                    },
+                                    shadowOpacity: 0.22,
+                                    shadowRadius: 2.22,
+                                    marginTop: 10,
+                                    alignItems: 'center',
+                                    height: 25,
+                                    width: 105,
+                                    borderRadius: 20,
+                                }}>
+                                    <Text style={{ fontSize: 11, color: 'white', textAlign: 'center', fontFamily: 'Roboto-Regular' }}>ADD TO CART</Text>
+                                </LinearGradient>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </View>
-            </>
+            </View>
         )
     }
 
@@ -238,16 +246,16 @@ export default class Home extends Component {
     render() {
         return (
             <View style={{ flex: 1, backgroundColor: 'white' }}>
-                <ImageBackground resizeMode="cover" source={require('../../assets/images/header.png')} style={styles.headerImageStyle}>
-                    <View style={{ paddingHorizontal: '2.5%', marginTop: '5%' }}>
+                <View style={styles.headerImageStyle}>
+                    <View style={{ paddingHorizontal: '2.5%', marginTop: '2%' }}>
                         <Input placeholder='Search laundry by name....'
                             round={true}
                             onChangeText={text => this.func_searchFilter(text)}
                             value={this.state.value}
                             autoCorrect={false}
                             leftIcon={{ type: 'feather', name: 'search', size: 20, color: '#7A7A7A' }}
-                            inputStyle={{ fontFamily: 'Nunito-Regulaar', fontSize: 14, marginLeft: '2%' }}
-                            leftIconContainerStyle={{ padding: 0, borderRightWidth: 0.5, height: 20, borderColor: '#7A7A7A' }}
+                            inputStyle={{ fontFamily: 'Nunito-Regulaar', fontSize: 14, marginLeft: '2%', }}
+                            leftIconContainerStyle={{ padding: 0, borderRightWidth: 0.5, height: 20, backgroundColor: 'white', borderColor: '#7A7A7A' }}
                             rightIconContainerStyle={{ paddingRight: 10 }}
                             containerStyle={styles.containerStyle}
                             inputContainerStyle={styles.inputContainerStyle} />
@@ -263,9 +271,9 @@ export default class Home extends Component {
                             renderItem={({ item, index }) => this._renderItems(item, index)}
                             keyExtractor={item => item} />
                     </View>
-                </ImageBackground>
-                <View style={{ flex: 1, marginTop: 85 }}>
-                    <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: '5%', }}>
+                </View>
+                <View style={{ flex: 1, marginTop: 75 }}>
+                    <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: '0.5%', }}>
                         <View style={styles.lowerListContainer}>
                             <FlatList
                                 data={this.state.list}

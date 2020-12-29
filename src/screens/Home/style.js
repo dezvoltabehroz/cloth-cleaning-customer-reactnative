@@ -10,7 +10,7 @@ export default StyleSheet.create({
         paddingBottom: 0
     },
     inputContainerStyle: {
-        backgroundColor: 'rgb(240,240,240)',
+        backgroundColor: 'white',
         marginBottom: 0,
         height: 35,
         paddingLeft: '5%',
@@ -23,7 +23,11 @@ export default StyleSheet.create({
     textStyle: {
         fontSize: 12, color: 'white',
     },
-    headerImageStyle: { height: 150, width: screenWidth },
+    headerImageStyle: {
+        height: 150,
+        width: screenWidth,
+        backgroundColor: '#29B1DB'
+    },
     seperatorStyle: {
         width: 15
     },
@@ -37,16 +41,14 @@ export default StyleSheet.create({
         paddingLeft: '5%',
         backgroundColor: 'white',
         borderRadius: 10,
-        elevation: 1,
-        borderColor: "#EEE",
-        borderWidth: 0.3,
+        elevation: 5,
         shadowColor: "#000",
         shadowOffset: {
-            width: 0,
-            height: 1,
+            x: 0,
+            height: 0,
         },
-        shadowOpacity: 0.18,
-        shadowRadius: 1.00,
+        shadowOpacity: 0.5,
+        shadowRadius: 5,
     },
     headingStyle: {
         fontSize: 16,
