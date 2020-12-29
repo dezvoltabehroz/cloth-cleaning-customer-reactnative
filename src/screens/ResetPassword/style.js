@@ -59,7 +59,7 @@ export default StyleSheet.create({
     checkoutButtonContainer: {
         borderRadius: 35,
         height: 40,
-        width: 140,
+        width: 80,
         justifyContent: 'center',
         paddingHorizontal: '5%'
     },
