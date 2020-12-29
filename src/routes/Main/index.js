@@ -58,11 +58,16 @@ function CustomDrawerContent({ navigation }) {
                     <View style={styles.policyStyles}>
                         <Text style={{ color: "#707070", fontFamily: 'Roboto-Regular', fontSize: 12 }} >Terms & conditions / policy</Text>
                     </View>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: '10%', height: 54, width: 150, justifyContent: 'space-between', }}>
+                    {/* <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: '10%', height: 54, width: 150, justifyContent: 'space-between', }}>
                         <Icon.FontAwesome name="facebook" size={20} color="#0092C7" />
                         <Icon.FontAwesome name="instagram" size={20} color="#0092C7" />
                         <Icon.FontAwesome name="twitter" size={20} color="#0092C7" />
-                    </View>
+                    </View> */}
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: '10%', height: 54, width: 150, justifyContent: 'space-between', }}>
+                    <Icon.FontAwesome name="facebook" size={20} color="#707070" />
+                    <Icon.FontAwesome name="instagram" size={20} color="#707070" />
+                    <Icon.FontAwesome name="twitter" size={20} color="#707070" />
                 </View>
             </View>
 
