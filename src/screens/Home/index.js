@@ -119,11 +119,11 @@ export default class Home extends Component {
                         borderColor: index == this.state.index ? '#EAF7FB' : "#EEE",
                         borderWidth: 0.3,
                         borderRadius: 10,
-                        elevation: 3,
+                        elevation: 2,
                         shadowColor: index == this.state.index ? '#EAF7FB' : "#000",
                         shadowOffset: { width: 0, height: 1 },
-                        shadowOpacity: 0.18,
-                        shadowRadius: 1.00,
+                        shadowOpacity: 0.20,
+                        shadowRadius: 1.41,
                         height: 60,
                         width: 105,
                         backgroundColor: index == this.state.index ? '#EAF7FB' : 'white',
@@ -159,13 +159,14 @@ export default class Home extends Component {
 
             <View style={{
                 borderRadius: 10,
-                elevation: 3,
+                elevation: 2,
+                shadowColor: "#000",
                 shadowOffset: {
                     width: 0,
                     height: 1,
                 },
-                shadowOpacity: 0.22,
-                shadowRadius: 2.22,
+                shadowOpacity: 0.20,
+                shadowRadius: 1.41,
                 borderColor: "#EEEEEE",
                 borderWidth: 0.5,
                 // marginBottom: '1%',
@@ -205,14 +206,15 @@ export default class Home extends Component {
                         <Text style={{ fontSize: 12, color: '#7A7A7A', fontFamily: 'Roboto-Regular', height: 16 }}>Rs. {item.price}</Text>
                         <TouchableOpacity onPress={() => this.handleAddToCart(item, index)}>
                             <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={{
-                                justifyContent: 'center', elevation: 2.5,
+                                justifyContent: 'center',
+                                elevation: 2,
                                 shadowColor: "#000",
                                 shadowOffset: {
                                     width: 0,
-                                    height: 0,
+                                    height: 1,
                                 },
-                                shadowOpacity: 0.22,
-                                shadowRadius: 2.22,
+                                shadowOpacity: 0.20,
+                                shadowRadius: 1.41,
                                 marginTop: 10,
                                 alignItems: 'center',
                                 height: 25,

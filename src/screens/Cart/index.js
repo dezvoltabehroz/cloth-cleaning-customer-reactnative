@@ -202,13 +202,14 @@ export default class Cart extends Component {
                     <View style={{
                         backgroundColor: 'white',
                         borderRadius: 10,
-                        elevation: 3,
-                        shadowOffset: {
-                            width: 0,
-                            height: 1,
+                        elevation: 2,
+                        shadowColor: "#000",
+                        shadowOffset:{
+                        width: 0,
+                        height: 1,
                         },
-                        shadowOpacity: 0.22,
-                        shadowRadius: 2.22,
+                        shadowOpacity: 0.20,
+                        shadowRadius: 1.41,
                         borderColor: "#EEE",
                         borderWidth: 1,
                         marginBottom: '5%',

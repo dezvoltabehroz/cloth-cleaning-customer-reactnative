@@ -113,15 +113,16 @@ export default class Checkout extends Component {
 
                             activeTab == 0 || activeTab == 1 ?
                                 <View onPress={() => { }} style={{
-                                    borderRadius: 10, elevation: 3,
+                                    borderRadius: 10,
+                                    elevation: 2,
                                     backgroundColor: 'white',
                                     shadowColor: "#000",
                                     shadowOffset: {
                                         width: 0,
                                         height: 1,
                                     },
-                                    shadowOpacity: 0.22,
-                                    shadowRadius: 2.22,
+                                    shadowOpacity: 0.20,
+                                    shadowRadius: 1.41,
                                     borderColor: "#EEE",
                                     backgroundColor: 'white',
                                     borderWidth: 1,
@@ -142,23 +143,22 @@ export default class Checkout extends Component {
                                                 null
                                                 :
                                                 <>
-                                                    <View style={styles.checkoutItemStyle}>
-                                                        <View style={{ flexDirection: 'row' }}>
+                                                    <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={[styles.checkoutItemStyle, { alignItems: 'center', paddingHorizontal: '2.5%', borderRadius: 10, height: 40 }]}>
+                                                        <View style={{ flexDirection: 'row', }}>
                                                             <View style={{ backgroundColor: '#0DA7DF', alignItems: 'center', justifyContent: 'center', height: 20, width: 20, borderRadius: 10 }}>
                                                                 <Icon.Feather name="percent" size={15} color="white" />
                                                             </View>
-                                                            <Text style={{ color: '#7A7A7A', fontSize: 12, marginLeft: '5%', fontFamily: 'Roboto-Light' }}>{discount ? 'Get 10 discount' : 'Use coupon to get discount'}</Text>
+                                                            <Text style={{ color: 'white', fontSize: 12, marginLeft: '5%', fontFamily: 'Roboto-Medium' }}>{discount ? 'Get 10 discount' : 'Use coupon to get discount'}</Text>
                                                         </View>
                                                         <View style={{ justifyContent: 'center' }}>
                                                             {
                                                                 discount ?
                                                                     <Icon.AntDesign name='checkcircle' color='#0DA7DF' size={15} />
                                                                     :
-                                                                    <Text onPress={() => this.setState({ discountModal: true })} style={styles.totalPriceTextStyle}>Choose</Text>
+                                                                    <Text onPress={() => this.setState({ discountModal: true })} style={[styles.totalPriceTextStyle, { color: 'white' }]}>Choose</Text>
                                                             }
-
                                                         </View>
-                                                    </View>
+                                                    </LinearGradient>
                                                     <View style={styles.checkoutItemStyle}>
                                                         <View>
                                                             <Text style={styles.checkoutTextStyle}>Total</Text>
@@ -175,7 +175,6 @@ export default class Checkout extends Component {
                                                                     :
                                                                     <Text style={styles.checkoutTextStyle}>Delivery Charges</Text>
                                                             }
-
                                                         </View>
                                                         <View>
                                                             <Text style={styles.checkoutTextStyle}>Rs.{delivery}</Text>

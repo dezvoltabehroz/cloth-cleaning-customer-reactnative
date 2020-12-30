@@ -34,16 +34,17 @@ export default StyleSheet.create({
         paddingVertical: '5%',
         backgroundColor: 'white',
         borderRadius: 10,
-        elevation: 3,
+        elevation: 2,
         borderColor: "#EEE",
         borderWidth: 0.3,
         shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 1,
+        shadowColor: "#000",
+        shadowOffset:{
+        width: 0,
+        height: 1,
         },
-        shadowOpacity: 0.22,
-        shadowRadius: 2.22,
+        shadowOpacity: 0.20,
+        shadowRadius: 1.41,
     },
     listTextStyle: {
         fontSize: 12,

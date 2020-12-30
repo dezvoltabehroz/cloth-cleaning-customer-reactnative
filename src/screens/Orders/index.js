@@ -85,16 +85,16 @@ export default class Orders extends Component {
 
     _renderItems = (item, index) => {
         return (
-            <TouchableOpacity  onPress={() =>  this.props.navigation.navigate('OrdersDetail')} style={{
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('OrdersDetail')} style={{
                 borderRadius: 10,
-                elevation: 3,
-                shadowColor: "#000",
+                elevation: 2,
                 shadowOffset: {
                     width: 0,
                     height: 1,
                 },
-                shadowOpacity: 0.22,
-                shadowRadius: 2.22, marginBottom: '1%',
+                shadowOpacity: 0.20,
+                shadowRadius: 1.41,
+                marginBottom: '1%',
                 borderColor: "#EEE",
                 borderWidth: 0.3,
                 paddingHorizontal: '5%',
@@ -126,7 +126,7 @@ export default class Orders extends Component {
                 <View style={styles.listContainer}>
                     <FlatList
                         data={ordersList}
-                        contentContainerStyle={{paddingBottom:80}}
+                        contentContainerStyle={{ paddingBottom: 80 }}
                         showsVerticalScrollIndicator={false}
                         ItemSeparatorComponent={this._renderListSeparator}
                         renderItem={({ item, index }) => this._renderItems(item, index)} />
