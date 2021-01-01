@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { FlatList, View, Text, Image, TouchableOpacity, Dimensions, ScrollView, Platform } from 'react-native';
-import { Icon } from '../../components';
+import { View, Text, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
 import styles from './style';
-import LinearGradient from 'react-native-linear-gradient';
-import style from '../../components/Input/style';
-import Fraq from '../../assets/svg/fraq.svg';
+import ProgressCircle from 'react-native-progress-circle'
+import { Icon } from '../../components';
+import Modal from 'react-native-modal';
+import LinearGradient from 'react-native-linear-gradient'
+import StarRating from 'react-native-star-rating';
+import { Input } from 'react-native-elements'
 const screenWidth = Dimensions.get('window').width;
-
+import moment from 'moment'
 export default class ProductDetail extends Component {
     constructor(props) {
         super(props);
@@ -22,8 +24,12 @@ export default class ProductDetail extends Component {
             totalPrice: 300,
             discount: 50,
             shipping: 50,
-            status: 'Complete',
+            status: this.props.route.params.status,
             serivceType: 'Iron Only',
+            review: '',
+            starCount: 0,
+            ratingModal: false,
+            rated: false,
             description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate...'
         }
     }
@@ -31,17 +37,73 @@ export default class ProductDetail extends Component {
         // this.handleTotalPrice(this.state.list)
     }
 
+    onStarRatingPress(rating) {
+        this.setState({
+            starCount: rating
+        });
+    }
 
 
     render() {
-        const { title, price, quantity, description, serivceType, status, orderNumber, address, date, shipping, discount, totalPrice } = this.state;
+        const { title, price, quantity, description, review, rated, starCount, ratingModal, serivceType, status, orderNumber, address, date, shipping, discount, totalPrice } = this.state;
         return (
             <View style={{ flex: 1, backgroundColor: 'white' }}>
                 <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
                     <View style={styles.upperContainer}>
                     </View>
                     <View style={styles.imageContainer}>
-                        <Fraq width={140} height={146} />
+                        <View style={{ marginTop: 10, alignItems: 'center' }}>
+                            <ProgressCircle
+                                percent={status == 'Pending' ? 50 : 100}
+                                radius={50}
+                                borderWidth={10}
+                                color={status == 'Complete' ? "#0DA7DF" : status == 'Pending' ? "#FFAF02" : status == 'Confirm' ? '#16C46C' : status == 'Cancel' ? "#F30808" : null}
+                                shadowColor="#E1E1E1"
+                                bgColor="#fff"
+                            >
+                                <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', color: "#102134" }}>{status}</Text>
+                            </ProgressCircle>
+                        </View>
+                        {status == 'Complete' ?
+
+                            rated ?
+                                <View style={{ marginHorizontal: '5%', paddingBottom: 3, }}>
+                                    <View style={[styles.itemQuantityContainer, { alignItems: 'center' }]}>
+                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: '5%' }}>
+                                            <StarRating
+                                                disabled={true}
+                                                containerStyle={{ justifyContent: 'space-between', }}
+                                                starStyle={{ paddingHorizontal: 2.5 }}
+                                                emptyStarColor={"#B5B5B5"}
+                                                maxStars={5}
+                                                starSize={25}
+                                                rating={starCount}
+                                                selectedStar={(rating) => this.onStarRatingPress(rating)}
+                                                fullStarColor={"#29B1DB"}
+                                            />
+                                            <View style={{ width: 10 }}></View>
+                                        </View>
+                                        <View>
+                                            <Text style={{ fontFamily: 'Roboto-Light', fontSize: 12, color: '#8E9297' }}>{moment().format('DD/MM/YYYY')}</Text>
+                                        </View>
+                                    </View>
+
+                                </View>
+                                :
+                                <TouchableOpacity onPress={() => this.setState({ ratingModal: true })} style={{ marginHorizontal: '5%', borderBottomWidth: 0.3, paddingBottom: 3, borderColor: '#7A7A7A' }}>
+                                    <View style={styles.itemQuantityContainer}>
+                                        <View>
+                                            <Text style={styles.listTextStyle}>Write a review</Text>
+                                        </View>
+                                        <View>
+                                            <Icon.MaterialIcons name="edit" color="#7A7A7A" size={12} />
+                                        </View>
+                                    </View>
+
+                                </TouchableOpacity>
+                            : null
+                        }
+
                     </View>
                     <View style={styles.lowerContainer}>
                         <View style={styles.itemQuantityContainer}>
@@ -130,7 +192,53 @@ export default class ProductDetail extends Component {
                         </View>
                     </View>
                 </ScrollView>
+                <Modal isVisible={ratingModal}>
+                    <View style={[styles.cardContainer]}>
+
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', }}>
+                            <Text style={styles.headingText}>Rating</Text>
+                            <TouchableOpacity onPress={() => this.setState({ ratingModal: false })} style={styles.iconContainer}>
+                                <Icon.Ionicons name='close-outline' size={15} color={'#7A7A7A'} />
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.lineStyle}></View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: '5%' }}>
+                            <StarRating
+                                disabled={false}
+                                containerStyle={{ justifyContent: 'space-between', }}
+                                starStyle={{ paddingHorizontal: 5 }}
+                                emptyStarColor={"#B5B5B5"}
+                                maxStars={5}
+                                starSize={25}
+                                rating={starCount}
+                                selectedStar={(rating) => this.onStarRatingPress(rating)}
+                                fullStarColor={"#29B1DB"}
+                            />
+                            <View style={{ width: 10 }}></View>
+                        </View>
+                        <View>
+                            <Text style={styles.headingText}>Anything else?</Text>
+                            <Input value={review}
+                                multiline={true}
+                                inputStyle={styles.inputStyle}
+                                inputContainerStyle={styles.inputContainerStyle}
+                                containerStyle={styles.containerStyle}
+                                onChangeText={(review) => this.setState({ review })}
+                                placeholder="Help others to lorem ipsum dolor" />
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: '10%' }}>
+                            <TouchableOpacity disabled={starCount != 0 || review != '' ? false : true} style={{ alignSelf: 'flex-end' }} onPress={() => {
+                                this.setState({ ratingModal: false, rated: true })
+                            }}>
+                                <LinearGradient colors={starCount != 0 || review != '' ? ['#0DA7DF', '#27C2FA'] : ['#F2F2F2', '#F2F2F2']} style={styles.saveButtonContainer}>
+                                    <Text style={[styles.checkButtonTextStyle, { color: starCount != 0 || review != '' ? 'white' : 'gray' }]}>{'Save'}</Text>
+                                </LinearGradient>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
             </View>
+
         )
     }
 }

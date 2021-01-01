@@ -12,7 +12,7 @@ export default StyleSheet.create({
     },
     imageContainer: {
         marginTop: 5,
-        paddingTop: '5%',
+        // paddingTop: '5%',
         backgroundColor: 'white',
         marginHorizontal: '5%',
         borderRadius: 10,
@@ -58,14 +58,14 @@ export default StyleSheet.create({
     },
     lowerContainer: {
         backgroundColor: 'white',
-        marginTop: '5%',
-        bottom: '5%',
+        // marginTop: '5%',
+        bottom: '7%',
         marginHorizontal: '5%',
     },
     headingTitleStyle: {
         fontSize: 16,
         fontFamily: 'Roboto-Medium',
-        paddingBottom: '5%',
+        paddingBottom: '2.5%',
     },
     lineStyle: {
         borderWidth: 0.2,
@@ -73,7 +73,7 @@ export default StyleSheet.create({
     },
     itemQuantityContainer: {
         flexDirection: 'row',
-        marginTop: '5%',
+        marginTop: '1.5%',
         justifyContent: 'space-between'
     },
     itemQuantityButtonContainer: {

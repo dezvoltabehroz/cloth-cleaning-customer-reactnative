@@ -103,9 +103,9 @@ export default class ProductDetail extends Component {
                     </View>
                     <View style={styles.imageContainer}>
                         <Fraq height={126} width={120} />
-                        <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonStyle} >
+                        {/* <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonStyle} >
                             <TouchableOpacity onPress={() => this.props.navigation.navigate('Checkout', { list: this.props.route.params.list })}><Text style={styles.checkoutTextStyle}>Checkout</Text></TouchableOpacity>
-                        </LinearGradient>
+                        </LinearGradient> */}
                     </View>
                     <View style={styles.lowerContainer}>
                         <Text style={styles.headingTitleStyle}>
@@ -141,7 +141,7 @@ export default class ProductDetail extends Component {
                         <View style={{ marginTop: '2.5%' }}>
                             <Text style={styles.headingTitleStyle}>Description </Text>
                             <View style={styles.lineStyle}></View>
-                            <View style={{ marginTop: '2.5%' }}>
+                            <View style={{ marginTop: '1.5%' }}>
                                 <Text style={styles.listTextStyle}>
                                     {description}
                                 </Text>

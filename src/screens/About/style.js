@@ -19,7 +19,7 @@ export default StyleSheet.create({
         fontSize: 15,
         textAlign: "justify",
         alignSelf: 'center',
-        fontFamily:'Roboto-Light',
+        fontFamily: 'Roboto-Light',
         paddingVertical: 10,
         paddingHorizontal: 15,
         letterSpacing: 1,
@@ -34,12 +34,19 @@ export default StyleSheet.create({
     contacttype1: {
         textAlign: 'left',
         fontSize: 15,
-        fontFamily:'Roboto-Medium'
+        fontFamily: 'Roboto-Medium'
     },
     contacttype2: {
         textAlign: 'left',
         marginTop: 4,
-        fontFamily:'Roboto-Medium',
+        fontFamily: 'Roboto-Medium',
         fontSize: 15,
+    },
+    headingTextStyle: {
+        color: '#102134',
+        fontSize: 18,
+        fontFamily: 'Roboto-Medium',
+        marginTop: '5%',
+        marginHorizontal: '5%'
     }
 })

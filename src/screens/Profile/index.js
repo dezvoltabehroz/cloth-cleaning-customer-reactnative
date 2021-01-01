@@ -34,6 +34,7 @@ export default class profile extends Component {
                                         labelStyle={{ fontSize: 10, color: email ? '#0DA7DF' : '#374B5C', fontFamily: 'Roboto-Regular' }}
                                         inputStyle={{ fontSize: 12, fontFamily: 'Roboto-Medium' }}
                                         onChangeText={(name) => this.setState({ name })}
+                                        containerStyle={{ marginHorizontal: 0, paddingHorizontal: 0 }}
                                         inputContainerStyle={{ height: 30 }}
                                         placeholder="" />
                                 </View>
@@ -41,7 +42,8 @@ export default class profile extends Component {
                                     <Input label="Email address" value={email}
                                         labelStyle={{ fontSize: 10, color: email ? '#0DA7DF' : '#374B5C', fontFamily: 'Roboto-Regular' }}
                                         inputStyle={{ fontSize: 12, fontFamily: 'Roboto-Medium' }}
-                                        inputContainerStyle={{ height: 30 }}
+                                        inputContainerStyle={{ height: 30, marginHorizontal: 0 }}
+                                        containerStyle={{ marginHorizontal: 0, paddingHorizontal: 0 }}
                                         onChangeText={(email) => this.setState({ email })}
                                         placeholder="Enter email address"
 
@@ -52,6 +54,7 @@ export default class profile extends Component {
                                         labelStyle={{ fontSize: 10, color: email ? '#0DA7DF' : '#374B5C', fontFamily: 'Roboto-Regular' }}
                                         inputStyle={{ fontSize: 12, fontFamily: 'Roboto-Medium' }}
                                         inputContainerStyle={{ height: 30 }}
+                                        containerStyle={{ marginHorizontal: 0, paddingHorizontal: 0 }}
                                         onChangeText={(phone) => this.setState({ phone })}
                                         placeholder="Enter phone number" />
                                 </View>
@@ -61,7 +64,7 @@ export default class profile extends Component {
                                             <Text style={styles.clearTextStyle}>{'Cancel'}</Text>
                                         </LinearGradient>
                                     </TouchableOpacity>
-                                    <View style={{ width: 15 }}></View>
+                                    <View style={{ width: 5 }}></View>
                                     <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => this.setState({ updateContactInfo: false })}>
                                         <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
                                             <Text style={styles.checkButtonTextStyle}>{'Update'}</Text>

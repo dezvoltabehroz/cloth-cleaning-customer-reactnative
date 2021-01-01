@@ -58,7 +58,7 @@ export default StyleSheet.create({
     checkoutButtonContainer: {
         borderRadius: 35,
         height: 33,
-        width: 80,
+        width: 95,
         justifyContent: 'center',
         alignItems: 'center',
         paddingHorizontal: '5%'
@@ -66,7 +66,7 @@ export default StyleSheet.create({
     clearButtonContainer: {
         borderRadius: 35,
         height: 33,
-        width: 80,
+        width: 95,
         borderWidth: 1,
         borderColor: '#0DA7DF',
         justifyContent: 'center',

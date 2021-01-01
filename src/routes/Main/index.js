@@ -41,7 +41,7 @@ function CustomDrawerContent({ navigation }) {
                 <View style={{ flex: 0.7, paddingTop: '10%' }}>
                     <TouchableOpacity onPress={() => navigation.navigate('Orders')} style={styles.itemStyle}>
                         <Bag height={16} width={16} />
-                        <Text style={{ color: "#0092C7", marginLeft: "10%", fontFamily: 'Roboto-Regular', fontSize: 12 }}>Orders</Text>
+                        <Text style={{ color: "#0092C7", marginLeft: "10%", fontFamily: 'Roboto-Regular', fontSize: 12 }}>Orders History</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.itemStyle}>
                         <User height={16} width={16} />

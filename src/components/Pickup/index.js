@@ -129,7 +129,7 @@ export default class Pickup extends Component {
                                     <Icon.MaterialIcons name="edit" color={'#7A7A7A'} size={20} />
                                 </View>
                             </View>
-                            <View style={{ marginTop: '5%' }}>
+                            <View style={{ marginTop: '2%' }}>
                                 <Text style={{ color: '#7A7A7A', fontFamily: 'Roboto-Regular', fontSize: 12 }}>Lorem ipsum dolor</Text>
                             </View>
 
@@ -145,7 +145,7 @@ export default class Pickup extends Component {
                                     <Icon.MaterialIcons name="edit" color={'#7A7A7A'} size={20} />
                                 </View>
                             </View>
-                            <View style={{ marginTop: '5%' }}>
+                            <View style={{ marginTop: '2%' }}>
                                 <Text style={{ color: '#7A7A7A', fontFamily: 'Roboto-Regular', fontSize: 12 }}>+92 3456 8798</Text>
                             </View>
                         </View>
@@ -165,7 +165,7 @@ export default class Pickup extends Component {
                                     <Icon.MaterialCommunityIcons name={today ? "checkbox-marked-circle" : "checkbox-blank-circle-outline"} color={today ? '#0DA7DF' : '#707070'} size={20} />
                                 </View>
                                 <View style={{ marginLeft: '5%' }}>
-                                    <Text style={{ color: '#374B5C', fontWeight: 'bold' }}>Today</Text>
+                                    <Text style={{ color: '#374B5C', fontFamily: 'Roboto-Medium', fontSize: 13, }}>Today</Text>
                                     <Text style={{ color: '#7A7A7A', fontSize: 12, fontFamily: 'Roboto-Regular' }}>Pickup on {this.state.pickUpShift}, 8 Dec 2020</Text>
                                 </View>
                             </TouchableOpacity>
@@ -174,7 +174,7 @@ export default class Pickup extends Component {
                                     <Icon.MaterialCommunityIcons name={tommorrow ? "checkbox-marked-circle" : "checkbox-blank-circle-outline"} color={tommorrow ? '#0DA7DF' : '#707070'} size={20} />
                                 </View>
                                 <View style={{ marginLeft: '5%' }}>
-                                    <Text style={{ color: '#374B5C', fontWeight: 'bold' }}>Tomorrow</Text>
+                                    <Text style={{ color: '#374B5C', fontFamily: 'Roboto-Medium', fontSize: 13, }}>Tomorrow</Text>
                                     <Text style={{ color: '#7A7A7A', fontSize: 12, fontFamily: 'Roboto-Regular' }}>Pickup on {this.state.pickUpShift}, 9 Dec 2020</Text>
                                 </View>
                             </TouchableOpacity>
@@ -194,8 +194,8 @@ export default class Pickup extends Component {
                                 </View>
                                 <View style={{ marginLeft: '5%', marginRight: '5%' }}>
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                        <Text style={{ color: '#374B5C', fontWeight: 'bold' }}>Regular</Text>
-                                        <Text style={{ color: '#374B5C', fontWeight: 'bold' }}>Rs.50</Text>
+                                        <Text style={{ color: '#374B5C', fontFamily: 'Roboto-Medium', fontSize: 13 }}>Regular</Text>
+                                        <Text style={{ color: '#374B5C', fontWeight: 'bold', fontSize: 13 }}>Rs.50</Text>
                                     </View>
                                     <Text style={{ color: '#7A7A7A', fontSize: 12, fontFamily: 'Roboto-Regular' }}>You will receive laundry within 3 to 4 working days</Text>
                                 </View>
@@ -207,7 +207,7 @@ export default class Pickup extends Component {
                                 <View style={{ marginLeft: '5%', marginRight: '5%' }}>
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                         <Text style={{ color: '#374B5C', fontFamily: 'Roboto-Medium', fontSize: 13 }}>Express</Text>
-                                        <Text style={{ color: '#374B5C', fontWeight: 'bold' }}>Rs.200</Text>
+                                        <Text style={{ color: '#374B5C', fontWeight: 'bold', fontSize: 13 }}>Rs.200</Text>
                                     </View>
                                     <Text style={{ color: '#7A7A7A', fontSize: 12, fontFamily: 'Roboto-Regular' }}>You will receive laundry within 1 to 2 working days</Text>
                                 </View>
@@ -221,7 +221,7 @@ export default class Pickup extends Component {
                                     <Text style={{ fontFamily: 'Roboto-Medium', color: '#1E2123' }}>Optional note</Text>
                                 </View>
                             </View>
-                            <View style={{ marginTop: '5%', borderRadius: 10, overflow: 'hidden' }}>
+                            <View style={{ marginTop: '5%' }}>
                                 <Input placeholder="Note here..." />
                             </View>
 

@@ -39,9 +39,9 @@ export default StyleSheet.create({
         borderWidth: 0.3,
         shadowColor: "#000",
         shadowColor: "#000",
-        shadowOffset:{
-        width: 0,
-        height: 1,
+        shadowOffset: {
+            width: 0,
+            height: 1,
         },
         shadowOpacity: 0.20,
         shadowRadius: 1.41,
@@ -52,7 +52,7 @@ export default StyleSheet.create({
         fontFamily: 'Roboto-Regular'
     },
     itemContainer: {
-        marginTop: '2.5%',
+        // marginTop: '2.5%',
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
@@ -62,7 +62,7 @@ export default StyleSheet.create({
     },
     itemNameTextStyle: {
         color: '#000',
-        marginVertical: '5%',
+        // marginVertical: '5%',
         fontSize: 12,
         fontFamily: 'Roboto-Regular'
     },
@@ -71,8 +71,8 @@ export default StyleSheet.create({
         // justifyContent: 'space-between'
     },
     listSeperatorStyle: {
-        height: 15,
-        marginTop: '5%',
+        height: 5,
+        marginTop: 5,
         borderTopWidth: 0.5,
         borderTopColor: '#707070'
     },

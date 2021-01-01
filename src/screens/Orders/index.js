@@ -33,7 +33,7 @@ export default class Orders extends Component {
                 },
                 {
                     date: '8 Dec 2020',
-                    status: 'Complete',
+                    status: 'Cancel',
                     orderNumber: '#00000456',
                     totalPrice: '50'
                 },
@@ -57,7 +57,7 @@ export default class Orders extends Component {
                 },
                 {
                     date: '8 Dec 2020',
-                    status: 'Complete',
+                    status: 'Confirm',
                     orderNumber: '#00000456',
                     totalPrice: '50'
                 },
@@ -85,7 +85,7 @@ export default class Orders extends Component {
 
     _renderItems = (item, index) => {
         return (
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('OrdersDetail')} style={{
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('OrdersDetail', { status: item.status })} style={{
                 borderRadius: 10,
                 elevation: 2,
                 shadowOffset: {
@@ -98,7 +98,7 @@ export default class Orders extends Component {
                 borderColor: "#EEE",
                 borderWidth: 0.3,
                 paddingHorizontal: '5%',
-                paddingVertical: '5%'
+                paddingVertical: 5
             }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <Text style={styles.listTextStyle}>{item.date}</Text>

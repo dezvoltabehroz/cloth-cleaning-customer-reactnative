@@ -45,9 +45,6 @@ export default StyleSheet.create({
     },
     content: {
         backgroundColor: 'white',
-        padding: 22,
-        // justifyContent: 'center',
-        // alignItems: 'center',
         borderRadius: 10,
         borderColor: 'rgba(0, 0, 0, 0.1)',
     },
@@ -58,8 +55,8 @@ export default StyleSheet.create({
     },
     checkoutButtonContainer: {
         borderRadius: 35,
-        height: 40,
-        width: 80,
+        height: 33,
+        width: 95,
         justifyContent: 'center',
         paddingHorizontal: '5%'
     },
@@ -70,5 +67,20 @@ export default StyleSheet.create({
         borderRadius: 15,
         height: 25,
         width: 25
+    },
+    clearTextStyle: {
+        color: '#0DA7DF',
+        textAlign: 'center',
+        fontFamily: 'Nunito-SemiBold'
+    },
+    clearButtonContainer: {
+        borderRadius: 35,
+        height: 33,
+        width: 95,
+        borderWidth: 1,
+        borderColor: '#0DA7DF',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: '5%'
     },
 })

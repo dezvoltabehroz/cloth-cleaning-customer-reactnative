@@ -31,7 +31,7 @@ export default StyleSheet.create({
     upperContainer: {
         marginHorizontal: '5%',
         paddingHorizontal: '5%',
-        paddingVertical: '5%',
+        paddingVertical: '2.5%',
         backgroundColor: 'white',
         borderRadius: 10,
         elevation: 2,
