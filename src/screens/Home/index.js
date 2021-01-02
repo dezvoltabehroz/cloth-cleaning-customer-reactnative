@@ -270,7 +270,7 @@ export default class Home extends Component {
                             keyExtractor={item => item} />
                     </View>
                 </View>
-                <View style={{ flex: 1, marginTop: 85 }}>
+                <View style={{ flex: 1, marginTop: 62 }}>
                     <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: '0.5%', }}>
                         <View style={styles.lowerListContainer}>
                             <FlatList

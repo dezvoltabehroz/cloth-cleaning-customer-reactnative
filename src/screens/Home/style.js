@@ -24,7 +24,7 @@ export default StyleSheet.create({
         fontSize: 12, color: 'white',
     },
     headerImageStyle: {
-        height: 150,
+        height: 175,
         width: screenWidth,
         backgroundColor: '#29B1DB'
     },
