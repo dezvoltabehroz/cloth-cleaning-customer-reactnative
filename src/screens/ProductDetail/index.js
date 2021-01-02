@@ -132,7 +132,7 @@ export default class ProductDetail extends Component {
                         <View style={{ marginTop: '2.5%' }}>
                             <Text style={styles.headingTitleStyle}>Service </Text>
                             <View style={styles.lineStyle}></View>
-                            <View style={{ marginTop: '2.5%' }}>
+                            <View style={{ marginTop: '2%' }}>
                                 <Text style={styles.listTextStyle}>
                                     {serivceType}
                                 </Text>

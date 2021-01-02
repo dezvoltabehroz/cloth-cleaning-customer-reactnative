@@ -153,7 +153,7 @@ export default class Checkout extends Component {
                                                         <View style={{ justifyContent: 'center' }}>
                                                             {
                                                                 discount ?
-                                                                    <Icon.AntDesign name='checkcircle' color='#0DA7DF' size={15} />
+                                                                    <Icon.AntDesign name='checkcircle' color='white' size={15} />
                                                                     :
                                                                     <Text onPress={() => this.setState({ discountModal: true })} style={[styles.totalPriceTextStyle, { color: 'white' }]}>Choose</Text>
                                                             }
