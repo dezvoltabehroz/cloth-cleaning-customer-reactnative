@@ -4,6 +4,7 @@ import { Image, ScrollView, Text, TouchableOpacity, View, ImageBackground, FlatL
 import { Input } from 'react-native-elements';
 import { HomeServices } from '../../services';
 import styles from './style';
+import { Icon } from '../../components';
 import LinearGradient from 'react-native-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Laundry from '../../assets/svg/laundry.svg';
@@ -45,6 +46,7 @@ export default class Home extends Component {
                     title: 'Wash & Fold'
                 },
             ],
+            showQuantity: false,
             list: [
                 {
                     title: 'Lorem Ipsum Dolor',
@@ -153,7 +155,22 @@ export default class Home extends Component {
         )
     }
 
+    handleAddQuantity = (item, index) => {
+        let array = [...this.state.list];
+        array[index] = { ...array[index], quantity: (parseInt(item.quantity) + 1) };
+        this.setState({ list: array })
+        // this.handleTotalPrice(array)
+    }
+
+    handleMinusQuantity = (item, index) => {
+        let array = [...this.state.list];
+        array[index] = { ...array[index], quantity: item.quantity == '1' ? item.quantity : (parseInt(item.quantity) - 1) };
+        this.setState({ list: array });
+        // this.handleTotalPrice(array)
+    }
+
     _renderListItems = (item, index) => {
+        const { showQuantity } = this.state;
         return (
 
 
@@ -204,26 +221,46 @@ export default class Home extends Component {
                     <View style={{ marginHorizontal: '5%', flexDirection: 'column', justifyContent: 'center' }}>
                         <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 13, height: 18 }}>{item.title}</Text>
                         <Text style={{ fontSize: 12, color: '#7A7A7A', fontFamily: 'Roboto-Regular', height: 16 }}>Rs. {item.price}</Text>
-                        <TouchableOpacity onPress={() => this.handleAddToCart(item, index)}>
-                            <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={{
-                                justifyContent: 'center',
-                                elevation: 2,
-                                shadowColor: "#000",
-                                shadowOffset: {
-                                    width: 0,
-                                    height: 1,
-                                },
-                                shadowOpacity: 0.20,
-                                shadowRadius: 1.41,
+                        {showQuantity ?
+                            <View style={{
+                                flexDirection: 'row', marginLeft: -5,
+                                alignSelf: 'flex-start',
+                                justifyContent: 'space-around',
                                 marginTop: 10,
                                 alignItems: 'center',
                                 height: 25,
-                                width: 105,
+                                width: 80,
                                 borderRadius: 20,
                             }}>
-                                <Text style={{ fontSize: 11, color: 'white', textAlign: 'center', fontFamily: 'Roboto-Regular' }}>ADD TO CART</Text>
-                            </LinearGradient>
-                        </TouchableOpacity>
+                                <TouchableOpacity style={styles.quantityButtonStyle} onPress={() => this.handleMinusQuantity(item, index)}>
+                                    <Icon.Feather name='minus' size={10} color={'#fff'} />
+                                </TouchableOpacity>
+                                <Text style={{ color: '#0DA7DF', fontFamily: 'Roboto-Regular', fontSize: 11 }}>{item.quantity}</Text>
+                                <TouchableOpacity style={styles.quantityButtonStyle} onPress={() => this.handleAddQuantity(item, index)}>
+                                    <Icon.Feather name='plus' size={10} color={'#fff'} />
+                                </TouchableOpacity>
+                            </View>
+                            :
+                            <TouchableOpacity onPress={() => this.setState({ showQuantity: true })}>
+                                <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={{
+                                    justifyContent: 'center',
+                                    elevation: 2,
+                                    shadowColor: "#000",
+                                    shadowOffset: {
+                                        width: 0,
+                                        height: 1,
+                                    },
+                                    shadowOpacity: 0.20,
+                                    shadowRadius: 1.41,
+                                    marginTop: 10,
+                                    alignItems: 'center',
+                                    height: 25,
+                                    width: 105,
+                                    borderRadius: 20,
+                                }}>
+                                    <Text style={{ fontSize: 11, color: 'white', textAlign: 'center', fontFamily: 'Roboto-Regular' }}>ADD TO CART</Text>
+                                </LinearGradient>
+                            </TouchableOpacity>}
                     </View>
                 </View>
             </View>

@@ -58,5 +58,27 @@ export default StyleSheet.create({
         // borderWidth:1,
         marginHorizontal: '5%',
         marginTop: '5%'
-    }
+    },
+    itemQuantityButtonContainer: {
+        width: 80,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    quantityButtonStyle: {
+        borderRadius: 15,
+        elevation: 2,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.20,
+        shadowRadius: 1.41,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#0DA7DF',
+        height: 25,
+        width: 25
+    },
 })

@@ -20,7 +20,6 @@ export default class profile extends Component {
     }
 
     render() {
-        console.log(PixelRatio.get())
         const { email, name, phone, password, confirmPassword, updateContactInfo } = this.state;
         return (
 
