@@ -57,7 +57,9 @@ export default StyleSheet.create({
         borderRadius: 35,
         height: 33,
         width: 95,
+        paddingBottom: '3%',
         justifyContent: 'center',
+        alignItems: 'center',
         paddingHorizontal: '5%'
     },
     iconContainer: {
@@ -78,6 +80,7 @@ export default StyleSheet.create({
         height: 33,
         width: 95,
         borderWidth: 1,
+        paddingBottom: '3%',
         borderColor: '#0DA7DF',
         justifyContent: 'center',
         alignItems: 'center',

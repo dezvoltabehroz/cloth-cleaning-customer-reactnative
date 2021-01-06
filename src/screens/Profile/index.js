@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, PixelRatio } from 'react-native';
 import { Icon } from '../../components';
 import styles from './style';
 import Modal from 'react-native-modal';
@@ -20,6 +20,7 @@ export default class profile extends Component {
     }
 
     render() {
+        console.log(PixelRatio.get())
         const { email, name, phone, password, confirmPassword, updateContactInfo } = this.state;
         return (
 
@@ -40,6 +41,7 @@ export default class profile extends Component {
                                 </View>
                                 <View style={{ marginTop: '5%' }}>
                                     <Input label="Email address" value={email}
+                                        disabled={true}
                                         labelStyle={{ fontSize: 10, color: email ? '#0DA7DF' : '#374B5C', fontFamily: 'Roboto-Regular' }}
                                         inputStyle={{ fontSize: 12, fontFamily: 'Roboto-Medium' }}
                                         inputContainerStyle={{ height: 30, marginHorizontal: 0 }}
@@ -51,7 +53,7 @@ export default class profile extends Component {
                                 </View>
                                 <View style={{ marginTop: '5%' }}>
                                     <Input label="Mobile Number" value={phone}
-                                        labelStyle={{ fontSize: 10, color: email ? '#0DA7DF' : '#374B5C', fontFamily: 'Roboto-Regular' }}
+                                        labelStyle={{ fontSize: 10, color: phone ? '#0DA7DF' : '#374B5C', fontFamily: 'Roboto-Regular' }}
                                         inputStyle={{ fontSize: 12, fontFamily: 'Roboto-Medium' }}
                                         inputContainerStyle={{ height: 30 }}
                                         containerStyle={{ marginHorizontal: 0, paddingHorizontal: 0 }}
@@ -59,13 +61,13 @@ export default class profile extends Component {
                                         placeholder="Enter phone number" />
                                 </View>
                                 <View style={{ flexDirection: 'row', justifyContent: 'flex-end', }}>
-                                    <TouchableOpacity style={{ alignSelf: 'flex-end', }} onPress={() => this.setState({ updateContactInfo: false })}>
+                                    <TouchableOpacity onPress={() => this.setState({ updateContactInfo: false })}>
                                         <LinearGradient colors={['#FFF', '#FFF']} style={styles.clearButtonContainer}>
                                             <Text style={styles.clearTextStyle}>{'Cancel'}</Text>
                                         </LinearGradient>
                                     </TouchableOpacity>
                                     <View style={{ width: 5 }}></View>
-                                    <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => this.setState({ updateContactInfo: false })}>
+                                    <TouchableOpacity style={{ justifyContent: 'center' }} onPress={() => this.setState({ updateContactInfo: false })}>
                                         <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
                                             <Text style={styles.checkButtonTextStyle}>{'Update'}</Text>
                                         </LinearGradient>

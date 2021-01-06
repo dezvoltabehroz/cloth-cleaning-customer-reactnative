@@ -11,6 +11,7 @@ export default StyleSheet.create({
         backgroundColor: '#29B1DB'
     },
     imageContainer: {
+        marginTop: 5,
         backgroundColor: 'white',
         marginHorizontal: '5%',
         paddingVertical: '2.5%',

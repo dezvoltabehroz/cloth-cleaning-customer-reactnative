@@ -47,7 +47,7 @@ export default StyleSheet.create({
 
     checkButtonTextStyle: {
         color: 'white',
-        textAlign: 'center',
+        // textAlign: 'center',
         fontFamily: 'Nunito-SemiBold'
     },
     clearTextStyle: {
@@ -59,6 +59,7 @@ export default StyleSheet.create({
         borderRadius: 35,
         height: 33,
         width: 95,
+        paddingBottom: '3%',
         justifyContent: 'center',
         alignItems: 'center',
         paddingHorizontal: '5%'
@@ -68,6 +69,7 @@ export default StyleSheet.create({
         height: 33,
         width: 95,
         borderWidth: 1,
+        paddingBottom: '3%',
         borderColor: '#0DA7DF',
         justifyContent: 'center',
         alignItems: 'center',

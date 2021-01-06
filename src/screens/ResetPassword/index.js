@@ -24,7 +24,7 @@ export default class ResetPassword extends Component {
                     <View style={styles.cardContainer}>
                         <View style={styles.content}>
                             <View style={{ marginTop: '5%' }}>
-                                <Input label="Email address" value={email}
+                                <Input label="Email address" value={email} disabled={true}
                                     labelStyle={{ fontSize: 10, color: email ? '#0DA7DF' : '#374B5C', fontFamily: 'Roboto-Regular' }}
                                     inputStyle={{ fontSize: 12, fontFamily: 'Roboto-Medium' }}
                                     containerStyle={{ marginHorizontal: 0, paddingHorizontal: 0 }}

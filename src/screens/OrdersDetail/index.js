@@ -87,10 +87,12 @@ export default class ProductDetail extends Component {
                                             <Text style={{ fontFamily: 'Roboto-Light', fontSize: 12, color: '#8E9297' }}>{moment().format('DD/MM/YYYY')}</Text>
                                         </View>
                                     </View>
-
+                                    <View>
+                                        <Text style={{ fontFamily: 'Roboto-Regular', fontSize: 12, color: '#7A7A7A' }}>{review}</Text>
+                                    </View>
                                 </View>
                                 :
-                                <TouchableOpacity onPress={() => this.setState({ ratingModal: true })} style={{ marginHorizontal: '5%', borderBottomWidth: 0.3, paddingBottom: 3, borderColor: '#7A7A7A' }}>
+                                <TouchableOpacity onPress={() => this.setState({ ratingModal: true })} style={{ marginHorizontal: '5%', borderBottomWidth: 0.3, paddingBottom: 3, marginBottom: 10, borderColor: '#7A7A7A' }}>
                                     <View style={styles.itemQuantityContainer}>
                                         <View>
                                             <Text style={styles.listTextStyle}>Write a review</Text>
