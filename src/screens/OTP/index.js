@@ -6,8 +6,11 @@ import CodeInput from 'react-native-confirmation-code-input';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import { AuthServices } from '../../services';
 import Logo from '../../assets/svg/logo.svg';
+import { connect } from 'react-redux';
+import { bindActionCreators } from "redux";
+import { authActions } from '../../redux/actions/auth';
 
-export default class OTP extends Component {
+class OTP extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -17,27 +20,30 @@ export default class OTP extends Component {
 
     // ============== func_HandleSubmitVerificationCode - Function Will allow user to verify the code to reset his/her password ==============
     func_HandleSubmitVerificationCode = () => {
-        const { password } = this.props.route.params;
+        const { password, userData, phoneAuthSnapshot } = this.props.route.params;
         if (password) {
             this.props.navigation.replace('NewPassword')
         }
         else {
-            this.props.navigation.replace('Main')
+            let data = {
+                ...userData,
+                code: phoneAuthSnapshot.code,
+                id: phoneAuthSnapshot.verificationId
+            }
+            console.log('data:', data)
+            this.props.authActions.verifyCode(data, this.props.navigation.replace)
         }
     }
 
     // ============== func_HandleResendCode - Function Will allow user to resend code to reset his/her email again ==============
     func_HandleResendCode = () => {
-        // AuthServices.getCodeForResetPass(email)
-        //     .then((response) => {
-        //         console.log(response.data);
-        //          this.props.navigation.replace('VerifyCode', { token: response.data.login_token })
-        //     })
-        //     .catch((err) => console.log(err))
+        const { userData } = this.props.route.params;
+        this.props.authActions.sendVerificationCode(userData, this.props.navigation.replace)
     }
 
     render() {
         const { value } = this.state;
+        const { userData } = this.props.route.params;
         return (
             <View>
                 <ImageBackground resizeMode="cover" style={styles.backgroundStyle} source={require('../../assets/images/verification.png')}>
@@ -47,8 +53,8 @@ export default class OTP extends Component {
                                 <Logo />
                             </View>
                             <View style={{ marginTop: '5%', }}>
-                                <Text style={styles.headingTextStyle}>Lorem Verification code send to your email</Text>
-                                <Text style={styles.headingTextStyle1}>jo****@gmail.com</Text>
+                                <Text style={styles.headingTextStyle}>Lorem Verification code send to your phone number </Text>
+                                <Text style={styles.headingTextStyle1}>{userData.phone}</Text>
                             </View>
                             <View style={styles.codeContainer}>
                                 <CodeInput
@@ -71,7 +77,7 @@ export default class OTP extends Component {
                         </View>
                         <View style={{ flex: 0.8, justifyContent: 'flex-end', marginBottom: '5%' }} >
                             <View style={{ alignItems: 'center', marginTop: '5%' }}>
-                                <Button disabled={value != '' ? false : true} loading={this.state.loading} title='Verify' onPress={this.func_HandleSubmitVerificationCode} />
+                                <Button disabled={value != '' ? false : true} loading={this.props.user.loading} title='Verify' onPress={this.func_HandleSubmitVerificationCode} />
                             </View>
                             <TouchableOpacity onPress={this.func_HandleResendCode} style={{ alignItems: 'center', marginTop: '5%' }} >
                                 <Text style={{ color: '#707070', fontFamily: 'Roboto-Regular', }}>Resend Code</Text>
@@ -83,3 +89,15 @@ export default class OTP extends Component {
         );
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        user: state.authReducer || {}
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        authActions: bindActionCreators(authActions, dispatch),
+    };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(OTP)

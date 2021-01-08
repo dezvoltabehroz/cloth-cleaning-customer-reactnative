@@ -4,7 +4,7 @@ import {
     StatusBar,
     View,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 class AuthLoadingScreen extends React.Component {
@@ -15,9 +15,9 @@ class AuthLoadingScreen extends React.Component {
 
     _bootstrapAsync = async () => {
 
-        const userToken = await AsyncStorage.getItem('USER_TOKEN');
+        const userToken = await AsyncStorage.getItem('USER');
         if (userToken) {
-            // this.props.navigation.replace('Main');
+            this.props.navigation.replace('Main');
         } else {
             this.props.navigation.replace('Auth');
         }

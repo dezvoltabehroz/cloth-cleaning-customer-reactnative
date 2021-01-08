@@ -9,6 +9,9 @@ import User from '../../assets/svg/user.svg';
 import Bag from '../../assets/svg/bag.svg';
 import Question from '../../assets/svg/question.svg';
 import Logout from '../../assets/svg/logout.svg';
+import { authActions } from '../../redux/actions/auth';
+import { useDispatch } from 'react-redux';
+
 const Drawer = createDrawerNavigator();
 const BadgedIcon = withBadge(1)(Icons);
 function MainRoutes() {
@@ -22,6 +25,7 @@ function MainRoutes() {
 }
 
 function CustomDrawerContent({ navigation }) {
+    const dispatch = useDispatch();
     return (
         <>
             <View style={{ flex: 1 }} >
@@ -51,7 +55,7 @@ function CustomDrawerContent({ navigation }) {
                         <Question height={16} width={16} />
                         <Text style={{ color: "#0092C7", marginLeft: "10%", fontFamily: 'Roboto-Regular', fontSize: 12 }} >About</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => navigation.replace('Auth')} style={styles.itemStyle}>
+                    <TouchableOpacity onPress={() => dispatch(authActions.removeUser(navigation.replace))} style={styles.itemStyle}>
                         <Logout height={16} width={16} />
                         <Text style={{ color: "#0092C7", marginLeft: "10%", fontFamily: 'Roboto-Regular', fontSize: 12 }} >Logout</Text>
                     </TouchableOpacity>
@@ -86,6 +90,6 @@ const styles = StyleSheet.create({
     },
     itemStyle: { flexDirection: 'row', height: 54, alignItems: 'center', paddingLeft: '10%' },
     policyStyles: { paddingLeft: '10%', paddingVertical: '10%' }
-})
+});
 
 export default MainRoutes;

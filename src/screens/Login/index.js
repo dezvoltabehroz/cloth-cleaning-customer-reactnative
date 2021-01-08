@@ -4,37 +4,27 @@ import { Button, Input, ClearButton } from '../../components';
 import styles from './style';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { AuthServices } from '../../services';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
+import { connect } from 'react-redux';
+import { bindActionCreators } from "redux";
+import { authActions } from '../../redux/actions/auth';
 import Logo from '../../assets/svg/logo.svg';
 import Google from '../../assets/svg/google.svg';
-export default class Login extends Component {
+class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
         };
     }
 
     // ============== func_HandleLogin - Function Will allow user to get login ==============
-    func_HandleLogin = () => {
-        this.setState({ loading: true });
-        this.props.navigation.replace('Main');
-        // let userData = {
-        //     email: this.state.email,
-        //     password: this.state.password
-        // }
-        // AuthServices.userLogin(userData)
-        //     .then(async (response) => {
-        //         await AsyncStorage.setItem('USER_TOKEN', JSON.stringify(response.data.login_token));
-        //         this.props.navigation.replace('Main');
-        //         this.setState({ loading: false });
-        //     })
-        //     .catch((error) => {
-        //         if (error.message == 'Request failed with status code 401') {
-        //             Alert.alert("Attension", "Invalid Credentials");
-        //             this.setState({ loading: false });
-        //         }
-        //     })
+    func_HandleLogin = async () => {
+        const { replace } = this.props.navigation;
+        let userData = {
+            email: this.state.email,
+            password: this.state.password
+        }
+        await this.props.authActions.userLogin(userData, replace);
     }
 
     // ============== func_HandleSignUp - Function Will allow user to register himself ==============
@@ -69,14 +59,14 @@ export default class Login extends Component {
                                     placeholder="Password"
                                     value={password}
                                     secureTextEntry={true}
-                                    onChangeText={(password) => this.setState({ password: password }, () => console.log(password))}
+                                    onChangeText={(password) => this.setState({ password })}
                                 />
                             </View>
                             <TouchableOpacity onPress={() => this.props.navigation.navigate('ForgetPassword')} style={{ marginHorizontal: '7%', alignItems: 'flex-end' }} >
                                 <Text style={{ fontFamily: 'Nunito-Regular' }} >Forget Password?</Text>
                             </TouchableOpacity>
                             <View style={{ alignItems: 'center', marginTop: '5%' }}>
-                                <Button loading={loading} title='Login' onPress={() => this.func_HandleLogin()} />
+                                <Button disabled={email && password ? false : true} loading={this.props.user.loading} title='Login' onPress={() => this.func_HandleLogin()} />
                             </View>
                             <View style={{ alignItems: 'center', marginTop: '5%' }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 5, borderWidth: 0.5, borderColor: 'red', height: 44, width: 180 }}>
@@ -98,3 +88,16 @@ export default class Login extends Component {
         );
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        user: state.authReducer || {}
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        authActions: bindActionCreators(authActions, dispatch)
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

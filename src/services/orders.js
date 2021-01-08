@@ -12,13 +12,13 @@ let configToken = (token) => {
 }
 const Api = {
 
-    getCategories: function () {
-        return axiosInstance.get('buyer/getCategories', config)
-    },
-    getproductsforcustomer: function (userData) {
-        return axiosInstance.post('buyer/getproductsforcustomer', {
-            category_id: userData.category_id
+    getcustomerorders: function (userData) {
+        return axiosInstance.post('buyer/getcustomerorders', {
+            customer_id: userData.id,
         }, configToken(userData.token))
+    },
+    getproductsforcustomer: function () {
+        return axiosInstance.get('buyer/getproductsforcustomer', config)
     },
 
 

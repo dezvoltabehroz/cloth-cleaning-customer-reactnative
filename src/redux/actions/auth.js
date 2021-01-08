@@ -9,12 +9,9 @@ import {
     USER_EMAIL_AND_PASSWORD_SUCCESS,
     HEALTH_AND_SEFATY_SUCCESS
 } from '../types';
-import { RegisterUser } from '../../services';
+import { AuthServices, RegisterUser } from '../../services';
 import { Alert, Linking, Platform } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import { categoryActions } from './category';
-import { barberActions } from './barbers';
-import { notificationActions } from './notification'
 import auth from '@react-native-firebase/auth';
 import messaging from '@react-native-firebase/messaging';
 import io from 'socket.io-client';
@@ -24,11 +21,6 @@ const setUserProfile = (userData) => {
     return (dispatch) => {
         if (userData) {
             dispatch({ type: USER_LOGIN_SUCCESS, userData: userData, })
-            if (userData.type == 'customer') {
-                dispatch(barberActions.getBarbersList(userData));
-                dispatch(categoryActions.getCategories(userData));
-            }
-            dispatch(notificationActions.getNotification(userData));
         }
     }
 };
@@ -39,47 +31,22 @@ const getUserProfile = (userData, navigate) => {
         if (loading) {
             dispatch({ type: LOADING_SUCCESS, loading: loading })
         }
-        RegisterUser.getUserProfile(userData)
+        AuthServices.getUserProfile(userData)
             .then(async (responseData) => {
                 if (responseData.data.success != 'undefined' && responseData.data.success == false) {
                     dispatch(removeUser(navigate));
                     dispatch({ type: LOADING_SUCCESS, loading: !loading })
                 }
                 else {
-                    if (responseData.data.status) {
-                        socket.on("updateNotification", async ({ receiver_id }) => {
-                            if (receiver_id === responseData.data.userData[0].id) {
-                                await dispatch(notificationActions.getNotification(responseData.data.userData[0]));
-                            }
-                        });
-                        await dispatch(setUserProfile(responseData.data.userData[0]))
-                        AsyncStorage.setItem('USER', JSON.stringify(responseData.data.userData[0]))
-                        if (navigate) {
-                            if (responseData.data.userData[0].type == "customer") {
-                                navigate('Customer');
-                            } else if (userData.update) {
-                                navigate();
-                            }
-                            else {
-                                switch (responseData.data.userData[0].steps_count) {
-                                    case 0:
-                                        navigate('Services');
-                                        break;
-                                    case 1:
-                                        navigate('PriceandTime');
-                                        break;
-                                    case 2:
-                                        navigate('WorkingDays');
-                                        break;
-                                    case 3:
-                                        navigate('ScheduleTime');
-                                        break;
-                                    default:
-                                        navigate('Barber');
-                                        break;
-                                }
-                            }
-                        }
+                    if (responseData.data.success) {
+                        // socket.on("updateNotification", async ({ receiver_id }) => {
+                        //     if (receiver_id === responseData.data.userData[0].id) {
+                        //         await dispatch(notificationActions.getNotification(responseData.data.userData[0]));
+                        //     }
+                        // });
+                        await dispatch(setUserProfile(responseData.data.result))
+                        AsyncStorage.setItem('USER', JSON.stringify(responseData.data.result))
+                        navigate('Main');
                         dispatch({ type: LOADING_SUCCESS, loading: false })
                     }
                     // else {
@@ -99,58 +66,47 @@ const setSocialNetworkUserData = (userData) => {
     })
 };
 
-const sendVerificationCode = (number, navigate) => {
+const sendVerificationCode = (userData, navigate) => {
     return (dispatch) => {
         let loading = true;
         if (loading) {
             dispatch({ type: LOADING_SUCCESS, loading: loading })
         }
-        RegisterUser.sendCodeToPhoneNumber(number)
-            .then(response => {
-                if (response.data.status) {
-                    auth().verifyPhoneNumber(number, 60)
-                        .on('state_changed', (phoneAuthSnapshot) => {
-                            switch (phoneAuthSnapshot.state) {
-                                case auth.PhoneAuthState.CODE_SENT:
-                                    dispatch({ type: SEND_CODE_TO_USER_PHONENUMBER_SUCCESS, userData: { phone: number }, loading: !loading })
-                                    AsyncStorage.setItem('Phone', JSON.stringify(number))
-                                    navigate('PhoneVerification', { verificationId: phoneAuthSnapshot.verificationId })
-                                    break;
-                                case auth.PhoneAuthState.ERROR: // or 'error'
-                                    console.log(phoneAuthSnapshot.error.code)
-                                    Alert.alert('Phone number is not correct')
-                                    dispatch({ type: LOADING_SUCCESS, loading: !loading })
-                                    break;
-                                // case auth.PhoneAuthState.AUTO_VERIFY_TIMEOUT:
-                                //     console.log('verify time out')
-                                //     dispatch({ type: SEND_CODE_TO_USER_PHONENUMBER_SUCCESS, userData: { phone: number }, loading: !loading })
-                                //     navigate('PhoneVerification', { verificationId: phoneAuthSnapshot.verificationId })
-                                //     break;
-                                case auth.PhoneAuthState.AUTO_VERIFIED: // or 'error'
-                                    // console.log('verified', phoneAuthSnapshot)
-                                    if (phoneAuthSnapshot.code == null && phoneAuthSnapshot.verificationId == null) {
-                                        Alert.alert('Phone number is already in use');
-                                        dispatch({ type: LOADING_SUCCESS, loading: !loading })
-                                    }
-                                    else {
-                                        let userData = {
-                                            phone: number,
-                                            code: phoneAuthSnapshot.code,
-                                            id: phoneAuthSnapshot.verificationId
-                                        }
-                                        dispatch(verifyCode(userData, navigate))
-                                    }
-                                    break;
+
+        auth().verifyPhoneNumber(userData.phone, 60)
+            .on('state_changed', (phoneAuthSnapshot) => {
+                switch (phoneAuthSnapshot.state) {
+                    case auth.PhoneAuthState.CODE_SENT:
+                        dispatch({ type: SEND_CODE_TO_USER_PHONENUMBER_SUCCESS, userData: { phone: userData.phone }, loading: !loading })
+                        AsyncStorage.setItem('Phone', JSON.stringify(userData.phone))
+                        navigate('OTP', { phoneAuthSnapshot: phoneAuthSnapshot, password: false, userData: userData })
+                        break;
+                    case auth.PhoneAuthState.ERROR: // or 'error'
+                        console.log(phoneAuthSnapshot.error.code)
+                        Alert.alert('Phone number is not correct')
+                        dispatch({ type: LOADING_SUCCESS, loading: !loading })
+                        break;
+                    case auth.PhoneAuthState.AUTO_VERIFIED: // or 'error'
+                        if (phoneAuthSnapshot.code == null && phoneAuthSnapshot.verificationId == null) {
+                            Alert.alert('Phone number is already in use');
+                            dispatch({ type: LOADING_SUCCESS, loading: !loading })
+                        }
+                        else {
+                            let data = {
+                                ...userData,
+                                code: phoneAuthSnapshot.code,
+                                id: phoneAuthSnapshot.verificationId
                             }
-                        }, (error) => {
-                            console.log(error);
-                        });
+                            console.log('data:', data)
+                            dispatch(verifyCode(data, navigate))
+                        }
+                        break;
                 }
-                else {
-                    Alert.alert(response.data.message)
-                    dispatch({ type: LOADING_SUCCESS, loading: !loading })
-                }
-            }).catch(error => { })
+            }, (error) => {
+                console.log(error);
+            });
+
+
     };
 
 };
@@ -164,17 +120,21 @@ const verifyCode = (userData, navigate) => {
         var credential = auth.PhoneAuthProvider.credential(userData.id, userData.code);
         if (credential) {
             console.log('User email: ', credential);
-            RegisterUser.verifyTheCode(userData)
+            AuthServices.userSignUp(userData)
                 .then(response => {
-                    if (response.data.status) {
+                    if (response.data.success) {
                         dispatch({ type: IS_USER_VERIFIED_SUCCESS, loading: !loading })
-                        navigate('PhoneVerified');
+                        dispatch(userLogin(userData, navigate))
                     }
                     else {
-                        Alert.alert(response.data.message)
+                        Alert.alert(response.data.msg)
                         dispatch({ type: LOADING_SUCCESS, loading: !loading })
                     }
                 }).catch(error => {
+                    Alert.alert("This Email already exists", "", [
+                        { text: "OK", onPress: () => navigate('Auth') }
+                    ])
+                    dispatch({ type: LOADING_SUCCESS, loading: !loading })
                     console.log(error)
                 })
         }
@@ -267,15 +227,15 @@ const userLogin = (userData, navigate) => {
         if (loading) {
             dispatch({ type: LOADING_SUCCESS, loading: loading })
         }
-        RegisterUser.userLogin(userData)
+        AuthServices.userLogin(userData)
             .then(async (responseData) => {
-                if (responseData.data.status) {
-                    await requestUserPermission(responseData.data.userData[0], dispatch, navigate)
-
+                if (responseData.data.success) {
+                    await requestUserPermission(responseData.data.result, dispatch, navigate)
+                    AsyncStorage.setItem('TOKEN', JSON.stringify(responseData.data.result.access_token))
                     AsyncStorage.setItem('Email', JSON.stringify(userData))
                 }
                 else {
-                    Alert.alert(responseData.data.message)
+                    Alert.alert(responseData.data.msg)
                     dispatch({ type: LOADING_SUCCESS, loading: !loading })
                 }
             })
@@ -319,15 +279,18 @@ const getFcmToken = async (userData, dispatch, navigate) => {
     const fcmToken = await messaging().getToken();
     if (fcmToken) {
         let data = {
-            id: userData.id,
+            id: userData.user.id,
             fcmToken: fcmToken,
-            token: userData.token
+            token: userData.access_token
         }
-        RegisterUser.updateFCMToken(data)
-            .then(async (res) => {
-                if (res.data.status) {
+        console.log("data:", data)
+        console.log("userData:", userData)
+        AuthServices.addFcmToken(data)
+            .then((res) => {
+                if (res.data.success) {
                     dispatch(getUserProfile(userData, navigate))
                 }
+
             }).catch((err) => console.log(err))
     } else {
         console.log("Failed", "No token received");
