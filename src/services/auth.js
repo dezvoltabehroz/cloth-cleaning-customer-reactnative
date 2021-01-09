@@ -41,7 +41,7 @@ const Api = {
         }, configToken(userData.token))
     },
     getUserProfile: function (userData) {
-        return axiosInstance.get(`buyer/customerdetails?id=${userData.user.id}`)
+        return axiosInstance.get(`buyer/customerdetails?id=${userData.user != undefined ? userData.user.id : userData.id}`)
     },
     updateUserProfile: function (userData) {
         return axiosInstance.put('buyer/updatecustomer', {

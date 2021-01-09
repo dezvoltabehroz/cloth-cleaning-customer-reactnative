@@ -17,10 +17,11 @@ import messaging from '@react-native-firebase/messaging';
 import io from 'socket.io-client';
 const socket = io.connect('http://ec2-18-204-20-183.compute-1.amazonaws.com:3000'); //dev
 
-const setUserProfile = (userData) => {
+const setUserProfile = (userData, navigate) => {
     return (dispatch) => {
         if (userData) {
-            dispatch({ type: USER_LOGIN_SUCCESS, userData: userData, })
+            dispatch({ type: USER_LOGIN_SUCCESS, userData: userData, loading: false });
+            navigate('Main');
         }
     }
 };
@@ -38,17 +39,15 @@ const getUserProfile = (userData, navigate) => {
                     dispatch({ type: LOADING_SUCCESS, loading: !loading })
                 }
                 else {
-                    if (responseData.data.success) {
-                        // socket.on("updateNotification", async ({ receiver_id }) => {
-                        //     if (receiver_id === responseData.data.userData[0].id) {
-                        //         await dispatch(notificationActions.getNotification(responseData.data.userData[0]));
-                        //     }
-                        // });
-                        await dispatch(setUserProfile(responseData.data.result))
-                        AsyncStorage.setItem('USER', JSON.stringify(responseData.data.result))
-                        navigate('Main');
-                        dispatch({ type: LOADING_SUCCESS, loading: false })
-                    }
+                    // socket.on("updateNotification", async ({ receiver_id }) => {
+                    //     if (receiver_id === responseData.data.userData[0].id) {
+                    //         await dispatch(notificationActions.getNotification(responseData.data.userData[0]));
+                    //     }
+                    // });
+                    await dispatch(setUserProfile(responseData.data.result, navigate))
+                    AsyncStorage.setItem('USER', JSON.stringify(responseData.data.result))
+                    // navigate('Main');
+                    dispatch({ type: LOADING_SUCCESS, loading: false })
                     // else {
                     //     Alert.alert(responseData.data.message)
                     //     dispatch({ type: LOADING_SUCCESS, loading: !loading })

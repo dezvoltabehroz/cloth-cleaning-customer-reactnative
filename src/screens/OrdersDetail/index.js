@@ -9,7 +9,10 @@ import StarRating from 'react-native-star-rating';
 import { Input } from 'react-native-elements'
 const screenWidth = Dimensions.get('window').width;
 import moment from 'moment'
-export default class ProductDetail extends Component {
+import { OrdersServices } from '../../services';
+import { connect } from 'react-redux';
+
+class OrderDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -34,7 +37,14 @@ export default class ProductDetail extends Component {
         }
     }
     componentDidMount = () => {
-        // this.handleTotalPrice(this.state.list)
+        let userData = {
+            id: this.props.user.userData.id,
+            token: this.props.user.userData.token,
+            order_id: this.props.route.params.order_id
+        }
+        OrdersServices.getOrderDetails(userData)
+            .then((res) => console.log(res.data))
+            .catch((err) => console.log(err))
     }
 
     onStarRatingPress(rating) {
@@ -240,7 +250,14 @@ export default class ProductDetail extends Component {
                     </View>
                 </Modal>
             </View>
-
         )
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        user: state.authReducer || {}
+    };
+};
+
+
+export default connect(mapStateToProps)(OrderDetail)

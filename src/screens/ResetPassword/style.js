@@ -86,4 +86,11 @@ export default StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: '5%'
     },
+    errorText: {
+        paddingTop: "1%",
+        paddingLeft: 8,
+        color: '#c30000',
+        fontSize: 12,
+        marginLeft: 5
+    },
 })

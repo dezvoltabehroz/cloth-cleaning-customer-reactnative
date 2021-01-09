@@ -12,14 +12,23 @@ let configToken = (token) => {
 }
 const Api = {
 
-    getcustomerorders: function (userData) {
+    getCustomerOrders: function (userData) {
         return axiosInstance.post('buyer/getcustomerorders', {
             customer_id: userData.id,
         }, configToken(userData.token))
     },
-    getproductsforcustomer: function () {
-        return axiosInstance.get('buyer/getproductsforcustomer', config)
+    getOrderDetails: function (userData) {
+        return axiosInstance.post('buyer/customerorderdetail', {
+            customer_id: userData.id,
+            order_id: userData.order_id
+        }, configToken(userData.token))
     },
+    placeCustomerOrder:function(userData){
+        return axiosInstance.post('buyer/placeorder',{
+            name:userData.name,
+            email:userData.email
+        },configToken(userData.token))
+    }
 
 
 

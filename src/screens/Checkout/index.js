@@ -206,7 +206,7 @@ export default class Checkout extends Component {
                                 </View>
                                 :
                                 <View style={{ flexDirection: 'row', bottom: '5%', justifyContent: 'center', alignItems: 'center', }}>
-                                    <TouchableOpacity onPress={() => this.props.navigation.replace('Home')}>
+                                    <TouchableOpacity onPress={() => this.props.navigation.replace('Main', { screen: 'Home' })}>
                                         <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
                                             <Text style={styles.checkButtonTextStyle}>{'Continue'}</Text>
                                         </LinearGradient>

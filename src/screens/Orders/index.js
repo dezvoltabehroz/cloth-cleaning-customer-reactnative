@@ -1,80 +1,33 @@
 import React, { Component } from 'react';
 import { FlatList, Text, View, TouchableOpacity } from 'react-native';
+import { OrdersServices } from '../../services';
 import styles from './style';
-
-export default class Orders extends Component {
+import { connect } from 'react-redux';
+import moment from 'moment'
+import { ActivityIndicator } from 'react-native';
+class Orders extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            ordersList: [
-                {
-                    date: '8 Dec 2020',
-                    status: 'Complete',
-                    orderNumber: '#00000456',
-                    totalPrice: '50'
-                },
-                {
-                    date: '8 Dec 2020',
-                    status: 'Pending',
-                    orderNumber: '#00000456',
-                    totalPrice: '50'
-                },
-                {
-                    date: '8 Dec 2020',
-                    status: 'Complete',
-                    orderNumber: '#00000456',
-                    totalPrice: '50'
-                },
-                {
-                    date: '8 Dec 2020',
-                    status: 'Pending',
-                    orderNumber: '#00000456',
-                    totalPrice: '50'
-                },
-                {
-                    date: '8 Dec 2020',
-                    status: 'Cancel',
-                    orderNumber: '#00000456',
-                    totalPrice: '50'
-                },
-                {
-                    date: '8 Dec 2020',
-                    status: 'Pending',
-                    orderNumber: '#00000456',
-                    totalPrice: '50'
-                },
-                {
-                    date: '8 Dec 2020',
-                    status: 'Complete',
-                    orderNumber: '#00000456',
-                    totalPrice: '50'
-                },
-                {
-                    date: '8 Dec 2020',
-                    status: 'Complete',
-                    orderNumber: '#00000456',
-                    totalPrice: '50'
-                },
-                {
-                    date: '8 Dec 2020',
-                    status: 'Confirm',
-                    orderNumber: '#00000456',
-                    totalPrice: '50'
-                },
-                {
-                    date: '8 Dec 2020',
-                    status: 'Complete',
-                    orderNumber: '#00000456',
-                    totalPrice: '50'
-                },
-                {
-                    date: '8 Dec 2020',
-                    status: 'Complete',
-                    orderNumber: '#00000456',
-                    totalPrice: '50'
-                },
-            ]
+            ordersList: [],
+            loading: true
         }
+    }
+
+    componentDidMount = () => {
+        let userData = {
+            id: this.props.user.userData.id,
+            token: this.props.user.userData.token
+        }
+        OrdersServices.getCustomerOrders(userData)
+            .then((res) => {
+                console.log('res.data:', res.data.result.rows)
+                this.setState({ ordersList: res.data.result.rows, loading: false })
+            })
+            .catch((err) => {
+                console.log(err)
+                this.setState({ ordersList: [], loading: false })
+            })
     }
 
     _renderListSeparator = () => {
@@ -85,7 +38,7 @@ export default class Orders extends Component {
 
     _renderItems = (item, index) => {
         return (
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('OrdersDetail', { status: item.status })} style={{
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('OrdersDetail', { order_id: item.id })} style={{
                 borderRadius: 10,
                 elevation: 2,
                 shadowOffset: {
@@ -101,37 +54,64 @@ export default class Orders extends Component {
                 paddingVertical: 5
             }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <Text style={styles.listTextStyle}>{item.date}</Text>
-                    <Text style={styles.listTextStyle}>{item.status}</Text>
+                    <Text style={styles.listTextStyle}>{moment(item.createdAt).format('ll')}</Text>
+                    <Text style={styles.listTextStyle}>{item.orderStatus}</Text>
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <Text style={styles.listColorTextStyle}>Order number:</Text>
-                    <Text style={styles.listColorTextStyle}>{item.orderNumber}</Text>
+                    <Text style={styles.listColorTextStyle}>{item.orderNumber ? item.orderNumber : '#00000456'}</Text>
                 </View>
                 <View style={styles.lineStyle}></View>
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                    <Text style={styles.listTextStyle}>Rs.{item.totalPrice}</Text>
+                    <Text style={styles.listTextStyle}>Rs.{item.grandTotal}</Text>
                 </View>
             </TouchableOpacity>
         )
     }
 
     render() {
-        const { ordersList } = this.state;
+        const { ordersList, loading } = this.state;
         return (
             <View style={styles.container}>
-                <View style={styles.headingConatiner}>
-                    <Text style={styles.headingTextStyle}>Past Orders</Text>
-                </View>
-                <View style={styles.listContainer}>
-                    <FlatList
-                        data={ordersList}
-                        contentContainerStyle={{ paddingBottom: 80 }}
-                        showsVerticalScrollIndicator={false}
-                        ItemSeparatorComponent={this._renderListSeparator}
-                        renderItem={({ item, index }) => this._renderItems(item, index)} />
-                </View>
+                {
+                    loading ?
+                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                            <ActivityIndicator size={30} color={'#0DA7DF'} />
+                        </View>
+                        :
+                        <>
+                            {
+                                ordersList.length == 0 ?
+                                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                        <Text style={styles.headingTextStyle}>No Orders found</Text>
+                                    </View>
+                                    :
+                                    <>
+                                        <View style={styles.headingConatiner}>
+                                            <Text style={styles.headingTextStyle}>Past Orders</Text>
+                                        </View>
+                                        <View style={styles.listContainer}>
+                                            <FlatList
+                                                data={ordersList}
+                                                contentContainerStyle={{ paddingBottom: 80 }}
+                                                showsVerticalScrollIndicator={false}
+                                                ItemSeparatorComponent={this._renderListSeparator}
+                                                renderItem={({ item, index }) => this._renderItems(item, index)} />
+                                        </View>
+                                    </>
+                            }
+                        </>
+                }
+
             </View>
         )
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        user: state.authReducer || {}
+    };
+};
+
+
+export default connect(mapStateToProps)(Orders)

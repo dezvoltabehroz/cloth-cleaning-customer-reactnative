@@ -15,7 +15,7 @@ const Api = {
     getCategories: function () {
         return axiosInstance.get('buyer/getCategories', config)
     },
-    getproductsforcustomer: function (userData) {
+    getProductsforCustomer: function (userData) {
         return axiosInstance.post('buyer/getproductsforcustomer', {
             category_id: userData.category_id
         }, configToken(userData.token))

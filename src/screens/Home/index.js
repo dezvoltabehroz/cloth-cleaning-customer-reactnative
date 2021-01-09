@@ -20,8 +20,11 @@ import Pent from '../../assets/svg/pent.svg';
 import Skert from '../../assets/svg/skert.svg';
 import HandBag from '../../assets/svg/handbag.svg';
 import JNamaz from '../../assets/svg/jnamaz.svg';
+import { connect } from 'react-redux';
+import { bindActionCreators } from "redux";
+import { authActions } from '../../redux/actions/auth';
 
-export default class Home extends Component {
+class Home extends Component {
 
     constructor(props) {
         super(props);
@@ -47,6 +50,7 @@ export default class Home extends Component {
                 },
             ],
             showQuantity: false,
+            productIndex: '',
             list: [
                 {
                     title: 'Lorem Ipsum Dolor',
@@ -94,14 +98,21 @@ export default class Home extends Component {
     }
 
     // ============== func_componentDidMount - Function Will get initial data from server ==============
-    componentDidMount = () => {
-        // let data = await AsyncStorage.getItem('USER_TOKEN');
-        // let token = JSON.parse(data)
-        // HomeServices.myInvitations(token)
-        //     .then((response) => {
-        //         console.log(response.data);
-        //     })
-        //     .catch((err) => { console.log(err) })
+    componentDidMount = async () => {
+        let data = await AsyncStorage.getItem('TOKEN');
+        let token = JSON.parse(data);
+        if (token) {
+            HomeServices.getCategories()
+                .then((response) => {
+                    HomeServices.getProductsforCustomer(response.data.result[0].id)
+                        .then((res) => {
+                            console.log("res.data:", res.data)
+                            this.setState({ data: response.data.result })
+                        })
+                })
+                .catch((err) => { console.log(err) })
+
+        }
     }
 
     // ============== func_searchFilter - Function Will allow user to Search jobs ==============
@@ -116,7 +127,7 @@ export default class Home extends Component {
     _renderItems = (item, index) => {
         return (
             <>
-                <TouchableOpacity onPress={() => { this.setState({ index: index }) }} style={{ height: 95, width: 105, }}>
+                <TouchableOpacity onPress={() => { this.setState({ index: index }, () => console.log('this.props.user.userData:', this.props.user)) }} style={{ height: 95, width: 105, }}>
                     <View style={{
                         borderColor: index == this.state.index ? '#EAF7FB' : "#EEE",
                         borderWidth: 0.3,
@@ -134,20 +145,20 @@ export default class Home extends Component {
                         marginBottom: '1%',
                     }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: '5%' }}>
-                            {item.title == 'Dry Clean' ?
+                            {item.name == 'Dry Clean' ?
                                 <Laundry />
-                                : item.title == 'Iron Only' ?
+                                : item.name == 'Iron Only' ?
                                     <Iron />
-                                    : item.title == 'Linen & Bedsheet' ?
+                                    : item.name == 'Linen & Bedsheet' ?
                                         <Machine />
-                                        : item.title == 'Wash & Iron' ?
+                                        : item.name == 'Wash & Iron' ?
                                             <Fold />
                                             :
                                             <Basket />}
                         </View>
                     </View>
                     <View style={{ marginTop: '5%', alignItems: 'center', justifyContent: 'center' }}>
-                        <Text style={{ fontSize: 12, color: index == this.state.index ? '#0DA7DF' : '#B5B5B5', fontFamily: 'Roboto-Medium' }}>{item.title}</Text>
+                        <Text style={{ fontSize: 12, color: index == this.state.index ? '#0DA7DF' : '#B5B5B5', fontFamily: 'Roboto-Medium' }}>{item.name}</Text>
                     </View>
                 </TouchableOpacity>
 
@@ -170,7 +181,7 @@ export default class Home extends Component {
     }
 
     _renderListItems = (item, index) => {
-        const { showQuantity } = this.state;
+        const { showQuantity, productIndex } = this.state;
         return (
 
 
@@ -221,7 +232,7 @@ export default class Home extends Component {
                     <View style={{ marginHorizontal: '5%', flexDirection: 'column', justifyContent: 'center' }}>
                         <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 13, height: 18 }}>{item.title}</Text>
                         <Text style={{ fontSize: 12, color: '#7A7A7A', fontFamily: 'Roboto-Regular', height: 16 }}>Rs. {item.price}</Text>
-                        {showQuantity ?
+                        {showQuantity && productIndex == index ?
                             <View style={{
                                 flexDirection: 'row', marginLeft: -5,
                                 alignSelf: 'flex-start',
@@ -241,7 +252,7 @@ export default class Home extends Component {
                                 </TouchableOpacity>
                             </View>
                             :
-                            <TouchableOpacity onPress={() => this.setState({ showQuantity: true })}>
+                            <TouchableOpacity onPress={() => this.setState({ showQuantity: true, productIndex: index })}>
                                 <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={{
                                     justifyContent: 'center',
                                     elevation: 2,
@@ -324,3 +335,16 @@ export default class Home extends Component {
     }
 
 }
+const mapStateToProps = (state) => {
+    return {
+        user: state.authReducer || {}
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        authActions: bindActionCreators(authActions, dispatch)
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
