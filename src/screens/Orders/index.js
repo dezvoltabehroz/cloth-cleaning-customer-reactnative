@@ -59,7 +59,7 @@ class Orders extends Component {
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <Text style={styles.listColorTextStyle}>Order number:</Text>
-                    <Text style={styles.listColorTextStyle}>{item.orderNumber ? item.orderNumber : '#00000456'}</Text>
+                    {/* <Text style={styles.listColorTextStyle}>{item.orderNumber ? item.orderNumber : '#00000456'}</Text> */}
                 </View>
                 <View style={styles.lineStyle}></View>
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>

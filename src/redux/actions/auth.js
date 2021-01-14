@@ -18,10 +18,13 @@ import io from 'socket.io-client';
 const socket = io.connect('http://ec2-18-204-20-183.compute-1.amazonaws.com:3000'); //dev
 
 const setUserProfile = (userData, navigate) => {
-    return (dispatch) => {
+    return async (dispatch) => {
+        let token = await AsyncStorage.getItem('TOKEN')
+        let data = JSON.parse(token)
         if (userData) {
-            dispatch({ type: USER_LOGIN_SUCCESS, userData: userData, loading: false });
-            navigate('Main');
+            dispatch({ type: USER_LOGIN_SUCCESS, userData: userData, userToken: data, loading: false });
+            if (navigate != null)
+                navigate('Main');
         }
     }
 };
@@ -213,10 +216,10 @@ const UpdateEmailAddressandToken = (userData, navigate) => {
 };
 
 const removeUser = (navigate) => {
-    return (dispatch) => {
+    return async (dispatch) => {
+        await navigate('Auth')
+        await AsyncStorage.removeItem('USER');
         dispatch({ type: USER_LOGOUT_SUCCESS })
-        AsyncStorage.removeItem('USER');
-        navigate('Auth')
     }
 };
 
@@ -238,7 +241,11 @@ const userLogin = (userData, navigate) => {
                     dispatch({ type: LOADING_SUCCESS, loading: !loading })
                 }
             })
-            .catch(err => { console.log(err) })
+            .catch(err => {
+                console.log(err)
+                Alert.alert("Email or Password is incorrect")
+                dispatch({ type: LOADING_SUCCESS, loading: !loading })
+            })
     }
 };
 const requestUserPermission = async function (data, dispatch, navigate) {

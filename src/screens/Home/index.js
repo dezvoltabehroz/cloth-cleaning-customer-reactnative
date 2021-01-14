@@ -23,6 +23,8 @@ import JNamaz from '../../assets/svg/jnamaz.svg';
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import { authActions } from '../../redux/actions/auth';
+import { cartActions } from '../../redux/actions/cart';
+import { ActivityIndicator } from 'react-native';
 
 class Home extends Component {
 
@@ -32,67 +34,12 @@ class Home extends Component {
             value: '',
             loading: true,
             index: 0,
-            data: [
-                {
-                    title: 'Iron Only'
-                },
-                {
-                    title: 'Dry Clean'
-                },
-                {
-                    title: 'Linen & Bedsheet'
-                },
-                {
-                    title: 'Wash & Iron'
-                },
-                {
-                    title: 'Wash & Fold'
-                },
-            ],
+            data: [],
             showQuantity: false,
             productIndex: '',
-            list: [
-                {
-                    title: 'Lorem Ipsum Dolor',
-                    price: 50,
-                    quantity: '1',
-                },
-                {
-                    title: 'Lorem Ipsum Dolor',
-                    price: 50,
-                    quantity: '1',
-                },
-                {
-                    title: 'Lorem Ipsum Dolor',
-                    price: 50,
-                    quantity: '1',
-                },
-                {
-                    title: 'Lorem Ipsum Dolor',
-                    price: 50,
-                    quantity: '1',
-                },
-                {
-                    title: 'Lorem Ipsum Dolor',
-                    price: 50,
-                    quantity: '1',
-                },
-                {
-                    title: 'Lorem Ipsum Dolor',
-                    price: 50,
-                    quantity: '1',
-                },
-                {
-                    title: 'Lorem Ipsum Dolor',
-                    price: 50,
-                    quantity: '1',
-                },
-                {
-                    title: 'Lorem Ipsum Dolor',
-                    price: 50,
-                    quantity: '1',
-                },
-            ]
+            list: [],
+            categoryLoading: true,
+            productLoading: true
 
         }
     }
@@ -104,15 +51,27 @@ class Home extends Component {
         if (token) {
             HomeServices.getCategories()
                 .then((response) => {
-                    HomeServices.getProductsforCustomer(response.data.result[0].id)
-                        .then((res) => {
-                            console.log("res.data:", res.data)
-                            this.setState({ data: response.data.result })
-                        })
+                    this.setState({ data: response.data.result, categoryLoading: false })
+                    this.getProductsCategory(response.data.result[0].id)
                 })
                 .catch((err) => { console.log(err) })
 
         }
+    }
+
+    getProductsCategory = (id) => {
+        HomeServices.getProductsforCustomer(id)
+            .then((res) => {
+                let data = [...res.data.result.rows];
+                let array = [];
+                data.forEach(element => {
+                    if (element.category_id == id) {
+                        let item = { ...element, quantity: '1', }
+                        array.push(item);
+                    }
+                });
+                this.setState({ list: array, productLoading: false })
+            })
     }
 
     // ============== func_searchFilter - Function Will allow user to Search jobs ==============
@@ -127,7 +86,7 @@ class Home extends Component {
     _renderItems = (item, index) => {
         return (
             <>
-                <TouchableOpacity onPress={() => { this.setState({ index: index }, () => console.log('this.props.user.userData:', this.props.user)) }} style={{ height: 95, width: 105, }}>
+                <TouchableOpacity onPress={() => { this.getProductsCategory(item.id); this.setState({ index: index }) }} style={{ height: null, width: 105, }}>
                     <View style={{
                         borderColor: index == this.state.index ? '#EAF7FB' : "#EEE",
                         borderWidth: 0.3,
@@ -145,11 +104,11 @@ class Home extends Component {
                         marginBottom: '1%',
                     }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: '5%' }}>
-                            {item.name == 'Dry Clean' ?
+                            {item.name == 'Dry cleaning' ?
                                 <Laundry />
-                                : item.name == 'Iron Only' ?
+                                : item.name == 'Iron only' ?
                                     <Iron />
-                                    : item.name == 'Linen & Bedsheet' ?
+                                    : item.name == 'Bedsheet & Blankets' ?
                                         <Machine />
                                         : item.name == 'Wash & Iron' ?
                                             <Fold />
@@ -157,6 +116,25 @@ class Home extends Component {
                                             <Basket />}
                         </View>
                     </View>
+                    {/* <View style={{
+                        borderColor: index == this.state.index ? '#EAF7FB' : "#EEE",
+                        borderWidth: 0.3,
+                        borderRadius: 10,
+                        elevation: 2,
+                        shadowColor: index == this.state.index ? '#EAF7FB' : "#000",
+                        shadowOffset: { width: 0, height: 1 },
+                        shadowOpacity: 0.20,
+                        shadowRadius: 1.41,
+                        height: 60,
+                        width: 105,
+                        alignItems: 'center',
+                        backgroundColor: index == this.state.index ? '#EAF7FB' : 'white',
+                        justifyContent: 'center',
+                        marginTop: '10%',
+                        marginBottom: '1%',
+                    }}>
+                        <Image source={{ uri: `https://dhobiuncle.pk/${item.image}` }} style={{ height: 50, width: 50, justifyContent: 'center', backgroundColor: index == this.state.index ? '#EAF7FB' : 'white', }} />
+                    </View> */}
                     <View style={{ marginTop: '5%', alignItems: 'center', justifyContent: 'center' }}>
                         <Text style={{ fontSize: 12, color: index == this.state.index ? '#0DA7DF' : '#B5B5B5', fontFamily: 'Roboto-Medium' }}>{item.name}</Text>
                     </View>
@@ -168,15 +146,29 @@ class Home extends Component {
 
     handleAddQuantity = (item, index) => {
         let array = [...this.state.list];
+        let cartArray = [...this.props.cart.cart];
+        cartArray.map((element, i) => {
+            if (element.id == item.id) {
+                cartArray[i] = { ...cartArray[i], quantity: (parseInt(element.quantity) + 1) };
+            }
+        })
+        this.props.cartActions.setCart(cartArray);
         array[index] = { ...array[index], quantity: (parseInt(item.quantity) + 1) };
-        this.setState({ list: array })
+        this.setState({ list: array }, () => console.log("handleAddQuantity:", this.props.cart.cart))
         // this.handleTotalPrice(array)
     }
 
     handleMinusQuantity = (item, index) => {
         let array = [...this.state.list];
+        let cartArray = [...this.props.cart.cart];
+        cartArray.map((element, i) => {
+            if (element.id == item.id) {
+                cartArray[i] = { ...cartArray[i], quantity: element.quantity == "1" ? element.quantity : (parseInt(element.quantity) - 1) };
+            }
+        })
+        this.props.cartActions.setCart(cartArray);
         array[index] = { ...array[index], quantity: item.quantity == '1' ? item.quantity : (parseInt(item.quantity) - 1) };
-        this.setState({ list: array });
+        this.setState({ list: array }, () => console.log("handleMinusQuantity:", this.props.cart.cart));
         // this.handleTotalPrice(array)
     }
 
@@ -211,7 +203,11 @@ class Home extends Component {
                         borderWidth: 1,
                         borderRadius: 9
                     }}>
-                        {
+                        <Image resizeMode="contain" source={{ uri: `https://dhobiuncle.pk/${item.thumbnail}` }} style={{
+                            height: 96,
+                            width: 122,
+                        }} />
+                        {/* {
                             index == 0 ?
                                 <Fraq />
                                 : index == 1 ?
@@ -227,12 +223,12 @@ class Home extends Component {
                                                     : index == 6 ?
                                                         <HandBag />
                                                         : <JNamaz />
-                        }
+                        } */}
                     </View>
                     <View style={{ marginHorizontal: '5%', flexDirection: 'column', justifyContent: 'center' }}>
-                        <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 13, height: 18 }}>{item.title}</Text>
+                        <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 13, height: 18 }}>{item.name}</Text>
                         <Text style={{ fontSize: 12, color: '#7A7A7A', fontFamily: 'Roboto-Regular', height: 16 }}>Rs. {item.price}</Text>
-                        {showQuantity && productIndex == index ?
+                        {showQuantity && productIndex == item.id ?
                             <View style={{
                                 flexDirection: 'row', marginLeft: -5,
                                 alignSelf: 'flex-start',
@@ -252,7 +248,28 @@ class Home extends Component {
                                 </TouchableOpacity>
                             </View>
                             :
-                            <TouchableOpacity onPress={() => this.setState({ showQuantity: true, productIndex: index })}>
+                            <TouchableOpacity onPress={() => {
+                                let array = [];
+                                if (this.props.cart.cart.length == 0) {
+                                    array.push(item)
+                                }
+                                else {
+                                    array = [...this.props.cart.cart];
+                                    array.map((element) => {
+                                        if (element.id == item.id) {
+                                        }
+                                        else {
+                                            if (array.some(data => data.id === item.id)) {
+                                            } else {
+                                                array.push(item)
+                                            }
+                                        }
+                                    })
+                                }
+                                console.log("array:", array);
+                                this.props.cartActions.setCart(array);
+                                this.setState({ showQuantity: true, productIndex: item.id })
+                            }}>
                                 <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={{
                                     justifyContent: 'center',
                                     elevation: 2,
@@ -309,24 +326,42 @@ class Home extends Component {
                     </View>
                     <View style={styles.upperListContainer}>
                         <Text style={styles.headingStyle}>Choose Services</Text>
-                        <FlatList
-                            data={this.state.data}
-                            showsHorizontalScrollIndicator={false}
-                            horizontal={true}
-                            ItemSeparatorComponent={this._renderSeparator}
-                            renderItem={({ item, index }) => this._renderItems(item, index)}
-                            keyExtractor={item => item} />
+                        {this.state.categoryLoading ?
+                            <View style={{ justifyContent: 'center', alignItems: 'center', height: 90 }}>
+                                <ActivityIndicator size={30} color={'#0DA7DF'} />
+                            </View>
+                            :
+                            <FlatList
+                                data={this.state.data}
+                                showsHorizontalScrollIndicator={false}
+                                horizontal={true}
+                                ItemSeparatorComponent={this._renderSeparator}
+                                renderItem={({ item, index }) => this._renderItems(item, index)}
+                                keyExtractor={item => item} />}
                     </View>
                 </View>
-                <View style={{ flex: 1, marginTop: 62 }}>
-                    <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: '0.5%', }}>
+                <View style={{ flex: 1, marginTop: 70 }}>
+                    <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: '2.5%', }}>
                         <View style={styles.lowerListContainer}>
-                            <FlatList
-                                data={this.state.list}
-                                showsVerticalScrollIndicator={false}
-                                ItemSeparatorComponent={this._renderListSeparator}
-                                renderItem={({ item, index }) => this._renderListItems(item, index)}
-                                keyExtractor={item => item} />
+
+                            {
+                                this.state.productLoading ?
+                                    <View style={{ justifyContent: 'center', alignItems: 'center', height: 90 }}>
+                                        <ActivityIndicator size={30} color={'#0DA7DF'} />
+                                    </View>
+                                    :
+                                    this.state.list.length == 0 ?
+                                        <View style={{ justifyContent: 'center', marginTop: '20%' }}>
+                                            <Text style={{ textAlign: "center", fontFamily: 'Roboto-Bold' }}>No product found</Text>
+                                        </View>
+                                        :
+                                        <FlatList
+                                            data={this.state.list}
+                                            showsVerticalScrollIndicator={false}
+                                            ItemSeparatorComponent={this._renderListSeparator}
+                                            renderItem={({ item, index }) => this._renderListItems(item, index)}
+                                            keyExtractor={item => item} />
+                            }
                         </View>
                     </ScrollView>
                 </View>
@@ -337,13 +372,15 @@ class Home extends Component {
 }
 const mapStateToProps = (state) => {
     return {
-        user: state.authReducer || {}
+        user: state.authReducer || {},
+        cart: state.cartReducer || {}
     };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        authActions: bindActionCreators(authActions, dispatch)
+        authActions: bindActionCreators(authActions, dispatch),
+        cartActions: bindActionCreators(cartActions, dispatch)
     };
 };
 

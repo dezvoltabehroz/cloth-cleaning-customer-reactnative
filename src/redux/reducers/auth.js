@@ -34,6 +34,7 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 isUserLogedIn: true,
                 userData: action.userData,
+                userToken: action.userToken,
                 loading: action.loading
             };
         case USER_LOGOUT_SUCCESS:

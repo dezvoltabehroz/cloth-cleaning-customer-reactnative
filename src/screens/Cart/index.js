@@ -11,10 +11,13 @@ import Pent from '../../assets/svg/pent.svg';
 import Skert from '../../assets/svg/skert.svg';
 import HandBag from '../../assets/svg/handbag.svg';
 import JNamaz from '../../assets/svg/jnamaz.svg';
-
+import { connect } from 'react-redux';
+import { cartActions } from '../../redux/actions/cart';
+import { bindActionCreators } from "redux";
+import { Image } from 'react-native';
 const screenWidth = Dimensions.get('window').width;
 
-export default class Cart extends Component {
+class Cart extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -80,19 +83,21 @@ export default class Cart extends Component {
         }
     }
     componentDidMount = () => {
-        this.handleTotalPrice(this.state.list)
+        this.handleTotalPrice(this.props.cart.cart)
     }
 
     handleAddQuantity = (item, index) => {
-        let array = [...this.state.list];
+        let array = [...this.props.cart.cart];
         array[index] = { ...array[index], quantity: (parseInt(item.quantity) + 1) };
+        this.props.cartActions.setCart(array);
         this.setState({ list: array })
         this.handleTotalPrice(array)
     }
 
     handleMinusQuantity = (item, index) => {
-        let array = [...this.state.list];
+        let array = [...this.props.cart.cart];
         array[index] = { ...array[index], quantity: item.quantity == '1' ? item.quantity : (parseInt(item.quantity) - 1) };
+        this.props.cartActions.setCart(array);
         this.setState({ list: array });
         this.handleTotalPrice(array)
     }
@@ -108,12 +113,13 @@ export default class Cart extends Component {
 
 
     _renderListItems = (item, index) => {
+        console.log(item)
         return (
             <>
                 <View style={styles.listContentContainer}>
                     <View style={{ flexDirection: 'row', }}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('ProductDetail', { list: this.state.list })} style={styles.imageContainer}>
-                            {
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('ProductDetail', { product: item })} style={styles.imageContainer}>
+                            {/* {
                                 index == 0 ?
                                     <Fraq />
                                     : index == 1 ?
@@ -129,12 +135,16 @@ export default class Cart extends Component {
                                                         : index == 6 ?
                                                             <HandBag />
                                                             : <JNamaz />
-                            }
+                            } */}
+                            <Image source={{ uri: `https://dhobiuncle.pk/${item.thumbnail}` }} style={{
+                                height: 96,
+                                width: 122,
+                            }} resizeMode="contain" />
                         </TouchableOpacity>
                         <View style={styles.itemContainer}>
                             <View style={styles.itemNameContainer}>
                                 <View>
-                                    <Text style={styles.itemNameTextStyle}>{item.title}</Text>
+                                    <Text style={styles.itemNameTextStyle}>{item.name}</Text>
                                 </View>
                                 <TouchableOpacity style={styles.crossButtonStyle} onPress={() => this.handlePressDelete(item, index)}>
                                     <Icon.AntDesign name='close' size={10} color={'#000'} />
@@ -185,73 +195,95 @@ export default class Cart extends Component {
 
         return (
             <View style={{ flex: 1, backgroundColor: 'white' }}>
-                <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 60 }}>
-                    <View style={{ marginHorizontal: '5%', marginTop: '5%' }}>
-                        <Text style={{ fontSize: 16, fontFamily: 'Roboto-Medium' }}>Iron Only</Text>
-                    </View>
-                    <View style={{ marginHorizontal: '5%', marginTop: '5%' }}>
-                        <FlatList
-                            data={this.state.list}
-                            showsVerticalScrollIndicator={false}
-                            ItemSeparatorComponent={this._renderListSeparator}
-                            renderItem={({ item, index }) => this._renderListItems(item, index)}
-                            keyExtractor={item => item} />
-                    </View>
-                </ScrollView>
-                <View>
-                    <View style={{
-                        backgroundColor: 'white',
-                        borderRadius: 10,
-                        elevation: 2,
-                        shadowColor: "#000",
-                        shadowOffset:{
-                        width: 0,
-                        height: 1,
-                        },
-                        shadowOpacity: 0.20,
-                        shadowRadius: 1.41,
-                        borderColor: "#EEE",
-                        borderWidth: 1,
-                        marginBottom: '5%',
-                        marginHorizontal: '5%'
-                    }}>
-                        <View style={{ flexDirection: 'row', bottom: '5%', justifyContent: 'center', alignItems: 'center', }}>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Checkout', { list: this.state.list })}>
-                                <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
-                                    <Text style={styles.checkButtonTextStyle}>Checkout</Text>
-                                </LinearGradient>
-                            </TouchableOpacity>
+                {
+                    this.props.cart.cart.length == 0 ?
+                        <View style={{ flex: 1, justifyContent: 'center', alignItems: "center" }}>
+                            <Text style={{ fontSize: 16, fontFamily: 'Roboto-Medium' }}>Cart is Empty</Text>
                         </View>
-                        <View style={styles.checkoutInnerContainer}>
-                            <View style={styles.checkoutItemStyle}>
-                                <View>
-                                    <Text style={styles.checkoutTextStyle}>Total</Text>
+                        :
+                        <>
+                            <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 60 }}>
+                                <View style={{ marginHorizontal: '5%', marginTop: '5%' }}>
+                                    {/* <Text style={{ fontSize: 16, fontFamily: 'Roboto-Medium' }}>Iron Only</Text> */}
                                 </View>
-                                <View>
-                                    <Text style={styles.checkoutTextStyle}>Rs.{this.state.totalPrice}</Text>
+                                <View style={{ marginHorizontal: '5%', marginTop: '5%' }}>
+                                    <FlatList
+                                        data={this.props.cart.cart}
+                                        showsVerticalScrollIndicator={false}
+                                        ItemSeparatorComponent={this._renderListSeparator}
+                                        renderItem={({ item, index }) => this._renderListItems(item, index)}
+                                        keyExtractor={item => item} />
+                                </View>
+                            </ScrollView>
+                            <View>
+                                <View style={{
+                                    backgroundColor: 'white',
+                                    borderRadius: 10,
+                                    elevation: 2,
+                                    shadowColor: "#000",
+                                    shadowOffset: {
+                                        width: 0,
+                                        height: 1,
+                                    },
+                                    shadowOpacity: 0.20,
+                                    shadowRadius: 1.41,
+                                    borderColor: "#EEE",
+                                    borderWidth: 1,
+                                    marginBottom: '5%',
+                                    marginHorizontal: '5%'
+                                }}>
+                                    <View style={{ flexDirection: 'row', bottom: '5%', justifyContent: 'center', alignItems: 'center', }}>
+                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Checkout', { totalPrice: this.state.totalPrice })}>
+                                            <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
+                                                <Text style={styles.checkButtonTextStyle}>Checkout</Text>
+                                            </LinearGradient>
+                                        </TouchableOpacity>
+                                    </View>
+                                    <View style={styles.checkoutInnerContainer}>
+                                        <View style={styles.checkoutItemStyle}>
+                                            <View>
+                                                <Text style={styles.checkoutTextStyle}>Total</Text>
+                                            </View>
+                                            <View>
+                                                <Text style={styles.checkoutTextStyle}>Rs.{this.state.totalPrice}</Text>
+                                            </View>
+                                        </View>
+                                        <View style={styles.checkoutItemStyle}>
+                                            <View>
+                                                <Text style={styles.checkoutTextStyle}>Delivery Charges</Text>
+                                            </View>
+                                            <View style={{ marginBottom: '2.5%' }}>
+                                                <Text style={styles.checkoutTextStyle}>Rs.{'00'}</Text>
+                                            </View>
+                                        </View>
+                                        <View style={styles.lineStyle}></View>
+                                        <View style={styles.checkoutItemStyle}>
+                                            <View>
+                                                <Text style={styles.totalTextStyle}>Total</Text>
+                                            </View>
+                                            <View>
+                                                <Text style={styles.totalPriceTextStyle}>Rs. {this.state.totalPrice + 0}</Text>
+                                            </View>
+                                        </View>
+                                    </View>
                                 </View>
                             </View>
-                            <View style={styles.checkoutItemStyle}>
-                                <View>
-                                    <Text style={styles.checkoutTextStyle}>Delivery Charges</Text>
-                                </View>
-                                <View style={{ marginBottom: '2.5%' }}>
-                                    <Text style={styles.checkoutTextStyle}>Rs.{'00'}</Text>
-                                </View>
-                            </View>
-                            <View style={styles.lineStyle}></View>
-                            <View style={styles.checkoutItemStyle}>
-                                <View>
-                                    <Text style={styles.totalTextStyle}>Total</Text>
-                                </View>
-                                <View>
-                                    <Text style={styles.totalPriceTextStyle}>Rs. {this.state.totalPrice + 0}</Text>
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-                </View>
+                        </>}
             </View>
         )
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        user: state.authReducer || {},
+        cart: state.cartReducer || {}
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        cartActions: bindActionCreators(cartActions, dispatch)
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart)

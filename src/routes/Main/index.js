@@ -10,13 +10,13 @@ import Bag from '../../assets/svg/bag.svg';
 import Question from '../../assets/svg/question.svg';
 import Logout from '../../assets/svg/logout.svg';
 import { authActions } from '../../redux/actions/auth';
-import { useDispatch } from 'react-redux';
+import { useDispatch, connect } from 'react-redux';
 
 const Drawer = createDrawerNavigator();
 const BadgedIcon = withBadge(1)(Icons);
-function MainRoutes() {
+function MainRoutes(props) {
     return (
-        <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />} initialRouteName="Home" >
+        <Drawer.Navigator drawerContent={(data) => <CustomDrawerContent props={props} {...data} />} initialRouteName="Home" >
             <Drawer.Screen name="Home" component={HomeRoutes} options={{
                 swipeEnabled: false
             }} />
@@ -24,8 +24,9 @@ function MainRoutes() {
     );
 }
 
-function CustomDrawerContent({ navigation }) {
+function CustomDrawerContent({ navigation, props }) {
     const dispatch = useDispatch();
+    let title = props?.user?.userData?.fullName.split(' ');
     return (
         <>
             <View style={{ flex: 1 }} >
@@ -33,11 +34,11 @@ function CustomDrawerContent({ navigation }) {
                     <TouchableOpacity onPress={() => navigation.replace('Home')} style={styles.upperContainer}>
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-start', paddingLeft: '10%', alignItems: 'center' }}>
                             <View>
-                                <Avatar containerStyle={{ backgroundColor: 'white' }} size={50} title="J" titleStyle={{ color: '#0092C7' }} rounded={true} />
+                                <Avatar containerStyle={{ backgroundColor: 'white' }} size={50} title={title ? title[0][0] + title[1][0] : ""} titleStyle={{ color: '#0092C7', fontSize: 16 }} rounded={true} />
                             </View>
                             <View style={{ justifyContent: 'center', marginLeft: '5%' }}>
-                                <Text style={{ color: "white", marginLeft: "10%", fontFamily: 'Roboto-Bold', }} >John Doe</Text>
-                                <Text style={{ color: "white", marginLeft: "10%", fontFamily: 'Roboto-Regular', fontSize: 10 }} >San Francisco, CA</Text>
+                                <Text style={{ color: "white", marginLeft: "10%", fontFamily: 'Roboto-Bold', }} >{props?.user?.userData?.fullName}</Text>
+                                <Text style={{ color: "white", marginLeft: "10%", fontFamily: 'Roboto-Regular', fontSize: 10 }} >{props?.user?.userData?.city}</Text>
                             </View>
                         </View>
                     </TouchableOpacity>
@@ -92,4 +93,10 @@ const styles = StyleSheet.create({
     policyStyles: { paddingLeft: '10%', paddingVertical: '10%' }
 });
 
-export default MainRoutes;
+const mapStateToProps = (state) => {
+    return {
+        user: state.authReducer || {}
+    };
+};
+
+export default connect(mapStateToProps)(MainRoutes);

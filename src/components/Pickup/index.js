@@ -8,21 +8,22 @@ const screenHeight = Dimensions.get('window').height;
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import Modal from 'react-native-modal';
 import LinearGradient from 'react-native-linear-gradient'
-
-export default class Pickup extends Component {
+import { connect } from 'react-redux';
+class Pickup extends Component {
     constructor(props) {
         super(props);
         this.state = {
             editPickUpShift: false,
             pickUpShift: 'Noon (12pm-02pm)',
             timing: '',
+            time: 'Noon',
             region: {
                 latitude: 32.1877,
                 longitude: 74.1945,
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
             },
-            address: 'Park Rd, Islamabad, Islamabad Capital...',
+            address: '',
             shift: [
                 {
                     shiftName: 'Morning',
@@ -41,19 +42,34 @@ export default class Pickup extends Component {
                 }
             ],
             today: true,
+            day: 'today',
             tommorrow: false,
             regular: true,
-            express: false
+            express: false,
+            name: "",
+            phone: "",
+            deliveryCharges: 50,
+            note: ""
         }
     }
 
     componentDidMount = () => {
-        if (this.props.route != undefined) {
-            const { region, address } = this.props.route;
-            console.log("region:", region)
-            this.setState({ region: region != undefined ? region : this.state.region, address: address != undefined ? address : this.state.address })
-        }
+        const { region, address } = this.props.route;
 
+        if (this.props.route != undefined) {
+            console.log("region:", region)
+            this.setState({
+                name: this.props.user.userData.fullName,
+                phone: this.props.user.userData.phone,
+                region: region != undefined ? region : this.state.region,
+                address: address != undefined ? address : this.props.user.userData.address + " " + this.props.user.userData.city
+            })
+            this.props.day('today');
+            this.props.time('Noon');
+            this.props.urgent('0');
+            this.props.address(address != undefined ? address : this.props.user.userData.address + " " + this.props.user.userData.city);
+            this.props.region(region != undefined ? ({ lat: region.latitude, lng: region.longitude }) : ({ lat: this.state.region.latitude, lng: this.state.region.longitude }))
+        }
     }
 
     handleshift = (item, index) => {
@@ -63,7 +79,8 @@ export default class Pickup extends Component {
             items[index] = { ...items[index], selected: false };
         }
         items[objIndex] = { ...items[objIndex], selected: true };
-        this.setState({ shift: items, timing: `${items[objIndex].shiftName} (${items[objIndex].timing})` })
+        this.setState({ shift: items, timing: `${items[objIndex].shiftName} (${items[objIndex].timing})`, time: items[objIndex].shiftName });
+        this.props.time(items[objIndex].shiftName);
     }
 
     truncateString = (str, num) => {
@@ -74,7 +91,7 @@ export default class Pickup extends Component {
     }
 
     render() {
-        const { address, region, regular, express, today, tommorrow } = this.state;
+        const { name, phone, address, region, regular, express, today, tommorrow, note } = this.state;
         return (
             <>
                 <View style={{ flex: 1 }}>
@@ -130,7 +147,7 @@ export default class Pickup extends Component {
                                 </View>
                             </View>
                             <View style={{ marginTop: '2%' }}>
-                                <Text style={{ color: '#7A7A7A', fontFamily: 'Roboto-Regular', fontSize: 12 }}>Lorem ipsum dolor</Text>
+                                <Text style={{ color: '#7A7A7A', fontFamily: 'Roboto-Regular', fontSize: 12 }}>{name}</Text>
                             </View>
 
                         </View>
@@ -146,7 +163,7 @@ export default class Pickup extends Component {
                                 </View>
                             </View>
                             <View style={{ marginTop: '2%' }}>
-                                <Text style={{ color: '#7A7A7A', fontFamily: 'Roboto-Regular', fontSize: 12 }}>+92 3456 8798</Text>
+                                <Text style={{ color: '#7A7A7A', fontFamily: 'Roboto-Regular', fontSize: 12 }}>{phone}</Text>
                             </View>
                         </View>
                     </View>
@@ -160,7 +177,7 @@ export default class Pickup extends Component {
                                     <Icon.MaterialIcons name="edit" color={'#7A7A7A'} size={20} />
                                 </TouchableOpacity>
                             </View>
-                            <TouchableOpacity onPress={() => this.setState({ today: true, tommorrow: false })} style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%' }}>
+                            <TouchableOpacity onPress={() => this.setState({ today: true, tommorrow: false }, () => this.props.day('today'))} style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%' }}>
                                 <View>
                                     <Icon.MaterialCommunityIcons name={today ? "checkbox-marked-circle" : "checkbox-blank-circle-outline"} color={today ? '#0DA7DF' : '#707070'} size={20} />
                                 </View>
@@ -169,7 +186,7 @@ export default class Pickup extends Component {
                                     <Text style={{ color: '#7A7A7A', fontSize: 12, fontFamily: 'Roboto-Regular' }}>Pickup on {this.state.pickUpShift}, 8 Dec 2020</Text>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => this.setState({ today: false, tommorrow: true })} style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%' }}>
+                            <TouchableOpacity onPress={() => this.setState({ today: false, tommorrow: true }, this.props.day('tommorrow'))} style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%' }}>
                                 <View>
                                     <Icon.MaterialCommunityIcons name={tommorrow ? "checkbox-marked-circle" : "checkbox-blank-circle-outline"} color={tommorrow ? '#0DA7DF' : '#707070'} size={20} />
                                 </View>
@@ -188,7 +205,7 @@ export default class Pickup extends Component {
                                     <Text style={{ fontFamily: 'Roboto-Medium', color: '#1E2123' }}>Delivery options</Text>
                                 </View>
                             </View>
-                            <TouchableOpacity onPress={() => this.setState({ regular: true, express: false })} style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%' }}>
+                            <TouchableOpacity onPress={() => this.setState({ regular: true, express: false }, () => this.props.urgent('0'))} style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%' }}>
                                 <View>
                                     <Icon.MaterialCommunityIcons name={regular ? "checkbox-marked-circle" : "checkbox-blank-circle-outline"} color={regular ? '#0DA7DF' : '#707070'} size={20} />
                                 </View>
@@ -200,7 +217,7 @@ export default class Pickup extends Component {
                                     <Text style={{ color: '#7A7A7A', fontSize: 12, fontFamily: 'Roboto-Regular' }}>You will receive laundry within 3 to 4 working days</Text>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => this.setState({ regular: false, express: true })} style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%' }}>
+                            <TouchableOpacity onPress={() => this.setState({ regular: false, express: true }, () => () => this.props.urgent('1'))} style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%' }}>
                                 <View>
                                     <Icon.MaterialCommunityIcons name={express ? "checkbox-marked-circle" : "checkbox-blank-circle-outline"} color={express ? '#0DA7DF' : '#707070'} size={20} />
                                 </View>
@@ -222,7 +239,7 @@ export default class Pickup extends Component {
                                 </View>
                             </View>
                             <View style={{ marginTop: '5%' }}>
-                                <Input placeholder="Note here..." />
+                                <Input value={note} placeholder="Note here..." onChangeText={(note) => this.setState({ note })} onBlur={() => this.props.note(note)} />
                             </View>
 
                         </View>
@@ -255,7 +272,11 @@ export default class Pickup extends Component {
                                 }
                             </View>
                         </View>
-                        <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => this.setState({ editPickUpShift: false, pickUpShift: this.state.timing })}>
+                        <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => this.setState({ editPickUpShift: false, pickUpShift: this.state.timing, }, () => {
+                            // let userData = {
+                            // }
+                            // this.props.data()
+                        })}>
                             <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
                                 <Text style={styles.checkButtonTextStyle}>{'Apply'}</Text>
                             </LinearGradient>
@@ -266,3 +287,12 @@ export default class Pickup extends Component {
         )
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        user: state.authReducer || {},
+        cart: state.cartReducer || {}
+    };
+};
+
+
+export default connect(mapStateToProps)(Pickup)

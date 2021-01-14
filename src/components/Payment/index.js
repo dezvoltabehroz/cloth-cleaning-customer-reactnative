@@ -14,11 +14,15 @@ export default class Payment extends Component {
         this.state = {
             cashOnDelivery: true,
             easyPaisa: false,
-            jazzCash: false
+            jazzCash: false,
+            transactionIdJazzCash: "",
+            transactionIdEasyPaisa: ""
         }
     }
     componentDidMount = () => {
-        this.setState({ orderList: this.props.list })
+        this.setState({ orderList: this.props.list });
+        this.props.paymentMethod('cashOnDelivery');
+        this.props.transactionId("");
     }
 
 
@@ -29,7 +33,7 @@ export default class Payment extends Component {
                     <View style={styles.itemContainer}>
                         <View style={styles.itemNameContainer}>
                             <View>
-                                <Text style={styles.itemNameTextStyle}>{item.title}</Text>
+                                <Text style={styles.itemNameTextStyle}>{item.name}</Text>
                             </View>
                             <View>
                                 <Text style={styles.listTextStyle}>Rs. {item.price} X {item.quantity}</Text>
@@ -40,7 +44,7 @@ export default class Payment extends Component {
                                 <Text style={{ color: '#000000', fontFamily: 'Roboto-Medium', fontSize: 12 }}>Rs. {item.price * item.quantity}</Text>
                             </View>
                             <View>
-                                <Text style={styles.listTextStyle}>{item.serviceType}</Text>
+                                <Text style={styles.listTextStyle}>{item.productcategory.name}</Text>
                             </View>
                         </View>
                     </View>
@@ -56,7 +60,7 @@ export default class Payment extends Component {
     }
 
     render() {
-        const { cashOnDelivery, jazzCash, easyPaisa } = this.state;
+        const { cashOnDelivery, jazzCash, easyPaisa, transactionIdJazzCash, transactionIdEasyPaisa } = this.state;
         return (
             <>
                 <View style={{ flex: 1 }}>
@@ -71,7 +75,7 @@ export default class Payment extends Component {
                                 <View>
                                     <Text style={{ color: cashOnDelivery ? 'white' : '#7A7A7A', fontFamily: 'Roboto-Medium', fontSize: 12 }}>Cash on Delivery</Text>
                                 </View>
-                                <TouchableOpacity onPress={() => this.setState({ cashOnDelivery: true, jazzCash: false, easyPaisa: false })}>
+                                <TouchableOpacity onPress={() => this.setState({ cashOnDelivery: true, jazzCash: false, easyPaisa: false }, () => this.props.paymentMethod('cashOnDelivery'))}>
                                     <Icon.MaterialCommunityIcons name={cashOnDelivery ? "checkbox-marked-circle" : "checkbox-blank-circle-outline"} color={cashOnDelivery ? 'white' : '#7A7A7A'} size={20} />
                                 </TouchableOpacity>
                             </View>
@@ -79,7 +83,7 @@ export default class Payment extends Component {
                                 <View>
                                     <Text style={{ color: easyPaisa ? 'white' : '#7A7A7A', fontFamily: 'Roboto-Medium', fontSize: 12 }}>Easypaisa</Text>
                                 </View>
-                                <TouchableOpacity onPress={() => this.setState({ cashOnDelivery: false, jazzCash: false, easyPaisa: true })}>
+                                <TouchableOpacity onPress={() => this.setState({ cashOnDelivery: false, jazzCash: false, easyPaisa: true }, () => this.props.paymentMethod('easyPaisa'))}>
                                     <Icon.MaterialCommunityIcons name={easyPaisa ? "checkbox-marked-circle" : "checkbox-blank-circle-outline"} color={easyPaisa ? 'white' : '#7A7A7A'} size={20} />
                                 </TouchableOpacity>
                             </View>
@@ -87,7 +91,7 @@ export default class Payment extends Component {
                                 <View>
                                     <Text style={{ color: jazzCash ? 'white' : '#7A7A7A', fontFamily: 'Roboto-Medium', fontSize: 12 }}>Jazz cash</Text>
                                 </View>
-                                <TouchableOpacity onPress={() => this.setState({ cashOnDelivery: false, jazzCash: true, easyPaisa: false })}>
+                                <TouchableOpacity onPress={() => this.setState({ cashOnDelivery: false, jazzCash: true, easyPaisa: false }, () => this.props.paymentMethod('jazzCash'))}>
                                     <Icon.MaterialCommunityIcons name={jazzCash ? "checkbox-marked-circle" : "checkbox-blank-circle-outline"} color={jazzCash ? 'white' : '#7A7A7A'} size={20} />
                                 </TouchableOpacity>
                             </View>
@@ -106,7 +110,11 @@ export default class Payment extends Component {
                             </View>
                             <View style={{ marginTop: '5%' }}>
                                 <Text style={{ color: '#7A7A7A' }}>Your transaction ID <Text style={{ color: '#FF0000' }}>*</Text></Text>
-                                <Input placeholder="0000-2233-0000-3455" />
+                                <Input
+                                    value={transactionIdJazzCash}
+                                    onChangeText={(transactionIdJazzCash) => this.setState(transactionIdJazzCash)}
+                                    placeholder="0000-2233-0000-3455"
+                                    onBlur={() => this.props.transactionId(transactionIdJazzCash)} />
                             </View>
                         </View>
                     </View> : null}
@@ -123,7 +131,11 @@ export default class Payment extends Component {
                             </View>
                             <View style={{ marginTop: '5%' }}>
                                 <Text style={{ color: '#7A7A7A' }}>Your transaction ID <Text style={{ color: '#FF0000' }}>*</Text></Text>
-                                <Input placeholder="0000-2233-0000-3455" />
+                                <Input placeholder="0000-2233-0000-3455"
+                                    value={transactionIdEasyPaisa}
+                                    onChangeText={(transactionIdEasyPaisa) => this.setState(transactionIdEasyPaisa)}
+                                    placeholder="0000-2233-0000-3455"
+                                    onBlur={() => this.props.transactionId(transactionIdEasyPaisa)} />
                             </View>
                         </View>
                     </View> : null}

@@ -7,18 +7,26 @@ import { Input } from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import { AuthServices } from '../../services';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
-export default class ResetPassword extends Component {
+import { connect } from 'react-redux';
+import { ActivityIndicator } from 'react-native';
+class ResetPassword extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: "johndoe@gmail.com",
+            email: "",
             password: "",
-            confirmPassword: ""
+            confirmPassword: "",
+            oldPassword: "",
+            buttonLoading: false
         }
     }
 
+    componentDidMount = () => {
+        this.setState({ email: this.props.user.userData.email })
+    }
+
     render() {
-        const { email, name, phone, password, confirmPassword } = this.state;
+        const { email, name, phone, password, confirmPassword, oldPassword, buttonLoading } = this.state;
         return (
 
             <>
@@ -34,6 +42,16 @@ export default class ResetPassword extends Component {
                                         containerStyle={{ marginHorizontal: 0, paddingHorizontal: 0 }}
                                         inputContainerStyle={{ height: 30 }}
                                         placeholder="" />
+                                </View>
+                                <View style={{ marginTop: '5%' }}>
+                                    <Input label="Old password" value={oldPassword}
+                                        secureTextEntry={true}
+                                        onChangeText={(oldPassword) => this.setState({ oldPassword })}
+                                        labelStyle={{ fontSize: 10, color: oldPassword ? '#0DA7DF' : '#374B5C', fontFamily: 'Roboto-Regular' }}
+                                        inputStyle={{ fontSize: 12, fontFamily: 'Roboto-Medium' }}
+                                        containerStyle={{ marginHorizontal: 0, paddingHorizontal: 0 }}
+                                        inputContainerStyle={{ height: 30 }}
+                                        placeholder="*********" />
                                 </View>
                                 <View style={{ marginTop: '5%' }}>
                                     <Input label="New password" value={password}
@@ -65,24 +83,36 @@ export default class ResetPassword extends Component {
                                         </LinearGradient>
                                     </TouchableOpacity>
                                     <View style={{ width: 5 }}></View>
-                                    <TouchableOpacity disabled={password != '' && confirmPassword != '' ? false : true} style={{ alignSelf: 'flex-end' }} onPress={() => Alert.alert('Success', 'Password Change Successfully', [
-                                        {
-                                            text: "OK", onPress: () => {
-                                                let userData = {
-                                                    id: this.props.user.userData.id,
-                                                    password: this.state.password,
-                                                }
-                                                AuthServices.updatePassword(userData)
-                                                    .then((res) => {
-                                                        console.log(res.data)
-                                                        this.props.navigation.goBack()
-                                                    })
-                                                    .catch((err) => console.log(err))
-                                            },
+                                    <TouchableOpacity disabled={password != '' && confirmPassword != '' ? false : true} style={{ alignSelf: 'flex-end' }} onPress={() => {
+                                        this.setState({ buttonLoading: true })
+                                        let userData = {
+                                            id: this.props.user.userData.id,
+                                            oldPassword: this.state.oldPassword,
+                                            password: this.state.password,
+                                            newPassword: this.state.confirmPassword,
+                                            token: this.props.user.userToken
                                         }
-                                    ])}>
+                                        AuthServices.updatePassword(userData)
+                                            .then((res) => {
+                                                console.log(res.data)
+                                                this.setState({ buttonLoading: false })
+                                                Alert.alert('Success', 'Password Change Successfully', [
+                                                    {
+                                                        text: "OK", onPress: () => {
+                                                            this.props.navigation.goBack()
+                                                        },
+                                                    }
+                                                ])
+                                            })
+                                            .catch((err) => console.log(err))
+                                    }}>
                                         <LinearGradient colors={password != '' && confirmPassword != '' && password == confirmPassword ? ['#0DA7DF', '#27C2FA'] : ['#f2f2f2', '#e2e2e2']} style={styles.checkoutButtonContainer}>
-                                            <Text style={styles.checkButtonTextStyle}>{'Reset'}</Text>
+                                            {
+                                                buttonLoading ?
+                                                    <ActivityIndicator size={20} color="#FFF" />
+                                                    :
+                                                    <Text style={styles.checkButtonTextStyle}>{'Reset'}</Text>
+                                            }
                                         </LinearGradient>
                                     </TouchableOpacity>
                                 </View>
@@ -95,3 +125,11 @@ export default class ResetPassword extends Component {
         )
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        user: state.authReducer || {}
+    };
+};
+
+
+export default connect(mapStateToProps)(ResetPassword)

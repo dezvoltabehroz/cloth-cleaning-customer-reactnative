@@ -7,19 +7,33 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview'
 import Modal from 'react-native-modal';
 const screenHeight = Dimensions.get('window').height;
 import ThankYou from '../../assets/svg/thankyou.svg';
-export default class Checkout extends Component {
+import { connect } from 'react-redux';
+import { cartActions } from '../../redux/actions/cart';
+import { bindActionCreators } from "redux";
+import { OrdersServices } from '../../services';
+class Checkout extends Component {
     constructor(props) {
         super(props);
         this.state = {
             activeTab: 0,
-            totalPrice: 350,
+            totalPrice: this.props.route.params.totalPrice,
             discount: false,
             delivery: 50,
             code: '',
             orderList: [],
+            urgent: 0,
             discountValue: 50,
             discountModal: false,
-            keyboardState: false
+            keyboardState: false,
+            day: "",
+            time: '',
+            lat: "",
+            lng: "",
+            note: "",
+            address: "",
+            transactionId: "",
+            products: []
+
         }
     }
 
@@ -47,13 +61,56 @@ export default class Checkout extends Component {
     }
 
     componentDidMount = () => {
-        const { list, } = this.props.route.params;
-        this.setState({ orderList: list })
+        let array = [];
+        this.props.cart.cart.map((item, index) => {
+            array.push({
+                quantity: item.quantity,
+                unitPrice: item.price * item.quantity,
+                product_id: item.id
+            })
+        });
+
+        this.setState({ orderList: this.props.cart.cart, products: array })
+    }
+
+    handlePlaceOrder = () => {
+        const { lat, lng, day, time, totalPrice, address, urgent, paymentMethod, note, products, transactionId } = this.state;
+        let userData = {
+            name: this.props.user.userData.fullName,
+            email: this.props.user.userData.email,
+            phone: this.props.user.userData.phone,
+            customer_id: this.props.user.userData.id,
+            lat: lat,
+            long: lng,
+            day: day,
+            time: time,
+            totalPrice: totalPrice,
+            urgent: urgent,
+            grandTotal: urgent == '1' ? (totalPrice + 200) : (totalPrice + 50),
+            deliveryAddress: address,
+            city: this.props.user.userData.city,
+            paymentMethod: paymentMethod,
+            transactionId: transactionId,
+            notes: note,
+            products: products,
+            token: this.props.user.userToken
+        }
+        console.log(userData)
+        OrdersServices.placeCustomerOrder(userData)
+            .then((response) => {
+                console.log(response.data)
+                this.props.cartActions.clear()
+            })
+            .catch((err) => {
+                console.log(err)
+                this.props.cartActions.clear()
+            })
+
     }
 
 
     render() {
-        const { activeTab, discount, delivery, code, discountValue, keyboardState } = this.state;
+        const { activeTab, discount, urgent, code, discountValue, keyboardState } = this.state;
 
         return (
             <>
@@ -71,13 +128,24 @@ export default class Checkout extends Component {
                             {
                                 activeTab == 0 ?
 
-                                    <Pickup navigation={this.props.navigation} route={this.props.route.params} />
+                                    <Pickup
+                                        day={(day) => this.setState({ day })}
+                                        time={(time) => this.setState({ time })}
+                                        urgent={(urgent) => this.setState({ urgent })}
+                                        note={(note) => this.setState({ note })}
+                                        address={(address) => this.setState({ address })}
+                                        region={({ lat, lng }) => this.setState({ lat: lat, lng: lng })}
+                                        navigation={this.props.navigation} route={this.props.route.params} />
                                     :
                                     null
                             }
                             {
                                 activeTab == 1 ?
-                                    <Payment orderList={this.state.orderList} />
+                                    <Payment
+
+                                        paymentMethod={(paymentMethod) => this.setState({ paymentMethod })}
+                                        transactionId={(transactionId) => this.setState({ transactionId })}
+                                        orderList={this.state.orderList} />
                                     :
                                     null
                             }
@@ -130,7 +198,15 @@ export default class Checkout extends Component {
                                     marginHorizontal: '5%'
                                 }}>
                                     <View style={{ flexDirection: 'row', bottom: '5%', justifyContent: 'center', alignItems: 'center', }}>
-                                        <TouchableOpacity onPress={() => this.setState({ activeTab: activeTab + 1 })}>
+                                        <TouchableOpacity onPress={() => {
+                                            if (activeTab == 1) {
+                                                this.handlePlaceOrder()
+                                                this.setState({ activeTab: activeTab + 1 })
+                                            }
+                                            else {
+                                                this.setState({ activeTab: activeTab + 1 })
+                                            }
+                                        }}>
                                             <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
                                                 <Text style={styles.checkButtonTextStyle}>{activeTab == 0 ? 'Continue' : 'Place order'}</Text>
                                             </LinearGradient>
@@ -177,7 +253,7 @@ export default class Checkout extends Component {
                                                             }
                                                         </View>
                                                         <View>
-                                                            <Text style={styles.checkoutTextStyle}>Rs.{delivery}</Text>
+                                                            <Text style={styles.checkoutTextStyle}>Rs.{urgent == 0 ? '50' : '200'}</Text>
                                                         </View>
                                                     </View>
                                                     {discount ?
@@ -199,7 +275,7 @@ export default class Checkout extends Component {
                                                 <Text style={styles.totalTextStyle}>Total</Text>
                                             </View>
                                             <View>
-                                                <Text style={styles.totalPriceTextStyle}>Rs. {activeTab == 0 ? this.state.totalPrice : discount ? this.state.totalPrice + delivery - discountValue : this.state.totalPrice + delivery}</Text>
+                                                <Text style={styles.totalPriceTextStyle}>Rs. {activeTab == 0 ? this.state.totalPrice : discount ? this.state.totalPrice + (urgent == '0' ? 50 : 200) - discountValue : this.state.totalPrice + (urgent == '0' ? 50 : 200)}</Text>
                                             </View>
                                         </View>
                                     </View>
@@ -239,3 +315,17 @@ export default class Checkout extends Component {
         )
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        user: state.authReducer || {},
+        cart: state.cartReducer || {}
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        cartActions: bindActionCreators(cartActions, dispatch)
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Checkout)

@@ -5,79 +5,70 @@ import styles from './style';
 import LinearGradient from 'react-native-linear-gradient';
 import Fraq from '../../assets/svg/fraq.svg';
 const screenWidth = Dimensions.get('window').width;
-
-export default class ProductDetail extends Component {
+import { connect } from 'react-redux';
+import { cartActions } from '../../redux/actions/cart';
+import { bindActionCreators } from "redux";
+import Modal from 'react-native-modal';
+import { ActivityIndicator } from 'react-native';
+class ProductDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            list: [
-                {
-                    id: 1,
-                    title: 'Lorem Ipsum Dolor',
-                    price: 50,
-                    quantity: '1',
-                },
-                {
-                    id: 2,
-                    title: 'Lorem Ipsum Dolor',
-                    price: 50,
-                    quantity: '1',
-                },
-                {
-                    id: 3,
-                    title: 'Lorem Ipsum Dolor',
-                    price: 50,
-                    quantity: '1',
-                },
-                {
-                    id: 4,
-                    title: 'Lorem Ipsum Dolor',
-                    price: 50,
-                    quantity: '1',
-                },
-                {
-                    id: 5,
-                    title: 'Lorem Ipsum Dolor',
-                    price: 50,
-                    quantity: '1',
-                },
-                {
-                    id: 6,
-                    title: 'Lorem Ipsum Dolor',
-                    price: 50,
-                    quantity: '1',
-                },
-
-                {
-                    id: 8,
-                    title: 'Lorem Ipsum Dolor',
-                    price: 50,
-                    quantity: '1',
-                },
-            ],
-            id: 7,
-            title: 'Lorem Ipsum Dolor',
-            price: 50,
-            quantity: 1,
-            serivceType: 'Iron Only',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate...'
+            id: "",
+            name: "",
+            price: "",
+            quantity: "",
+            serivceType: "",
+            description: "",
+            loading: true
         }
     }
     componentDidMount = () => {
-        this.handleTotalPrice(this.state.list)
+
+        this.props.cart.cart.map((item, index) => {
+            if (item.id == this.props.route.params.product.id) {
+                this.setState({
+                    id: this.props.route.params.product.id,
+                    name: item.name,
+                    price: item.price,
+                    quantity: item.quantity,
+                    serivceType: item.productcategory.name,
+                    description: item.description,
+                    loading: false
+                })
+            }
+        })
     }
 
-    handleAddQuantity = () => {
-        this.setState({ quantity: this.state.quantity + 1 })
+    handleAddQuantity = async () => {
+        this.setState({ loading: true })
+        let cartArray = [...this.props.cart.cart];
+        cartArray.map((element, i) => {
+            if (element.id == this.props.route.params.product.id) {
+                cartArray[i] = { ...cartArray[i], quantity: (parseInt(element.quantity) + 1) };
+            }
+        })
+        await this.props.cartActions.setCart(cartArray);
+        setTimeout(() => {
+            this.componentDidMount();
+        }, 3000);
     }
 
-    handleMinusQuantity = () => {
-        this.setState({ quantity: this.state.quantity == 1 ? this.state.quantity : this.state.quantity - 1 })
-        // let array = [...this.state.list];
-        // array[index] = { ...array[index], quantity: item.quantity == '1' ? item.quantity : (parseInt(item.quantity) - 1) };
-        // this.setState({ list: array });
-        // this.handleTotalPrice(array)   
+    handleMinusQuantity = async () => {
+        this.setState({ loading: true })
+        let cartArray = [...this.props.cart.cart];
+        cartArray.map((element, i) => {
+            if (element.id == this.props.route.params.product.id) {
+                cartArray[i] = { ...cartArray[i], quantity: item.quantity == '1' ? item.quantity : (parseInt(element.quantity) - 1) };
+            }
+        })
+        await this.props.cartActions.setCart(cartArray);
+        setTimeout(() => {
+            this.componentDidMount();
+        }, 3000);
     }
+
+
     handlePressDelete = async (item, index) => {
         this.setState({ list: this.state.list.filter((obj => obj.id != item.id)) });
         // await AsyncStorage.setItem('CARTITEMS', JSON.stringify(this.state.list))
@@ -95,21 +86,21 @@ export default class ProductDetail extends Component {
     }
 
     render() {
-        const { title, price, quantity, description, serivceType } = this.state;
+        const { name, price, quantity, description, serivceType } = this.state;
         return (
             <View style={{ flex: 1, backgroundColor: 'white' }}>
                 <ScrollView contentContainerStyle={{ paddingBottom: 80 }} showsVerticalScrollIndicator={false}>
                     <View style={styles.upperContainer}>
                     </View>
                     <View style={styles.imageContainer}>
-                        <Fraq height={126} width={120} />
+                        <Image resizeMode="contain" source={{ uri: `https://dhobiuncle.pk/${this.props.route.params.product.thumbnail}` }} style={{ height: 126, width: 120 }} />
                         {/* <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonStyle} >
                             <TouchableOpacity onPress={() => this.props.navigation.navigate('Checkout', { list: this.props.route.params.list })}><Text style={styles.checkoutTextStyle}>Checkout</Text></TouchableOpacity>
                         </LinearGradient> */}
                     </View>
                     <View style={styles.lowerContainer}>
                         <Text style={styles.headingTitleStyle}>
-                            {title}
+                            {name}
                         </Text>
                         <View style={styles.lineStyle}></View>
                         <View style={styles.itemQuantityContainer}>
@@ -149,7 +140,27 @@ export default class ProductDetail extends Component {
                         </View>
                     </View>
                 </ScrollView>
+                <Modal isVisible={this.state.loading}>
+                    <View>
+                        <ActivityIndicator size={60} color='#0DA7DF' />
+                    </View>
+                </Modal>
             </View>
+
         )
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        user: state.authReducer || {},
+        cart: state.cartReducer || {}
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        cartActions: bindActionCreators(cartActions, dispatch)
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDetail)
