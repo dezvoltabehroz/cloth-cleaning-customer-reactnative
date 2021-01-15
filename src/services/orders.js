@@ -18,10 +18,7 @@ const Api = {
         }, configToken(userData.token))
     },
     getOrderDetails: function (userData) {
-        return axiosInstance.post('buyer/customerorderdetail', {
-            customer_id: userData.id,
-            order_id: userData.order_id
-        }, configToken(userData.token))
+        return axiosInstance.get(`buyer/customerorderdetail?customer_id=${userData.id}&order_id=${userData.order_id}`)
     },
     placeCustomerOrder: function (userData) {
         return axiosInstance.post('buyer/placeorder', {

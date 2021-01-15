@@ -23,17 +23,19 @@ class OrderDetail extends Component {
             quantity: 1,
             date: '8 Dec 2020',
             orderNumber: '#00000456',
-            address: 'Park Rd, Islamabad, Islamabad Capital',
-            totalPrice: 300,
-            discount: 50,
-            shipping: 50,
-            status: this.props.route.params.status,
-            serivceType: 'Iron Only',
+            address: '',
+            totalPrice: "",
+            discount: "",
+            grandTotal: "",
+            shipping: "",
+            status: "",
+            serivceType: '',
             review: '',
             starCount: 0,
             ratingModal: false,
             rated: false,
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate...'
+            description: '',
+            orders: []
         }
     }
     componentDidMount = () => {
@@ -43,7 +45,16 @@ class OrderDetail extends Component {
             order_id: this.props.route.params.order_id
         }
         OrdersServices.getOrderDetails(userData)
-            .then((res) => console.log(res.data))
+            .then((res) => {
+                console.log(res.data.result)
+                this.setState({
+                    address: res.data.result.deliveryAddress,
+                    status: res.data.result.orderStatus,
+                    totalPrice: res.data.result.totalPrice,
+                    grandTotal: res.data.result.grandTotal,
+                    orders: res.data.result.orderedproduct,
+                })
+            })
             .catch((err) => console.log(err))
     }
 
@@ -55,7 +66,7 @@ class OrderDetail extends Component {
 
 
     render() {
-        const { title, price, quantity, description, review, rated, starCount, ratingModal, serivceType, status, orderNumber, address, date, shipping, discount, totalPrice } = this.state;
+        const { title, price, quantity, grandTotal, review, rated, starCount, ratingModal, serivceType, status, orderNumber, address, date, orders, discount, totalPrice } = this.state;
         return (
             <View style={{ flex: 1, backgroundColor: 'white' }}>
                 <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
@@ -152,23 +163,31 @@ class OrderDetail extends Component {
                             </View>
                         </View>
                         <View style={styles.lineStyle}></View>
-                        <View style={styles.itemQuantityContainer}>
-                            <View>
-                                <Text style={styles.headingTitleStyle}>{title}</Text>
-                            </View>
-                            <View>
-                                <Text style={styles.headingTitleStyle}>Rs.{price}</Text>
-                            </View>
-                        </View>
-                        <View style={styles.itemQuantityContainer}>
-                            <View>
-                                <Text style={styles.listTextStyle}>Rs. {price} X {quantity}</Text>
-                            </View>
-                            <View>
-                                <Text style={[styles.listTextStyle, { fontFamily: 'Roboto-Medium' }]}>{serivceType}</Text>
-                            </View>
-                        </View>
-                        <View style={styles.lineStyle}></View>
+                        {
+                            orders.map((item, index) => {
+                                return (
+                                    <>
+                                        <View style={styles.itemQuantityContainer}>
+                                            <View>
+                                                <Text style={styles.headingTitleStyle}>{item.productorder.name}</Text>
+                                            </View>
+                                            <View>
+                                                <Text style={styles.headingTitleStyle}>Rs.{item.unitPrice*item.quantity}</Text>
+                                            </View>
+                                        </View>
+                                        <View style={styles.itemQuantityContainer}>
+                                            <View>
+                                                <Text style={styles.listTextStyle}>Rs. {item.unitPrice} X {item.quantity}</Text>
+                                            </View>
+                                            <View>
+                                                <Text style={[styles.listTextStyle, { fontFamily: 'Roboto-Medium' }]}>{item.productorder.name}</Text>
+                                            </View>
+                                        </View>
+                                        <View style={styles.lineStyle}></View>
+                                    </>
+                                )
+                            })
+                        }
                         <View style={styles.itemQuantityContainer}>
                             <View>
                                 <Text style={styles.listTextStyle}>Total</Text>
@@ -182,7 +201,7 @@ class OrderDetail extends Component {
                                 <Text style={styles.listTextStyle}>Shipping</Text>
                             </View>
                             <View>
-                                <Text style={styles.listTextStyle}>Rs.{shipping}</Text>
+                                <Text style={styles.listTextStyle}>Rs.{grandTotal - totalPrice}</Text>
                             </View>
                         </View>
                         <View style={styles.itemQuantityContainer}>
@@ -190,7 +209,7 @@ class OrderDetail extends Component {
                                 <Text style={styles.listTextStyle}>Discount</Text>
                             </View>
                             <View>
-                                <Text style={[styles.listTextStyle, { color: '#A50808' }]}>Rs.{discount}</Text>
+                                <Text style={[styles.listTextStyle, { color: '#A50808' }]}>Rs.{'00'}</Text>
                             </View>
                         </View>
                         <View style={styles.lineStyle}></View>
@@ -199,7 +218,7 @@ class OrderDetail extends Component {
                                 <Text style={[styles.headingTitleStyle, { color: '#707070' }]}>Total</Text>
                             </View>
                             <View>
-                                <Text style={[styles.headingTitleStyle, { color: '#707070' }]}>Rs.{totalPrice - discount + shipping}</Text>
+                                <Text style={[styles.headingTitleStyle, { color: '#707070' }]}>Rs.{grandTotal}</Text>
                             </View>
                         </View>
                     </View>
