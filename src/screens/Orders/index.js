@@ -55,11 +55,11 @@ class Orders extends Component {
             }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <Text style={styles.listTextStyle}>{moment(item.createdAt).format('ll')}</Text>
-                    <Text style={styles.listTextStyle}>{item.orderStatus}</Text>
+                    <Text style={[styles.listTextStyle, { textTransform: "capitalize" }]}>{item.orderStatus}</Text>
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     <Text style={styles.listColorTextStyle}>Order number:</Text>
-                    {/* <Text style={styles.listColorTextStyle}>{item.orderNumber ? item.orderNumber : '#00000456'}</Text> */}
+                    <Text style={styles.listColorTextStyle}>{item.orderNumber ? item.orderNumber : ''}</Text>
                 </View>
                 <View style={styles.lineStyle}></View>
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>

@@ -53,6 +53,8 @@ class OrderDetail extends Component {
                     totalPrice: res.data.result.totalPrice,
                     grandTotal: res.data.result.grandTotal,
                     orders: res.data.result.orderedproduct,
+                    orderNumber: res.data.result.orderNumber ? res.data.result.orderNumber : "",
+                    date: res.data.result.deliveryDate ? res.data.result.deliveryDate : ""
                 })
             })
             .catch((err) => console.log(err))
@@ -78,11 +80,11 @@ class OrderDetail extends Component {
                                 percent={status == 'Pending' ? 50 : 100}
                                 radius={50}
                                 borderWidth={10}
-                                color={status == 'Complete' ? "#0DA7DF" : status == 'Pending' ? "#FFAF02" : status == 'Confirm' ? '#16C46C' : status == 'Cancel' ? "#F30808" : null}
+                                color={status == 'complete' ? "#0DA7DF" : status == 'pending' ? "#FFAF02" : status == 'approved' ? '#16C46C' : status == 'cancel' ? "#F30808" : null}
                                 shadowColor="#E1E1E1"
                                 bgColor="#fff"
                             >
-                                <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', color: "#102134" }}>{status}</Text>
+                                <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', color: "#102134", textTransform: 'capitalize' }}>{status}</Text>
                             </ProgressCircle>
                         </View>
                         {status == 'Complete' ?
@@ -105,7 +107,7 @@ class OrderDetail extends Component {
                                             <View style={{ width: 10 }}></View>
                                         </View>
                                         <View>
-                                            <Text style={{ fontFamily: 'Roboto-Light', fontSize: 12, color: '#8E9297' }}>{moment().format('DD/MM/YYYY')}</Text>
+                                            <Text style={{ fontFamily: 'Roboto-Light', fontSize: 12, color: '#8E9297', }}>{moment().format('DD/MM/YYYY')}</Text>
                                         </View>
                                     </View>
                                     <View>
@@ -134,7 +136,7 @@ class OrderDetail extends Component {
                                 <Text style={styles.headingTitleStyle}>Order Details</Text>
                             </View>
                             <View>
-                                <Text style={[styles.totalPriceTextStyle, { fontSize: 14, fontFamily: 'Roboto-Medium' }]}>{status}</Text>
+                                <Text style={[styles.totalPriceTextStyle, { fontSize: 14, fontFamily: 'Roboto-Medium', textTransform: 'capitalize' }]}>{status}</Text>
                             </View>
                         </View>
                         <View style={styles.lineStyle}></View>
@@ -159,7 +161,7 @@ class OrderDetail extends Component {
                                 <Text style={styles.listTextStyle}>Delivery date:</Text>
                             </View>
                             <View>
-                                <Text style={[styles.listTextStyle, { fontFamily: 'Roboto-Medium' }]}>{date}</Text>
+                                {/* <Text style={[styles.listTextStyle, { fontFamily: 'Roboto-Medium' }]}>{date}</Text> */}
                             </View>
                         </View>
                         <View style={styles.lineStyle}></View>
@@ -172,7 +174,7 @@ class OrderDetail extends Component {
                                                 <Text style={styles.headingTitleStyle}>{item.productorder.name}</Text>
                                             </View>
                                             <View>
-                                                <Text style={styles.headingTitleStyle}>Rs.{item.unitPrice*item.quantity}</Text>
+                                                <Text style={styles.headingTitleStyle}>Rs.{item.unitPrice * item.quantity}</Text>
                                             </View>
                                         </View>
                                         <View style={styles.itemQuantityContainer}>
@@ -180,7 +182,7 @@ class OrderDetail extends Component {
                                                 <Text style={styles.listTextStyle}>Rs. {item.unitPrice} X {item.quantity}</Text>
                                             </View>
                                             <View>
-                                                <Text style={[styles.listTextStyle, { fontFamily: 'Roboto-Medium' }]}>{item.productorder.name}</Text>
+                                                {/* <Text style={[styles.listTextStyle, { fontFamily: 'Roboto-Medium' }]}>{item.productorder.name}</Text> */}
                                             </View>
                                         </View>
                                         <View style={styles.lineStyle}></View>
