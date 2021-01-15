@@ -25,6 +25,10 @@ class ResetPassword extends Component {
         this.setState({ email: this.props.user.userData.email })
     }
 
+    isPasswordValid(password) {
+        return /^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(password)
+    }
+
     render() {
         const { email, name, phone, password, confirmPassword, oldPassword, buttonLoading } = this.state;
         return (

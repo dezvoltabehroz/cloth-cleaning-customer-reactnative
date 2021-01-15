@@ -3,7 +3,7 @@ const screenWidth = Dimensions.get('window').width;
 export default StyleSheet.create({
     containerStyle: {
         height: 54,
-        marginBottom: '5%'
+        marginBottom: 0
     },
     inputContainerStyle: {
         borderBottomWidth: 0,

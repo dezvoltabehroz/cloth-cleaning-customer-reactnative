@@ -47,5 +47,10 @@ export default StyleSheet.create({
         fontSize: 12,
         marginLeft: 5
     },
+    themeText: {
+        fontSize: 12,
+        marginRight: '5%',
+        fontFamily: 'Nunito-Regular'
+    },
 
 })
