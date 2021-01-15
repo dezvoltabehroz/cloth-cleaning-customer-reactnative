@@ -16,6 +16,7 @@ const Stack = createStackNavigator();
 
 
 function HomeRoutes(props) {
+    const BadgedIcon = withBadge(props.cart.cart.length)(Icons);
     return (
         <Stack.Navigator>
             <Stack.Screen name="Home" component={Home} options={({ navigation, route }) => ({
@@ -25,7 +26,7 @@ function HomeRoutes(props) {
                     elevation: 0
                 },
                 headerLeft: () => (<TouchableOpacity onPress={() => navigation.toggleDrawer()} style={{ paddingLeft: 15 }}><Menus /></TouchableOpacity>),
-                headerRight: () => (<TouchableOpacity style={{ marginRight: 20 }} onPress={() => navigation.navigate('Cart')}><CartIcon /></TouchableOpacity>),
+                headerRight: () => (<TouchableOpacity style={{ marginRight: 20 }} onPress={() => navigation.navigate('Cart')}><BadgedIcon type="feather" name="shopping-cart" size={props.cart.cart.length == 0 ? 25 : 20} color='white' /></TouchableOpacity>),
                 headerTitle: () => (<View><Text style={styles.headerTitleStyle}></Text></View>),
             })} />
             <Stack.Screen name="Cart" component={Cart} options={({ navigation, route }) => ({
@@ -35,7 +36,7 @@ function HomeRoutes(props) {
                     backgroundColor: '#29B1DB',
                     elevation: 0
                 },
-                headerLeft: () => (<TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingLeft: 15 }}><Icon.AntDesign name="arrowleft" color="white" size={25} /></TouchableOpacity>),
+                headerLeft: () => (<TouchableOpacity onPress={() => navigation.replace('Home')} style={{ paddingLeft: 15 }}><Icon.AntDesign name="arrowleft" color="white" size={25} /></TouchableOpacity>),
                 headerRight: () => (<TouchableOpacity onPress={() => props.cartActions.clear()} style={{ marginRight: 20 }}><Text style={styles.headerTextStyle}>Clear All</Text></TouchableOpacity>),
                 headerTitle: () => (<View><Text style={styles.headerTitleStyle}>Cart</Text></View>),
             })} />

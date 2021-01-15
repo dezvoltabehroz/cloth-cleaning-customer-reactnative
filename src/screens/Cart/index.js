@@ -98,19 +98,29 @@ class Cart extends Component {
 
     handleMinusQuantity = (item, index) => {
         let array = [...this.props.cart.cart];
-        array[index] = { ...array[index], quantity: item.quantity == '1' ? item.quantity : (parseInt(item.quantity) - 1) };
+        array.map((element, i) => {
+            if (element.id == item.id) {
+                if (element.quantity == '1') {
+                    array = array.filter(data => data.id != element.id)
+                }
+                else {
+                    array[index] = { ...array[index], quantity: (parseInt(element.quantity) - 1) };
+                }
+            }
+        })
         this.props.cartActions.setCart(array);
-        this.setState({ list: array });
         this.handleTotalPrice(array)
     }
 
     handlePressDelete = async (item, index) => {
-        this.setState({ list: this.state.list.filter((obj => obj.id != item.id)) });
+        let array = [...this.props.cart.cart];
+        array = array.filter((obj => obj.id != item.id))
+        this.props.cartActions.setCart(array);
         // await AsyncStorage.setItem('CARTITEMS', JSON.stringify(this.state.list))
-        await this.props.actions.updateBagdeCount(this.state.list.length)
-        if (this.state.list.length == 0) {
-            // await AsyncStorage.removeItem('CARTITEMS')
-        }
+        // await this.props.actions.updateBagdeCount(this.state.list.length)
+        // if (this.state.list.length == 0) {
+        //     // await AsyncStorage.removeItem('CARTITEMS')
+        // }
     }
 
 

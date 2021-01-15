@@ -66,7 +66,7 @@ class Home extends Component {
                 let array = [];
                 data.forEach(element => {
                     if (element.category_id == id) {
-                        let item = { ...element, quantity: '1', }
+                        let item = { ...element, quantity: '1', check: '0' }
                         array.push(item);
                     }
                 });
@@ -163,7 +163,13 @@ class Home extends Component {
         let cartArray = [...this.props.cart.cart];
         cartArray.map((element, i) => {
             if (element.id == item.id) {
-                cartArray[i] = { ...cartArray[i], quantity: element.quantity == "1" ? element.quantity : (parseInt(element.quantity) - 1) };
+                if (element.quantity == '1') {
+                    cartArray = cartArray.filter(data => data.id != element.id)
+                    array[index] = { ...array[index], check: '0' };
+                }
+                else {
+                    cartArray[i] = { ...cartArray[i], quantity: element.quantity == "1" ? element.quantity : (parseInt(element.quantity) - 1) };
+                }
             }
         })
         this.props.cartActions.setCart(cartArray);
@@ -173,10 +179,15 @@ class Home extends Component {
     }
 
     _renderListItems = (item, index) => {
-        const { showQuantity, productIndex } = this.state;
+        let quantity;
+        let check;
+        this.props.cart.cart.map(element => {
+            if (element.id == item.id) {
+                quantity = element.quantity
+                check = element.check
+            }
+        })
         return (
-
-
             <View style={{
                 borderRadius: 10,
                 elevation: 2,
@@ -228,7 +239,7 @@ class Home extends Component {
                     <View style={{ marginHorizontal: '5%', flexDirection: 'column', justifyContent: 'center' }}>
                         <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 13, height: 18 }}>{item.name}</Text>
                         <Text style={{ fontSize: 12, color: '#7A7A7A', fontFamily: 'Roboto-Regular', height: 16 }}>Rs. {item.price}</Text>
-                        {showQuantity && productIndex == item.id ?
+                        {check == '1' || item.check == '1' ?
                             <View style={{
                                 flexDirection: 'row', marginLeft: -5,
                                 alignSelf: 'flex-start',
@@ -242,33 +253,38 @@ class Home extends Component {
                                 <TouchableOpacity style={styles.quantityButtonStyle} onPress={() => this.handleMinusQuantity(item, index)}>
                                     <Icon.Feather name='minus' size={10} color={'#fff'} />
                                 </TouchableOpacity>
-                                <Text style={{ color: '#0DA7DF', fontFamily: 'Roboto-Regular', fontSize: 11 }}>{item.quantity}</Text>
+                                <Text style={{ color: '#0DA7DF', fontFamily: 'Roboto-Regular', fontSize: 11 }}>{quantity ? quantity : item.quantity}</Text>
                                 <TouchableOpacity style={styles.quantityButtonStyle} onPress={() => this.handleAddQuantity(item, index)}>
                                     <Icon.Feather name='plus' size={10} color={'#fff'} />
                                 </TouchableOpacity>
                             </View>
                             :
-                            <TouchableOpacity onPress={() => {
+                            <TouchableOpacity onPress={async () => {
                                 let array = [];
+                                let listArray = [...this.state.list];
+                                let objIndex = this.state.list.findIndex(data => data.id == item.id);
+                                listArray[index] = { ...listArray[index], check: '1' };
+                                let dataItem = { ...item, check: '1' }
+                                console.log("dataItem:", dataItem)
                                 if (this.props.cart.cart.length == 0) {
-                                    array.push(item)
+                                    array.push(dataItem)
                                 }
                                 else {
                                     array = [...this.props.cart.cart];
                                     array.map((element) => {
-                                        if (element.id == item.id) {
+                                        if (element.id == dataItem.id) {
                                         }
                                         else {
-                                            if (array.some(data => data.id === item.id)) {
+                                            if (array.some(data => data.id === dataItem.id)) {
                                             } else {
-                                                array.push(item)
+                                                array.push(dataItem)
                                             }
                                         }
                                     })
                                 }
                                 console.log("array:", array);
-                                this.props.cartActions.setCart(array);
-                                this.setState({ showQuantity: true, productIndex: item.id })
+                                await this.props.cartActions.setCart(array);
+                                this.setState({ list: listArray })
                             }}>
                                 <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={{
                                     justifyContent: 'center',
@@ -308,7 +324,7 @@ class Home extends Component {
 
     render() {
         return (
-            <View style={{ flex: 1, backgroundColor: 'white' }}>
+            <View style={{ flex: 1, backgroundColor: 'white' }} >
                 <View style={styles.headerImageStyle}>
                     <View style={{ paddingHorizontal: '2.5%', marginTop: '5%' }}>
                         <Input placeholder='Search laundry by name....'
@@ -365,7 +381,7 @@ class Home extends Component {
                         </View>
                     </ScrollView>
                 </View>
-            </View>
+            </View >
         )
     }
 
