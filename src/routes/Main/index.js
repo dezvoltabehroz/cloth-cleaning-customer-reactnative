@@ -60,9 +60,9 @@ function CustomDrawerContent({ navigation, props }) {
                         <Logout height={16} width={16} />
                         <Text style={{ color: "#0092C7", marginLeft: "10%", fontFamily: 'Roboto-Regular', fontSize: 12 }} >Logout</Text>
                     </TouchableOpacity>
-                    <View style={styles.policyStyles}>
+                    <TouchableOpacity onPress={() => alert("Terms and condition will be furnished soon")} style={styles.policyStyles}>
                         <Text style={{ color: "#707070", fontFamily: 'Roboto-Regular', fontSize: 12 }} >Terms & conditions / policy</Text>
-                    </View>
+                    </TouchableOpacity>
                     {/* <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: '10%', height: 54, width: 150, justifyContent: 'space-between', }}>
                         <Icon.FontAwesome name="facebook" size={20} color="#0092C7" />
                         <Icon.FontAwesome name="instagram" size={20} color="#0092C7" />
@@ -70,9 +70,15 @@ function CustomDrawerContent({ navigation, props }) {
                     </View> */}
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: '10%', height: 54, width: 150, justifyContent: 'space-between', }}>
-                    <Icon.FontAwesome name="facebook" size={20} color="#707070" />
-                    <Icon.FontAwesome name="instagram" size={20} color="#707070" />
-                    <Icon.FontAwesome name="twitter" size={20} color="#707070" />
+                    <TouchableOpacity>
+                        <Icon.FontAwesome name="facebook" size={20} color="#707070" />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Icon.FontAwesome name="instagram" size={20} color="#707070" />
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Icon.FontAwesome name="twitter" size={20} color="#707070" />
+                    </TouchableOpacity>
                 </View>
             </View>
 
