@@ -83,7 +83,7 @@ class ResetPassword extends Component {
                                         </LinearGradient>
                                     </TouchableOpacity>
                                     <View style={{ width: 5 }}></View>
-                                    <TouchableOpacity disabled={password != '' && confirmPassword != '' ? false : true} style={{ alignSelf: 'flex-end' }} onPress={() => {
+                                    <TouchableOpacity disabled={password != '' && confirmPassword != '' && oldPassword != "" ? false : true} style={{ alignSelf: 'flex-end' }} onPress={() => {
                                         this.setState({ buttonLoading: true })
                                         let userData = {
                                             id: this.props.user.userData.id,
@@ -104,9 +104,13 @@ class ResetPassword extends Component {
                                                     }
                                                 ])
                                             })
-                                            .catch((err) => console.log(err))
+                                            .catch((err) => {
+                                                console.log(err)
+                                                this.setState({ buttonLoading: false })
+                                                Alert.alert('Error', 'Old Password is not correct')
+                                            })
                                     }}>
-                                        <LinearGradient colors={password != '' && confirmPassword != '' && password == confirmPassword ? ['#0DA7DF', '#27C2FA'] : ['#f2f2f2', '#e2e2e2']} style={styles.checkoutButtonContainer}>
+                                        <LinearGradient colors={password != '' && confirmPassword != '' && password == confirmPassword && oldPassword != "" ? ['#0DA7DF', '#27C2FA'] : ['#f2f2f2', '#e2e2e2']} style={styles.checkoutButtonContainer}>
                                             {
                                                 buttonLoading ?
                                                     <ActivityIndicator size={20} color="#FFF" />
