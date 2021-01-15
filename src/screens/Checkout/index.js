@@ -157,7 +157,7 @@ class Checkout extends Component {
                                             <ThankYou />
                                         </View>
                                         <Text style={{ marginTop: '5%', color: '#374B5C', fontFamily: 'Roboto-Bold' }}>THANK YOU!</Text>
-                                        <View style={{ marginTop: '2.5%' }}>
+                                        {/* <View style={{ marginTop: '2.5%' }}>
                                             <View style={{ flexDirection: 'row' }}>
                                                 <Text style={{ color: '#7A7A7A', fontSize: 12, fontFamily: 'Roboto-Regular' }}>Order Number:</Text>
                                                 <Text style={{ color: '#374B5C', fontWeight: 'bold', fontSize: 12, fontFamily: 'Roboto-Medium' }}>  #00000456</Text>
@@ -166,7 +166,7 @@ class Checkout extends Component {
                                         <View style={{ marginTop: '2.5%' }}>
                                             <Text style={{ color: '#7A7A7A', textAlign: 'center', fontSize: 12, fontFamily: 'Roboto-Regular' }}>Oder details will be send to your email address</Text>
                                             <Text style={{ color: '#374B5C', textAlign: 'center', fontSize: 12, fontFamily: 'Roboto-Medium' }}>JohnDoe@example.com</Text>
-                                        </View>
+                                        </View> */}
                                     </View>
                                     :
                                     null
@@ -253,7 +253,7 @@ class Checkout extends Component {
                                                             }
                                                         </View>
                                                         <View>
-                                                            <Text style={styles.checkoutTextStyle}>Rs.{urgent == 0 ? '50' : '200'}</Text>
+                                                            <Text style={styles.checkoutTextStyle}>Rs.{urgent == '1' ? '200' : '50'}</Text>
                                                         </View>
                                                     </View>
                                                     {discount ?

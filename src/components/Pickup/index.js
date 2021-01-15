@@ -7,6 +7,7 @@ import Input from '../Input';
 const screenHeight = Dimensions.get('window').height;
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import Modal from 'react-native-modal';
+import moment from 'moment'
 import LinearGradient from 'react-native-linear-gradient'
 import { connect } from 'react-redux';
 class Pickup extends Component {
@@ -15,7 +16,7 @@ class Pickup extends Component {
         this.state = {
             editPickUpShift: false,
             pickUpShift: 'Noon (12pm-02pm)',
-            timing: '',
+            timing: 'Noon (12pm-02pm)',
             time: 'Noon',
             region: {
                 latitude: 32.1877,
@@ -79,7 +80,7 @@ class Pickup extends Component {
             items[index] = { ...items[index], selected: false };
         }
         items[objIndex] = { ...items[objIndex], selected: true };
-        this.setState({ shift: items, timing: `${items[objIndex].shiftName} (${items[objIndex].timing})`, time: items[objIndex].shiftName });
+        this.setState({ shift: items, timing: `${items[objIndex].shiftName} (${items[objIndex].timing})` });
         this.props.time(items[objIndex].shiftName);
     }
 
@@ -143,7 +144,7 @@ class Pickup extends Component {
                                     <Text style={{ fontFamily: 'Roboto-Medium', color: '#1E2123' }}>Name</Text>
                                 </View>
                                 <View>
-                                    <Icon.MaterialIcons name="edit" color={'#7A7A7A'} size={20} />
+                                    {/* <Icon.MaterialIcons name="edit" color={'#7A7A7A'} size={20} /> */}
                                 </View>
                             </View>
                             <View style={{ marginTop: '2%' }}>
@@ -159,7 +160,7 @@ class Pickup extends Component {
                                     <Text style={{ fontFamily: 'Roboto-Medium', color: '#1E2123' }}>Phone number</Text>
                                 </View>
                                 <View>
-                                    <Icon.MaterialIcons name="edit" color={'#7A7A7A'} size={20} />
+                                    {/* <Icon.MaterialIcons name="edit" color={'#7A7A7A'} size={20} /> */}
                                 </View>
                             </View>
                             <View style={{ marginTop: '2%' }}>
@@ -183,7 +184,7 @@ class Pickup extends Component {
                                 </View>
                                 <View style={{ marginLeft: '5%' }}>
                                     <Text style={{ color: '#374B5C', fontFamily: 'Roboto-Medium', fontSize: 13, }}>Today</Text>
-                                    <Text style={{ color: '#7A7A7A', fontSize: 12, fontFamily: 'Roboto-Regular' }}>Pickup on {this.state.pickUpShift}, 8 Dec 2020</Text>
+                                    <Text style={{ color: '#7A7A7A', fontSize: 12, fontFamily: 'Roboto-Regular' }}>Pickup on {this.state.pickUpShift}, {moment().format('ll')}</Text>
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => this.setState({ today: false, tommorrow: true }, this.props.day('tommorrow'))} style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%' }}>
@@ -192,7 +193,7 @@ class Pickup extends Component {
                                 </View>
                                 <View style={{ marginLeft: '5%' }}>
                                     <Text style={{ color: '#374B5C', fontFamily: 'Roboto-Medium', fontSize: 13, }}>Tomorrow</Text>
-                                    <Text style={{ color: '#7A7A7A', fontSize: 12, fontFamily: 'Roboto-Regular' }}>Pickup on {this.state.pickUpShift}, 9 Dec 2020</Text>
+                                    <Text style={{ color: '#7A7A7A', fontSize: 12, fontFamily: 'Roboto-Regular' }}>Pickup on {this.state.pickUpShift}, {moment().add(1, 'days').format('ll')}</Text>
                                 </View>
                             </TouchableOpacity>
 
@@ -217,7 +218,7 @@ class Pickup extends Component {
                                     <Text style={{ color: '#7A7A7A', fontSize: 12, fontFamily: 'Roboto-Regular' }}>You will receive laundry within 3 to 4 working days</Text>
                                 </View>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => this.setState({ regular: false, express: true }, () => () => this.props.urgent('1'))} style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%' }}>
+                            <TouchableOpacity onPress={() => this.setState({ regular: false, express: true }, () => this.props.urgent('1'))} style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%' }}>
                                 <View>
                                     <Icon.MaterialCommunityIcons name={express ? "checkbox-marked-circle" : "checkbox-blank-circle-outline"} color={express ? '#0DA7DF' : '#707070'} size={20} />
                                 </View>
