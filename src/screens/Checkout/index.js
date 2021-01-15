@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ImageBackground, Keyboard, TouchableOpacity, Dimensions, Image } from 'react-native';
+import { View, Text, ImageBackground, Keyboard, TouchableOpacity, Dimensions, Image, Alert } from 'react-native';
 import { Icon, Tabs, Pickup, Payment, Input } from '../../components';
 import styles from './style';
 import LinearGradient from 'react-native-linear-gradient'
@@ -11,6 +11,9 @@ import { connect } from 'react-redux';
 import { cartActions } from '../../redux/actions/cart';
 import { bindActionCreators } from "redux";
 import { OrdersServices } from '../../services';
+import Geolocation from '@react-native-community/geolocation';
+import Geocoder from 'react-native-geocoder';
+import { ActivityIndicator } from 'react-native';
 class Checkout extends Component {
     constructor(props) {
         super(props);
@@ -32,13 +35,45 @@ class Checkout extends Component {
             note: "",
             address: "",
             transactionId: "",
-            products: []
+            products: [],
+            region: {},
+            addressLocation: "",
+            location: {},
+            initialLoading: true
 
         }
     }
-
+    findCoordinates = () => {
+        Geolocation.getCurrentPosition(
+            position => {
+                Geocoder.geocodePosition({
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                })
+                    .then(async (res) => {
+                        let userData = {
+                            region: {
+                                latitude: position.coords.latitude,
+                                longitude: position.coords.longitude,
+                                latitudeDelta: 0.005,
+                                longitudeDelta: 0.005,
+                            },
+                            address: res[0].formattedAddress,
+                        }
+                        await this.props.cartActions.setRegion(userData)
+                        setTimeout(() => {
+                            this.setState({ initialLoading: false })
+                        }, 5000);
+                    })
+                    .catch(error => alert(error));
+            },
+            (error) => console.log(error)
+        );
+    };
 
     componentWillMount() {
+        // this.findCoordinates();
+        this.setState({ initialLoading: false })
         this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
         this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
     }
@@ -80,14 +115,14 @@ class Checkout extends Component {
             email: this.props.user.userData.email,
             phone: this.props.user.userData.phone,
             customer_id: this.props.user.userData.id,
-            lat: lat,
-            long: lng,
+            lat: this.props.cart.region.latitude ? this.props.cart.region.latitude : "",
+            long: this.props.cart.region.longitude ? this.props.cart.region.longitude : "",
             day: day,
             time: time,
             totalPrice: totalPrice,
             urgent: urgent,
             grandTotal: urgent == '1' ? (totalPrice + 200) : (totalPrice + 50),
-            deliveryAddress: address,
+            deliveryAddress: this.props.cart.address? this.props.cart.address: "",
             city: this.props.user.userData.city,
             paymentMethod: paymentMethod,
             transactionId: transactionId,
@@ -108,56 +143,61 @@ class Checkout extends Component {
 
     }
 
-
     render() {
-        const { activeTab, discount, urgent, code, discountValue, keyboardState } = this.state;
+        const { activeTab, discount, urgent, code, discountValue, keyboardState, initialLoading, addressLocation, location } = this.state;
 
         return (
             <>
-                <View style={{ flex: 1, backgroundColor: 'white' }}>
-
-                    <View style={styles.headerImageStyle}>
-                        <View style={styles.upperListContainer}>
-                            <View style={styles.tabContainer}>
-                                <Tabs active={activeTab} tabs={['Account', 'Pick up', 'Payment']} />
-                            </View>
-                        </View>
+                { initialLoading ?
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <ActivityIndicator color="#0DA7DF" size={60} />
                     </View>
-                    <View style={{ marginTop: 35 }}>
-                        <KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: '20%' }}>
-                            {
-                                activeTab == 0 ?
+                    :
+                    <>
+                        <View style={{ flex: 1, backgroundColor: 'white' }}>
 
-                                    <Pickup
-                                        day={(day) => this.setState({ day })}
-                                        time={(time) => this.setState({ time })}
-                                        urgent={(urgent) => this.setState({ urgent })}
-                                        note={(note) => this.setState({ note })}
-                                        address={(address) => this.setState({ address })}
-                                        region={({ lat, lng }) => this.setState({ lat: lat, lng: lng })}
-                                        navigation={this.props.navigation} route={this.props.route.params} />
-                                    :
-                                    null
-                            }
-                            {
-                                activeTab == 1 ?
-                                    <Payment
+                            <View style={styles.headerImageStyle}>
+                                <View style={styles.upperListContainer}>
+                                    <View style={styles.tabContainer}>
+                                        <Tabs active={activeTab} tabs={['Account', 'Pick up', 'Payment']} />
+                                    </View>
+                                </View>
+                            </View>
+                            <View style={{ marginTop: 35 }}>
+                                <KeyboardAwareScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: '20%' }}>
+                                    {
+                                        activeTab == 0 ?
 
-                                        paymentMethod={(paymentMethod) => this.setState({ paymentMethod })}
-                                        transactionId={(transactionId) => this.setState({ transactionId })}
-                                        orderList={this.state.orderList} />
-                                    :
-                                    null
-                            }
-                            {
-                                activeTab == 2 ?
-                                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                            <Pickup
+                                                location={this.props.cart.region}
+                                                addressLocation={this.props.cart.address}
+                                                day={(day) => this.setState({ day })}
+                                                time={(time) => this.setState({ time })}
+                                                urgent={(urgent) => this.setState({ urgent })}
+                                                note={(note) => this.setState({ note })}
+                                                navigation={this.props.navigation} route={this.props.route.params} />
+                                            :
+                                            null
+                                    }
+                                    {
+                                        activeTab == 1 ?
+                                            <Payment
 
-                                        <View style={{ marginTop: '20%' }}>
-                                            <ThankYou />
-                                        </View>
-                                        <Text style={{ marginTop: '5%', color: '#374B5C', fontFamily: 'Roboto-Bold' }}>THANK YOU!</Text>
-                                        {/* <View style={{ marginTop: '2.5%' }}>
+                                                paymentMethod={(paymentMethod) => this.setState({ paymentMethod })}
+                                                transactionId={(transactionId) => this.setState({ transactionId })}
+                                                orderList={this.state.orderList} />
+                                            :
+                                            null
+                                    }
+                                    {
+                                        activeTab == 2 ?
+                                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+
+                                                <View style={{ marginTop: '20%' }}>
+                                                    <ThankYou />
+                                                </View>
+                                                <Text style={{ marginTop: '5%', color: '#374B5C', fontFamily: 'Roboto-Bold' }}>THANK YOU!</Text>
+                                                {/* <View style={{ marginTop: '2.5%' }}>
                                             <View style={{ flexDirection: 'row' }}>
                                                 <Text style={{ color: '#7A7A7A', fontSize: 12, fontFamily: 'Roboto-Regular' }}>Order Number:</Text>
                                                 <Text style={{ color: '#374B5C', fontWeight: 'bold', fontSize: 12, fontFamily: 'Roboto-Medium' }}>  #00000456</Text>
@@ -167,131 +207,132 @@ class Checkout extends Component {
                                             <Text style={{ color: '#7A7A7A', textAlign: 'center', fontSize: 12, fontFamily: 'Roboto-Regular' }}>Oder details will be send to your email address</Text>
                                             <Text style={{ color: '#374B5C', textAlign: 'center', fontSize: 12, fontFamily: 'Roboto-Medium' }}>JohnDoe@example.com</Text>
                                         </View> */}
-                                    </View>
+                                            </View>
+                                            :
+                                            null
+                                    }
+                                </KeyboardAwareScrollView>
+                            </View>
+
+                        </View>
+                        <View style={{ backgroundColor: 'white' }}>
+                            {
+                                !keyboardState ?
+
+                                    activeTab == 0 || activeTab == 1 ?
+                                        <View onPress={() => { }} style={{
+                                            borderRadius: 10,
+                                            elevation: 2,
+                                            backgroundColor: 'white',
+                                            shadowColor: "#000",
+                                            shadowOffset: {
+                                                width: 0,
+                                                height: 1,
+                                            },
+                                            shadowOpacity: 0.20,
+                                            shadowRadius: 1.41,
+                                            borderColor: "#EEE",
+                                            backgroundColor: 'white',
+                                            borderWidth: 1,
+                                            marginBottom: '5%',
+                                            marginHorizontal: '5%'
+                                        }}>
+                                            <View style={{ flexDirection: 'row', bottom: '5%', justifyContent: 'center', alignItems: 'center', }}>
+                                                <TouchableOpacity onPress={() => {
+                                                    if (activeTab == 1) {
+                                                        this.handlePlaceOrder()
+                                                        this.setState({ activeTab: activeTab + 1 })
+                                                    }
+                                                    else {
+                                                        this.setState({ activeTab: activeTab + 1 })
+                                                    }
+                                                }}>
+                                                    <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
+                                                        <Text style={styles.checkButtonTextStyle}>{activeTab == 0 ? 'Continue' : 'Place order'}</Text>
+                                                    </LinearGradient>
+                                                </TouchableOpacity>
+                                            </View>
+                                            <View style={styles.checkoutInnerContainer}>
+
+                                                {
+                                                    activeTab == 0 ?
+                                                        null
+                                                        :
+                                                        <>
+                                                            <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={[styles.checkoutItemStyle, { alignItems: 'center', paddingHorizontal: '2.5%', borderRadius: 10, height: 40 }]}>
+                                                                <View style={{ flexDirection: 'row', }}>
+                                                                    <View style={{ backgroundColor: '#0DA7DF', alignItems: 'center', justifyContent: 'center', height: 20, width: 20, borderRadius: 10 }}>
+                                                                        <Icon.Feather name="percent" size={15} color="white" />
+                                                                    </View>
+                                                                    <Text style={{ color: 'white', fontSize: 12, marginLeft: '5%', fontFamily: 'Roboto-Medium' }}>{discount ? 'Get 10 discount' : 'Use coupon to get discount'}</Text>
+                                                                </View>
+                                                                <View style={{ justifyContent: 'center' }}>
+                                                                    {
+                                                                        discount ?
+                                                                            <Icon.AntDesign name='checkcircle' color='white' size={15} />
+                                                                            :
+                                                                            <Text onPress={() => this.setState({ discountModal: true })} style={[styles.totalPriceTextStyle, { color: 'white' }]}>Choose</Text>
+                                                                    }
+                                                                </View>
+                                                            </LinearGradient>
+                                                            <View style={styles.checkoutItemStyle}>
+                                                                <View>
+                                                                    <Text style={styles.checkoutTextStyle}>Total</Text>
+                                                                </View>
+                                                                <View>
+                                                                    <Text style={styles.checkoutTextStyle}>Rs.{this.state.totalPrice}</Text>
+                                                                </View>
+                                                            </View>
+                                                            <View style={styles.checkoutItemStyle}>
+                                                                <View>
+                                                                    {
+                                                                        discount ?
+                                                                            <Text style={styles.checkoutTextStyle}>Shipping</Text>
+                                                                            :
+                                                                            <Text style={styles.checkoutTextStyle}>Delivery Charges</Text>
+                                                                    }
+                                                                </View>
+                                                                <View>
+                                                                    <Text style={styles.checkoutTextStyle}>Rs.{urgent == '1' ? '200' : '50'}</Text>
+                                                                </View>
+                                                            </View>
+                                                            {discount ?
+                                                                <View style={styles.checkoutItemStyle}>
+                                                                    <View>
+                                                                        <Text style={styles.checkoutTextStyle}>Discount</Text>
+                                                                    </View>
+                                                                    <View>
+                                                                        <Text style={styles.discountTextStyle}>Rs.{'50'}</Text>
+                                                                    </View>
+                                                                </View>
+                                                                :
+                                                                null}
+                                                            <View style={styles.lineStyle}></View>
+                                                        </>
+                                                }
+                                                <View style={[styles.checkoutItemStyle, { bottom: activeTab == 0 ? '3%' : 0 }]}>
+                                                    <View>
+                                                        <Text style={styles.totalTextStyle}>Total</Text>
+                                                    </View>
+                                                    <View>
+                                                        <Text style={styles.totalPriceTextStyle}>Rs. {activeTab == 0 ? this.state.totalPrice : discount ? this.state.totalPrice + (urgent == '0' ? 50 : 200) - discountValue : this.state.totalPrice + (urgent == '0' ? 50 : 200)}</Text>
+                                                    </View>
+                                                </View>
+                                            </View>
+                                        </View>
+                                        :
+                                        <View style={{ flexDirection: 'row', bottom: '5%', justifyContent: 'center', alignItems: 'center', }}>
+                                            <TouchableOpacity onPress={() => this.props.navigation.replace('Main', { screen: 'Home' })}>
+                                                <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
+                                                    <Text style={styles.checkButtonTextStyle}>{'Continue'}</Text>
+                                                </LinearGradient>
+                                            </TouchableOpacity>
+                                        </View>
                                     :
                                     null
                             }
-                        </KeyboardAwareScrollView>
-                    </View>
-
-                </View>
-                <View style={{ backgroundColor: 'white' }}>
-                    {
-                        !keyboardState ?
-
-                            activeTab == 0 || activeTab == 1 ?
-                                <View onPress={() => { }} style={{
-                                    borderRadius: 10,
-                                    elevation: 2,
-                                    backgroundColor: 'white',
-                                    shadowColor: "#000",
-                                    shadowOffset: {
-                                        width: 0,
-                                        height: 1,
-                                    },
-                                    shadowOpacity: 0.20,
-                                    shadowRadius: 1.41,
-                                    borderColor: "#EEE",
-                                    backgroundColor: 'white',
-                                    borderWidth: 1,
-                                    marginBottom: '5%',
-                                    marginHorizontal: '5%'
-                                }}>
-                                    <View style={{ flexDirection: 'row', bottom: '5%', justifyContent: 'center', alignItems: 'center', }}>
-                                        <TouchableOpacity onPress={() => {
-                                            if (activeTab == 1) {
-                                                this.handlePlaceOrder()
-                                                this.setState({ activeTab: activeTab + 1 })
-                                            }
-                                            else {
-                                                this.setState({ activeTab: activeTab + 1 })
-                                            }
-                                        }}>
-                                            <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
-                                                <Text style={styles.checkButtonTextStyle}>{activeTab == 0 ? 'Continue' : 'Place order'}</Text>
-                                            </LinearGradient>
-                                        </TouchableOpacity>
-                                    </View>
-                                    <View style={styles.checkoutInnerContainer}>
-
-                                        {
-                                            activeTab == 0 ?
-                                                null
-                                                :
-                                                <>
-                                                    <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={[styles.checkoutItemStyle, { alignItems: 'center', paddingHorizontal: '2.5%', borderRadius: 10, height: 40 }]}>
-                                                        <View style={{ flexDirection: 'row', }}>
-                                                            <View style={{ backgroundColor: '#0DA7DF', alignItems: 'center', justifyContent: 'center', height: 20, width: 20, borderRadius: 10 }}>
-                                                                <Icon.Feather name="percent" size={15} color="white" />
-                                                            </View>
-                                                            <Text style={{ color: 'white', fontSize: 12, marginLeft: '5%', fontFamily: 'Roboto-Medium' }}>{discount ? 'Get 10 discount' : 'Use coupon to get discount'}</Text>
-                                                        </View>
-                                                        <View style={{ justifyContent: 'center' }}>
-                                                            {
-                                                                discount ?
-                                                                    <Icon.AntDesign name='checkcircle' color='white' size={15} />
-                                                                    :
-                                                                    <Text onPress={() => this.setState({ discountModal: true })} style={[styles.totalPriceTextStyle, { color: 'white' }]}>Choose</Text>
-                                                            }
-                                                        </View>
-                                                    </LinearGradient>
-                                                    <View style={styles.checkoutItemStyle}>
-                                                        <View>
-                                                            <Text style={styles.checkoutTextStyle}>Total</Text>
-                                                        </View>
-                                                        <View>
-                                                            <Text style={styles.checkoutTextStyle}>Rs.{this.state.totalPrice}</Text>
-                                                        </View>
-                                                    </View>
-                                                    <View style={styles.checkoutItemStyle}>
-                                                        <View>
-                                                            {
-                                                                discount ?
-                                                                    <Text style={styles.checkoutTextStyle}>Shipping</Text>
-                                                                    :
-                                                                    <Text style={styles.checkoutTextStyle}>Delivery Charges</Text>
-                                                            }
-                                                        </View>
-                                                        <View>
-                                                            <Text style={styles.checkoutTextStyle}>Rs.{urgent == '1' ? '200' : '50'}</Text>
-                                                        </View>
-                                                    </View>
-                                                    {discount ?
-                                                        <View style={styles.checkoutItemStyle}>
-                                                            <View>
-                                                                <Text style={styles.checkoutTextStyle}>Discount</Text>
-                                                            </View>
-                                                            <View>
-                                                                <Text style={styles.discountTextStyle}>Rs.{'50'}</Text>
-                                                            </View>
-                                                        </View>
-                                                        :
-                                                        null}
-                                                    <View style={styles.lineStyle}></View>
-                                                </>
-                                        }
-                                        <View style={[styles.checkoutItemStyle, { bottom: activeTab == 0 ? '3%' : 0 }]}>
-                                            <View>
-                                                <Text style={styles.totalTextStyle}>Total</Text>
-                                            </View>
-                                            <View>
-                                                <Text style={styles.totalPriceTextStyle}>Rs. {activeTab == 0 ? this.state.totalPrice : discount ? this.state.totalPrice + (urgent == '0' ? 50 : 200) - discountValue : this.state.totalPrice + (urgent == '0' ? 50 : 200)}</Text>
-                                            </View>
-                                        </View>
-                                    </View>
-                                </View>
-                                :
-                                <View style={{ flexDirection: 'row', bottom: '5%', justifyContent: 'center', alignItems: 'center', }}>
-                                    <TouchableOpacity onPress={() => this.props.navigation.replace('Main', { screen: 'Home' })}>
-                                        <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
-                                            <Text style={styles.checkButtonTextStyle}>{'Continue'}</Text>
-                                        </LinearGradient>
-                                    </TouchableOpacity>
-                                </View>
-                            :
-                            null
-                    }
-                </View>
+                        </View>
+                    </>}
                 <Modal isVisible={this.state.discountModal}  >
                     <View style={styles.content}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: '5%' }}>

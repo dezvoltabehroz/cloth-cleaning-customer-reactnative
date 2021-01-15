@@ -5,7 +5,9 @@ import {
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import Config from '../../config/config.json';
 import styles from './style';
-
+import { connect } from 'react-redux';
+import { cartActions } from '../../redux/actions/cart';
+import { bindActionCreators } from "redux";
 class Search extends Component {
     constructor(props) {
         super(props);
@@ -14,22 +16,22 @@ class Search extends Component {
         }
     }
 
-    goMap(data, details) {
+    goMap = async (data, details) => {
         let searchObj = {
             searchData: data,
             searchDetails: details
         }
-        this.setState({
+        let userData = {
             region: {
                 latitude: searchObj.searchDetails.geometry.location.lat,
                 longitude: searchObj.searchDetails.geometry.location.lng,
                 latitudeDelta: 0.005,
                 longitudeDelta: 0.005,
             },
-            name: searchObj.searchDetails.formatted_address
-        })
-        this.props.navigation.push('Checkout', { address: this.state.name, region: this.state.region });
-        this.setState({ region: {}, name: '' })
+            address: searchObj.searchDetails.formatted_address
+        }
+        await this.props.cartActions.setRegion(userData)
+        this.props.navigation.goBack();
         // this.props.onChange();
     }
 
@@ -86,4 +88,17 @@ class Search extends Component {
         )
     }
 }
-export default Search;
+const mapStateToProps = (state) => {
+    return {
+        user: state.authReducer || {},
+        cart: state.cartReducer || {}
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        cartActions: bindActionCreators(cartActions, dispatch)
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search)

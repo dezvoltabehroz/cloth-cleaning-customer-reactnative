@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, ImageBackground, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import { Icon } from '..';
 import styles from './style'
-import MapView from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker, AnimatedRegion } from 'react-native-maps';
 import Input from '../Input';
 const screenHeight = Dimensions.get('window').height;
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
@@ -55,23 +55,19 @@ class Pickup extends Component {
     }
 
     componentDidMount = () => {
-        const { region, address } = this.props.route;
+        console.log("this.props.cart.region", this.props.cart.region)
+        console.log("this.props.cart.region", this.props.cart.address)
 
-        if (this.props.route != undefined) {
-            console.log("region:", region)
-            this.setState({
-                name: this.props.user.userData.fullName,
-                phone: this.props.user.userData.phone,
-                region: region != undefined ? region : this.state.region,
-                address: address != undefined ? address : this.props.user.userData.address + " " + this.props.user.userData.city
-            })
-            this.props.day('today');
-            this.props.time('Noon');
-            this.props.urgent('0');
-            this.props.address(address != undefined ? address : this.props.user.userData.address + " " + this.props.user.userData.city);
-            this.props.region(region != undefined ? ({ lat: region.latitude, lng: region.longitude }) : ({ lat: this.state.region.latitude, lng: this.state.region.longitude }))
-        }
+        this.setState({
+            name: this.props.user.userData.fullName,
+            phone: this.props.user.userData.phone
+        })
+        this.props.day('today');
+        this.props.time('Noon');
+        this.props.urgent('0');
     }
+
+
 
     handleshift = (item, index) => {
         const objIndex = this.state.shift.findIndex((obj => obj == item));
@@ -92,6 +88,7 @@ class Pickup extends Component {
     }
 
     render() {
+
         const { name, phone, address, region, regular, express, today, tommorrow, note } = this.state;
         return (
             <>
@@ -103,8 +100,7 @@ class Pickup extends Component {
                                     <Text style={{ fontFamily: 'Roboto-Medium', color: '#1E2123' }}>Your Address</Text>
                                 </View>
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('Map', {
-                                    screen: 'Map',
-                                    params: { address: address, region: region }
+                                    screen: 'Map'
                                 })}>
                                     <Icon.MaterialIcons name="edit" color={'#7A7A7A'} size={20} />
                                 </TouchableOpacity>
@@ -113,16 +109,27 @@ class Pickup extends Component {
                                 <MapView
                                     style={{ height: screenHeight * 0.2 }}
                                     region={{
-                                        latitude: parseFloat(this.state.region.latitude),
-                                        longitude: parseFloat(this.state.region.longitude),
-                                        latitudeDelta: this.state.region.latitudeDelta,
-                                        longitudeDelta: this.state.region.longitudeDelta,
+                                        latitude: this.props.cart.region.latitude,
+                                        longitude: this.props.cart.region.longitude,
+                                        latitudeDelta: this.props.cart.region.latitudeDelta,
+                                        longitudeDelta: this.props.cart.region.longitudeDelta,
                                     }}
-                                />
+                                >
+                                    <Marker.Animated
+                                        opacity={0.5}
+                                        style={{ width: 20, height: 20 }}
+                                        coordinate={new AnimatedRegion({
+                                            latitude: parseFloat(this.props.cart.region.latitude),
+                                            longitude: parseFloat(this.props.cart.region.longitude),
+                                            latitudeDelta: 0.005,
+                                            longitudeDelta: 0.005,
+                                        })}
+                                    ></Marker.Animated>
+                                </MapView>
                             </View>
                             <View style={{ flex: 1, flexDirection: 'row', justifyContent: "space-between" }}>
                                 <View style={{ flex: 0.5, flexDirection: 'column', marginTop: '2%' }}>
-                                    <Text style={{ color: '#7A7A7A', fontFamily: 'Roboto-Regular', }}>{this.truncateString(address, 28)}</Text>
+                                    <Text style={{ color: '#7A7A7A', fontFamily: 'Roboto-Regular', }}>{this.truncateString(this.props.cart.address, 28)}</Text>
                                 </View>
                                 <View style={{ flex: 0.5, flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-end' }}>
                                     <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>

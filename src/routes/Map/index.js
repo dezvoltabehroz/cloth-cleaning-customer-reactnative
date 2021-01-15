@@ -4,11 +4,13 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, Alert, Dimensions, Pla
 import { Cart, Home, ProductDetail, Checkout, Orders, OrdersDetail, MapScreen, Search } from '../../screens';
 import { withBadge, Icon as Icons } from 'react-native-elements'
 import { Icon } from '../../components';
+import { connect } from 'react-redux'
 const screenWidth = Dimensions.get('window').width;
 const Stack = createStackNavigator();
 
 const BadgedIcon = withBadge(1)(Icons);
-function MapRoutes() {
+function MapRoutes(props) {
+    console.log(props.cart)
     return (
         <Stack.Navigator initialRouteName="Map">
             <Stack.Screen name="Map" component={MapScreen} options={({ navigation, route }) => {
@@ -18,7 +20,7 @@ function MapRoutes() {
                         elevation: 0
                     },
                     headerLeft: () => (<TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingLeft: 15 }}><Icon.AntDesign name="arrowleft" color="white" size={25} /></TouchableOpacity>),
-                    headerTitle: () => (<View><Text style={styles.headerMapTitleStyle}>{truncateString(route.params.address, 28)}</Text></View>),
+                    headerTitle: () => (<View><Text style={styles.headerMapTitleStyle}>{truncateString(props.cart.address, 28)}</Text></View>),
                 })
             }} />
             <Stack.Screen name="Search" component={Search} options={({ navigation, route }) => ({
@@ -52,7 +54,12 @@ const styles = StyleSheet.create({
         color: "#fff",
     }
 })
-
-export default MapRoutes;
+const mapStateToProps = (state) => {
+    return {
+        user: state.authReducer || {},
+        cart: state.cartReducer || {}
+    };
+};
+export default connect(mapStateToProps)(MapRoutes);
 
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, View, Text, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
+import { FlatList, View, Image, Text, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import { Icon } from '../../components';
 import styles from './style';
 import LinearGradient from 'react-native-linear-gradient';
@@ -14,7 +14,8 @@ import JNamaz from '../../assets/svg/jnamaz.svg';
 import { connect } from 'react-redux';
 import { cartActions } from '../../redux/actions/cart';
 import { bindActionCreators } from "redux";
-import { Image } from 'react-native';
+import Geolocation from '@react-native-community/geolocation';
+import Geocoder from 'react-native-geocoder';
 const screenWidth = Dimensions.get('window').width;
 
 class Cart extends Component {
@@ -83,6 +84,7 @@ class Cart extends Component {
         }
     }
     componentDidMount = () => {
+        this.findCoordinates()
         this.handleTotalPrice(this.props.cart.cart)
     }
 
@@ -173,6 +175,34 @@ class Cart extends Component {
             </>
         )
     }
+
+    findCoordinates = () => {
+        Geolocation.getCurrentPosition(
+            position => {
+                Geocoder.geocodePosition({
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                })
+                    .then(async (res) => {
+                        let userData = {
+                            region: {
+                                latitude: position.coords.latitude,
+                                longitude: position.coords.longitude,
+                                latitudeDelta: 0.005,
+                                longitudeDelta: 0.005,
+                            },
+                            address: res[0].formattedAddress,
+                        }
+                        await this.props.cartActions.setRegion(userData)
+                        setTimeout(() => {
+                            this.setState({ initialLoading: false })
+                        }, 5000);
+                    })
+                    .catch(error => alert(error));
+            },
+            (error) => console.log(error)
+        );
+    };
 
     _renderListSeparator = () => {
         return (
