@@ -46,11 +46,11 @@ const Api = {
     },
     updateUserProfile: function (userData) {
         return axiosInstance.put('buyer/updatecustomer', {
-            id: userData.id,
-            city: userData.city,
-            address: userData.address,
-            phone: userData.phone,
-            fullname: userData.name
+            "id": userData.id,
+            "city": `${userData.city}`,
+            "address": `${userData.address}`,
+            "phone": `${userData.phone}`,
+            "fullName": `${userData.fullName}`
         }, configToken(userData.token))
     }
 };

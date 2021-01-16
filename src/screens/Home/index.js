@@ -147,11 +147,12 @@ class Home extends Component {
     handleAddQuantity = (item, index) => {
         let array = [...this.state.list];
         let cartArray = [...this.props.cart.cart];
-        cartArray.map((element, i) => {
-            if (element.id == item.id) {
-                cartArray[i] = { ...cartArray[i], quantity: (parseInt(element.quantity) + 1) };
-            }
-        })
+        if (cartArray != null)
+            cartArray.map((element, i) => {
+                if (element.id == item.id) {
+                    cartArray[i] = { ...cartArray[i], quantity: (parseInt(element.quantity) + 1) };
+                }
+            })
         this.props.cartActions.setCart(cartArray);
         array[index] = { ...array[index], quantity: (parseInt(item.quantity) + 1) };
         this.setState({ list: array }, () => console.log("handleAddQuantity:", this.props.cart.cart))
@@ -161,17 +162,18 @@ class Home extends Component {
     handleMinusQuantity = (item, index) => {
         let array = [...this.state.list];
         let cartArray = [...this.props.cart.cart];
-        cartArray.map((element, i) => {
-            if (element.id == item.id) {
-                if (element.quantity == '1') {
-                    cartArray = cartArray.filter(data => data.id != element.id)
-                    array[index] = { ...array[index], check: '0' };
+        if (cartArray != null)
+            cartArray.map((element, i) => {
+                if (element.id == item.id) {
+                    if (element.quantity == '1') {
+                        cartArray = cartArray.filter(data => data.id != element.id)
+                        array[index] = { ...array[index], check: '0' };
+                    }
+                    else {
+                        cartArray[i] = { ...cartArray[i], quantity: element.quantity == "1" ? element.quantity : (parseInt(element.quantity) - 1) };
+                    }
                 }
-                else {
-                    cartArray[i] = { ...cartArray[i], quantity: element.quantity == "1" ? element.quantity : (parseInt(element.quantity) - 1) };
-                }
-            }
-        })
+            })
         this.props.cartActions.setCart(cartArray);
         array[index] = { ...array[index], quantity: item.quantity == '1' ? item.quantity : (parseInt(item.quantity) - 1) };
         this.setState({ list: array }, () => console.log("handleMinusQuantity:", this.props.cart.cart));
@@ -181,12 +183,13 @@ class Home extends Component {
     _renderListItems = (item, index) => {
         let quantity;
         let check;
-        this.props.cart.cart.map(element => {
-            if (element.id == item.id) {
-                quantity = element.quantity
-                check = element.check
-            }
-        })
+        if (this.props.cart.cart != null)
+            this.props.cart.cart.map(element => {
+                if (element.id == item.id) {
+                    quantity = element.quantity
+                    check = element.check
+                }
+            })
         return (
             <View style={{
                 borderRadius: 10,
@@ -265,8 +268,7 @@ class Home extends Component {
                                 let objIndex = this.state.list.findIndex(data => data.id == item.id);
                                 listArray[index] = { ...listArray[index], check: '1' };
                                 let dataItem = { ...item, check: '1' }
-                                console.log("dataItem:", dataItem)
-                                if (this.props.cart.cart.length == 0) {
+                                if (this.props.cart.cart == null || this.props.cart.cart.length == 0) {
                                     array.push(dataItem)
                                 }
                                 else {

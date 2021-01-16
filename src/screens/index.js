@@ -47,5 +47,8 @@ export const Profile = _Profile;
 import _About from './About';
 export const About = _About;
 
+import _PhoneVerification from './PhoneVerification';
+export const PhoneVerification = _PhoneVerification;
+
 import _ResetPassword from './ResetPassword';
 export const ResetPassword = _ResetPassword;

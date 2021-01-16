@@ -83,4 +83,16 @@ export default StyleSheet.create({
         height: 25,
         width: 25
     },
+    themeText: {
+        fontSize: 12,
+        marginRight: '5%',
+        fontFamily: 'Nunito-Regular'
+    },
+    errorText: {
+        paddingTop: "1%",
+        paddingLeft: 8,
+        color: '#c30000',
+        fontSize: 12,
+        marginLeft: 5
+    },
 })

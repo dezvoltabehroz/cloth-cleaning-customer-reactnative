@@ -11,12 +11,13 @@ import CartIcon from '../../assets/svg/cart.svg';
 import { connect } from 'react-redux';
 import { cartActions } from '../../redux/actions/cart';
 import { bindActionCreators } from "redux";
+import PhoneVerification from '../../screens/PhoneVerification';
 const screenWidth = Dimensions.get('window').width;
 const Stack = createStackNavigator();
 
 
 function HomeRoutes(props) {
-    const BadgedIcon = withBadge(props.cart.cart.length)(Icons);
+    const BadgedIcon = withBadge(props.cart.cart != null ? props.cart.cart.length : 0)(Icons);
     return (
         <Stack.Navigator>
             <Stack.Screen name="Home" component={Home} options={({ navigation, route }) => ({
@@ -26,7 +27,7 @@ function HomeRoutes(props) {
                     elevation: 0
                 },
                 headerLeft: () => (<TouchableOpacity onPress={() => navigation.toggleDrawer()} style={{ paddingLeft: 15 }}><Menus /></TouchableOpacity>),
-                headerRight: () => (<TouchableOpacity style={{ marginRight: 20 }} onPress={() => navigation.navigate('Cart')}><BadgedIcon type="feather" name="shopping-cart" size={props.cart.cart.length == 0 ? 25 : 20} color='white' /></TouchableOpacity>),
+                headerRight: () => (<TouchableOpacity style={{ marginRight: 20 }} onPress={() => navigation.navigate('Cart')}><BadgedIcon type="feather" name="shopping-cart" size={25} color='white' /></TouchableOpacity>),
                 headerTitle: () => (<View><Text style={styles.headerTitleStyle}></Text></View>),
             })} />
             <Stack.Screen name="Cart" component={Cart} options={({ navigation, route }) => ({
@@ -126,6 +127,9 @@ function HomeRoutes(props) {
                 headerLeft: () => (<TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingLeft: 15 }}><Icon.AntDesign name="arrowleft" color="white" size={25} /></TouchableOpacity>),
                 headerTitle: () => (<View><Text style={styles.headerTitleStyle}>Reset Password</Text></View>),
             })} />
+             <Stack.Screen name="PhoneVerification" component={PhoneVerification} options={{
+                headerShown: false
+            }} />
         </Stack.Navigator>
     );
 }

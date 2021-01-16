@@ -41,7 +41,7 @@ export default class Payment extends Component {
                         </View>
                         <View style={styles.itemNameContainer}>
                             <View>
-                                <Text style={{ color: '#000000', fontFamily: 'Roboto-Medium', fontSize: 12 }}>Rs. {item.price * item.quantity}</Text>
+                                <Text style={{ color: '#000000', fontFamily: 'Roboto-Medium', fontSize: 12, textAlign: 'right' }}>Rs. {item.price * item.quantity}</Text>
                             </View>
                             <View>
                                 <Text style={styles.listTextStyle}>{item.productcategory.name}</Text>

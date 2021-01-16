@@ -18,8 +18,9 @@ const setRegion = (userData) => {
 
 
 const clear = () => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch({ type: CART_SUCCESS, cart: [] })
+        await AsyncStorage.removeItem('CART_ITEMS')
     };
 }
 

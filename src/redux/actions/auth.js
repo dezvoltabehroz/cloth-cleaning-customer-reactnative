@@ -7,7 +7,8 @@ import {
     LOADING_SUCCESS,
     USER_UPDATE_PROFILE_INFO_SUCCESS,
     USER_EMAIL_AND_PASSWORD_SUCCESS,
-    HEALTH_AND_SEFATY_SUCCESS
+    HEALTH_AND_SEFATY_SUCCESS,
+    CART_SUCCESS
 } from '../types';
 import { AuthServices, RegisterUser } from '../../services';
 import { Alert, Linking, Platform } from 'react-native';
@@ -21,6 +22,7 @@ const setUserProfile = (userData, navigate) => {
     return async (dispatch) => {
         let token = await AsyncStorage.getItem('TOKEN')
         let data = JSON.parse(token)
+        console.log("userData:", userData)
         if (userData) {
             dispatch({ type: USER_LOGIN_SUCCESS, userData: userData, userToken: data, loading: false });
             if (navigate != null)
@@ -215,11 +217,90 @@ const UpdateEmailAddressandToken = (userData, navigate) => {
     }
 };
 
+const phoneVerificationCode = (userData, navigate) => {
+    return (dispatch) => {
+        let loading = true;
+        if (loading) {
+            dispatch({ type: LOADING_SUCCESS, loading: loading })
+        }
+
+        auth().verifyPhoneNumber(userData.phone, 60)
+            .on('state_changed', (phoneAuthSnapshot) => {
+                switch (phoneAuthSnapshot.state) {
+                    case auth.PhoneAuthState.CODE_SENT:
+                        dispatch({ type: SEND_CODE_TO_USER_PHONENUMBER_SUCCESS, userData: { phone: userData.phone }, loading: !loading })
+                        AsyncStorage.setItem('Phone', JSON.stringify(userData.phone))
+                        if (navigate != undefined) {
+                            navigate('PhoneVerification', { phoneAuthSnapshot: phoneAuthSnapshot, userData: userData })
+
+                        }
+                        break;
+                    case auth.PhoneAuthState.ERROR: // or 'error'
+                        console.log(phoneAuthSnapshot.error.code)
+                        Alert.alert('Phone number is not correct')
+                        dispatch({ type: LOADING_SUCCESS, loading: !loading })
+                        break;
+                    case auth.PhoneAuthState.AUTO_VERIFIED: // or 'error'
+                        if (phoneAuthSnapshot.code == null && phoneAuthSnapshot.verificationId == null) {
+                            Alert.alert('Phone number is already in use');
+                            dispatch({ type: LOADING_SUCCESS, loading: !loading })
+                        }
+                        else {
+                            // let data = {
+                            //     ...userData,
+                            //     code: phoneAuthSnapshot.code,
+                            //     id: phoneAuthSnapshot.verificationId
+                            // }
+                            // console.log('data:', data)
+                            // dispatch(phoneVerifyCode(data, navigate))
+                        }
+                        break;
+                }
+            }, (error) => {
+                console.log(error);
+            });
+
+
+    };
+
+};
+
+const phoneVerifyCode = (userData, navigate) => {
+    return (dispatch) => {
+        let loading = true;
+        if (loading) {
+            dispatch({ type: LOADING_SUCCESS, loading: loading })
+        }
+        var credential = auth.PhoneAuthProvider.credential(userData.phoneAuthSnapshotId, userData.code);
+        if (credential) {
+            console.log('User email: ', credential);
+            AuthServices.updateUserProfile(userData)
+                .then(response => {
+                    if (response.data.success) {
+                        dispatch(getUserProfile(userData, navigate))
+                    }
+                    else {
+                        Alert.alert(response.data.msg)
+                        dispatch({ type: LOADING_SUCCESS, loading: !loading })
+                    }
+                }).catch(error => {
+                    // Alert.alert("This Email already exists", "", [
+                    //     { text: "OK", onPress: () => navigate('Main') }
+                    // ])
+                    dispatch({ type: LOADING_SUCCESS, loading: !loading })
+                    console.log(error)
+                })
+        }
+    }
+};
+
 const removeUser = (navigate) => {
     return async (dispatch) => {
         await navigate('Auth')
         await AsyncStorage.removeItem('USER');
+        await AsyncStorage.removeItem('CART_ITEMS');
         dispatch({ type: USER_LOGOUT_SUCCESS })
+        dispatch({ type: CART_SUCCESS, cart: [] })
     }
 };
 
@@ -248,6 +329,7 @@ const userLogin = (userData, navigate) => {
             })
     }
 };
+
 const requestUserPermission = async function (data, dispatch, navigate) {
     const authorizationStatus = await messaging().requestPermission({
         alert: true,
@@ -302,6 +384,7 @@ const getFcmToken = async (userData, dispatch, navigate) => {
         console.log("Failed", "No token received");
     }
 }
+
 const healthAndSafety = (modal) => {
     return (dispatch) => {
         dispatch({ type: HEALTH_AND_SEFATY_SUCCESS, modal: modal })
@@ -317,5 +400,7 @@ export const authActions = {
     UpdateEmailAddressandToken,
     getUserProfile,
     userLogin,
-    healthAndSafety
+    healthAndSafety,
+    phoneVerificationCode,
+    phoneVerifyCode
 };

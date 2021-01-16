@@ -11,6 +11,8 @@ import { bindActionCreators } from "redux";
 import { authActions } from '../../redux/actions/auth';
 import { ActivityIndicator } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
+import PhoneInput from 'react-native-phone-input';
+import CountryPicker, { FlagButton } from 'react-native-country-picker-modal';
 class Profile extends Component {
     constructor(props) {
         super(props);
@@ -25,7 +27,9 @@ class Profile extends Component {
             address: "",
             city: "",
             loading: true,
-            buttonLoading: false
+            buttonLoading: false,
+            isVisible: false,
+            disabled: true
         }
     }
     componentDidMount = () => {
@@ -41,28 +45,89 @@ class Profile extends Component {
         }, 3000);
     }
 
-    handleUpdate = () => {
+    handleUpdate = async () => {
         this.setState({ buttonLoading: true })
         const { name, phone, city, address } = this.state;
         let userData = {
             id: this.props.user.userData.id,
             fullName: name,
             city: city,
+            phone: phone,
             address: address,
-            token: this.props.user.userToken
+            token: this.props.user.userToken,
+            phoneVerification: true
         }
-        AuthServices.updateUserProfile(userData)
-            .then(async (response) => {
-                console.log(response.data)
-                await this.props.authActions.getUserProfile(userData, null)
-                this.setState({ updateContactInfo: false, buttonLoading: false }, () =>
-                    this.componentDidMount())
-            })
-            .catch((err) => console.log(err))
+        console.log(userData)
+        if (this.props.user.userData.phone != phone) {
+            await this.props.authActions.phoneVerificationCode(userData, this.props.navigation.replace);
+        }
+        else {
+            AuthServices.updateUserProfile(userData)
+                .then(async (response) => {
+                    console.log(response.data)
+                    await this.props.authActions.getUserProfile(userData, null)
+                    this.setState({ updateContactInfo: false, buttonLoading: false }, () => setTimeout(() => {
+                        this.componentDidMount()
+                    }, 5000))
+                })
+                .catch((err) => console.log(err))
+        }
     }
 
+    onSelect = (country) => {
+        this.setState({
+            countryCode: country.cca2,
+            phone: "+" + country.callingCode[0],
+            country: country,
+            isVisible: false
+        })
+    };
+    selectCountry(country) {
+        console.log(country)
+        this.phoneRef.selectCountry(country.cca2);
+        this.setState({ phone: "+" + country.callingCode, countryCode: country.cca2 })
+
+    }
+
+    _flagButton = () => {
+        return (
+            <TouchableOpacity activeOpacity={0.9} onPress={() => this.setState({ isVisible: !this.state.isVisible })} >
+                <View style={{}}>
+                    <FlagButton
+                        onOpen={() => this.setState({ isVisible: !this.state.isVisible })}
+                        onClose={() => this.setState({ isVisible: !this.state.isVisible })}
+                        placeholder={""}
+                        withEmoji={false}
+                        withFlagButton={false}
+                        countryCode={this.state.countryCode}
+                        containerButtonStyle={{ height: 0 }}
+                    />
+                </View>
+            </TouchableOpacity>
+        )
+    }
+
+    disabled = () => {
+        console.log("false")
+        const { phone, name, city, address } = this.state;
+        if (this.isNameValid(name) && this.isPhoneValid(phone) && address.length && city.length) {
+            this.setState({ disabled: false })
+        } else {
+            this.setState({ disabled: true })
+        }
+    }
+
+    isPhoneValid = (phone) => {
+        return /^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$/.test(phone)
+    }
+
+    isNameValid(name) {
+        return /^[A-Za-z\s]{1,}[A-Za-z\s]{0,}$/.test(name)
+    }
+
+
     render() {
-        const { email, name, phone, password, confirmPassword, updateContactInfo, city, address, loading, buttonLoading } = this.state;
+        const { email, name, phone, password, disabled, updateContactInfo, city, address, loading, buttonLoading } = this.state;
         return (
 
             <>
@@ -75,9 +140,10 @@ class Profile extends Component {
 
                                     <View style={{}}>
                                         <Input label="Name" value={name}
-                                            labelStyle={{ fontSize: 10, color: email ? '#0DA7DF' : '#374B5C', fontFamily: 'Roboto-Regular' }}
+                                            labelStyle={{ fontSize: 10, color: name ? '#0DA7DF' : '#374B5C', fontFamily: 'Roboto-Regular' }}
                                             inputStyle={{ fontSize: 12, fontFamily: 'Roboto-Medium' }}
                                             onChangeText={(name) => this.setState({ name })}
+                                            onBlur={() => this.disabled()}
                                             containerStyle={{ marginHorizontal: 0, paddingHorizontal: 0 }}
                                             inputContainerStyle={{ height: 30 }}
                                             placeholder="" />
@@ -95,19 +161,55 @@ class Profile extends Component {
                                         />
                                     </View>
                                     <View style={{ marginTop: '5%' }}>
-                                        <Input label="Mobile Number" value={phone}
-                                            labelStyle={{ fontSize: 10, color: phone ? '#0DA7DF' : '#374B5C', fontFamily: 'Roboto-Regular' }}
-                                            inputStyle={{ fontSize: 12, fontFamily: 'Roboto-Medium' }}
-                                            inputContainerStyle={{ height: 30 }}
-                                            containerStyle={{ marginHorizontal: 0, paddingHorizontal: 0 }}
-                                            onChangeText={(phone) => this.setState({ phone })}
-                                            placeholder="Enter phone number" />
+                                        <Text style={{ fontSize: 10, color: phone ? '#0DA7DF' : '#374B5C', fontWeight: 'bold', fontFamily: 'Roboto-Bold', marginBottom: 10 }}>Mobile Number</Text>
+
+                                        <View style={{ height: 30, justifyContent: 'center', paddingHorizontal: "2.5%", borderRadius: 5, borderBottomWidth: 1, borderColor: '#7A7A7A' }}>
+                                            <PhoneInput
+                                                ref={c => (this.phoneRef = c)}
+                                                onPressFlag={() => this.setState({ isVisible: true })}
+                                                autoFormat={true}
+                                                allowZeroAfterCountryCode={false}
+                                                textStyle={{
+                                                    marginTop: 2,
+                                                    lineHeight: 20,
+                                                    fontFamily: 'Nunito-Regular',
+                                                    fontSize: 14,
+                                                    color: 'grey',
+                                                }}
+                                                returnKeyType="next"
+                                                blur={console.log('Hello')}
+                                                onChangePhoneNumber={(phone) => this.setState({ phone }, () => this.disabled())}
+                                                value={phone}
+                                                textProps={{
+                                                    placeholder: 'Phone Number *',
+                                                    placeholderTextColor: "grey",
+                                                }}
+                                            />
+                                            <View >
+                                                <CountryPicker
+                                                    countryCodes={['PK']}
+                                                    theme={styles.themeText}
+                                                    withFilter={true}
+                                                    visible={this.state.isVisible}
+                                                    onSelect={(country) => this.onSelect(country)}
+                                                    withAlphaFilter={true}
+                                                    withCountryNameButton={true}
+                                                    renderFlagButton={this._flagButton}
+                                                >
+                                                    <View />
+                                                </CountryPicker>
+                                            </View>
+                                        </View>
                                     </View>
-                                    <View style={{ marginTop: '5%' }}>
+                                    {
+                                        phone.length && !this.isPhoneValid(phone) ? <Text style={[styles.errorText]}>Phone is invalid </Text> : null
+                                    }
+                                    <View style={{ marginTop: '10%' }}>
                                         <Input label="Address" value={address}
                                             labelStyle={{ fontSize: 10, color: phone ? '#0DA7DF' : '#374B5C', fontFamily: 'Roboto-Regular' }}
                                             inputStyle={{ fontSize: 12, fontFamily: 'Roboto-Medium' }}
                                             inputContainerStyle={{ height: 30 }}
+                                            onBlur={() => this.disabled()}
                                             containerStyle={{ marginHorizontal: 0, paddingHorizontal: 0 }}
                                             onChangeText={(address) => this.setState({ address })}
                                             placeholder="Enter address" />
@@ -117,6 +219,7 @@ class Profile extends Component {
                                             labelStyle={{ fontSize: 10, color: phone ? '#0DA7DF' : '#374B5C', fontFamily: 'Roboto-Regular' }}
                                             inputStyle={{ fontSize: 12, fontFamily: 'Roboto-Medium' }}
                                             inputContainerStyle={{ height: 30 }}
+                                            onBlur={() => this.disabled()}
                                             containerStyle={{ marginHorizontal: 0, paddingHorizontal: 0 }}
                                             onChangeText={(city) => this.setState({ city })}
                                             placeholder="Enter city" />
@@ -135,8 +238,8 @@ class Profile extends Component {
                                             </LinearGradient>
                                         </TouchableOpacity>
                                         <View style={{ width: 5 }}></View>
-                                        <TouchableOpacity style={{ justifyContent: 'center' }} onPress={() => this.handleUpdate()}>
-                                            <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
+                                        <TouchableOpacity disabled={disabled} style={{ justifyContent: 'center' }} onPress={() => this.handleUpdate()}>
+                                            <LinearGradient colors={disabled ? ['#e2e2e2', '#e2e2e2'] : ['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
                                                 {
                                                     buttonLoading ?
                                                         <ActivityIndicator size={20} color="#FFF" />
