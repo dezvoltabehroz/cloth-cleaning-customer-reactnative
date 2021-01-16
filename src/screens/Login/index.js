@@ -14,17 +14,31 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            submit: false,
+            email: "",
+            password: "",
         };
     }
 
     // ============== func_HandleLogin - Function Will allow user to get login ==============
     func_HandleLogin = async () => {
         const { replace } = this.props.navigation;
-        let userData = {
-            email: this.state.email,
-            password: this.state.password
+        const { email, password, submit } = this.state;
+        if (email && password && submit) {
+            let userData = {
+                email: this.state.email,
+                password: this.state.password
+            }
+            await this.props.authActions.userLogin(userData, replace);
         }
-        await this.props.authActions.userLogin(userData, replace);
+        else {
+            this.setState({ submit: true })
+        }
+
+    }
+
+    isEmailValid(email) {
+        return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)
     }
 
     // ============== func_HandleSignUp - Function Will allow user to register himself ==============
@@ -38,7 +52,7 @@ class Login extends Component {
     }
 
     render() {
-        const { email, password, loading } = this.state;
+        const { email, password, loading, submit } = this.state;
         return (
             <View>
                 <ImageBackground resizeMode="cover" style={styles.backgroundStyle} source={require('../../assets/images/login.jpg')}>
@@ -51,8 +65,16 @@ class Login extends Component {
                                 <Input
                                     placeholder="Phone Number / Email"
                                     value={email}
+                                    onFocus={() => this.setState({ submit: true })}
                                     onChangeText={(email) => this.setState({ email: email })}
+
                                 />
+                                {
+                                    submit && !email ? <Text style={[styles.errorText]}>Please fill this field</Text> : null
+                                }
+                                {
+                                    submit && email.length && !this.isEmailValid(email) ? <Text style={[styles.errorText]}>Email is invalid</Text> : null
+                                }
                             </View>
                             <View style={{ marginHorizontal: '5%' }}>
                                 <Input
@@ -61,12 +83,15 @@ class Login extends Component {
                                     secureTextEntry={true}
                                     onChangeText={(password) => this.setState({ password })}
                                 />
+                                {
+                                    submit && !password ? <Text style={[styles.errorText]}>Please fill this field</Text> : null
+                                }
                             </View>
                             <TouchableOpacity onPress={() => this.props.navigation.navigate('ForgetPassword')} style={{ marginHorizontal: '7%', alignItems: 'flex-end' }} >
                                 <Text style={{ fontFamily: 'Nunito-Regular' }} >Forget Password?</Text>
                             </TouchableOpacity>
                             <View style={{ alignItems: 'center', marginTop: '5%' }}>
-                                <Button disabled={email && password ? false : true} loading={this.props.user.loading} title='Login' onPress={() => this.func_HandleLogin()} />
+                                <Button loading={this.props.user.loading} title='Login' onPress={() => this.func_HandleLogin()} />
                             </View>
                             <View style={{ alignItems: 'center', marginTop: '5%' }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 5, borderWidth: 0.5, borderColor: 'red', height: 44, width: 180 }}>
