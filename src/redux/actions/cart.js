@@ -1,10 +1,12 @@
+import AsyncStorage from '@react-native-community/async-storage';
 import {
     CART_SUCCESS, REGION_SUCCESS,
 } from '../types';
 
 const setCart = (cartArray) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch({ type: CART_SUCCESS, cart: cartArray })
+        await AsyncStorage.setItem('CART_ITEMS', JSON.stringify(cartArray))
     };
 }
 const setRegion = (userData) => {
