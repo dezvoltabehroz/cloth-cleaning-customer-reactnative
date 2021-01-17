@@ -87,7 +87,7 @@ class Home extends Component {
         return (
             <>
                 <TouchableOpacity onPress={() => { this.getProductsCategory(item.id); this.setState({ index: index }) }} style={{ height: null, width: 105, }}>
-                    <View style={{
+                    {/* <View style={{
                         borderColor: index == this.state.index ? '#EAF7FB' : "#EEE",
                         borderWidth: 0.3,
                         borderRadius: 10,
@@ -115,8 +115,8 @@ class Home extends Component {
                                             :
                                             <Basket />}
                         </View>
-                    </View>
-                    {/* <View style={{
+                    </View> */}
+                    <View style={{
                         borderColor: index == this.state.index ? '#EAF7FB' : "#EEE",
                         borderWidth: 0.3,
                         borderRadius: 10,
@@ -133,8 +133,8 @@ class Home extends Component {
                         marginTop: '10%',
                         marginBottom: '1%',
                     }}>
-                        <Image source={{ uri: `https://dhobiuncle.pk/${item.image}` }} style={{ height: 50, width: 50, justifyContent: 'center', backgroundColor: index == this.state.index ? '#EAF7FB' : 'white', }} />
-                    </View> */}
+                        <Image source={{ uri: `https://dhobiuncle.pk/${item.image}` }} style={{ height: 60, width: 100, justifyContent: 'center', backgroundColor: index == this.state.index ? '#EAF7FB' : 'white', }} />
+                    </View>
                     <View style={{ marginTop: '5%', alignItems: 'center', justifyContent: 'center' }}>
                         <Text style={{ fontSize: 12, color: index == this.state.index ? '#0DA7DF' : '#B5B5B5', fontFamily: 'Roboto-Medium' }}>{item.name}</Text>
                     </View>

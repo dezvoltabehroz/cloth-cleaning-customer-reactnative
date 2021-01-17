@@ -11,6 +11,7 @@ import Question from '../../assets/svg/question.svg';
 import Logout from '../../assets/svg/logout.svg';
 import { authActions } from '../../redux/actions/auth';
 import { useDispatch, connect } from 'react-redux';
+import { Linking } from 'react-native';
 
 const Drawer = createDrawerNavigator();
 const BadgedIcon = withBadge(1)(Icons);
@@ -65,13 +66,13 @@ function CustomDrawerContent({ navigation, props }) {
                     </TouchableOpacity>
                 </View>
                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: '10%', height: 54, width: 150, justifyContent: 'space-between', }}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => Linking.openURL('https://www.facebook.com/dhobiuncle.pk')}>
                         <Icon.FontAwesome name="facebook" size={20} color="#707070" />
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => Linking.openURL("https://www.instagram.com/dhobiuncle.pk/")}>
                         <Icon.FontAwesome name="instagram" size={20} color="#707070" />
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => Linking.openURL("https://twitter.com/dhobiuncle")}>
                         <Icon.FontAwesome name="twitter" size={20} color="#707070" />
                     </TouchableOpacity>
                 </View>
