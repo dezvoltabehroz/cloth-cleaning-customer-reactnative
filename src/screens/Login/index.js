@@ -5,11 +5,17 @@ import styles from './style';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { AuthServices } from '../../services';
 import AsyncStorage from '@react-native-community/async-storage';
+import { GoogleSignin } from '@react-native-community/google-signin';
+
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import { authActions } from '../../redux/actions/auth';
 import Logo from '../../assets/svg/logo.svg';
 import Google from '../../assets/svg/google.svg';
+import auth from '@react-native-firebase/auth'
+GoogleSignin.configure({
+    webClientId: '929459102958-4arbgpufia94rno2f65tjmi4hc28iimk.apps.googleusercontent.com',
+});
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -19,6 +25,7 @@ class Login extends Component {
             password: "",
         };
     }
+
 
     // ============== func_HandleLogin - Function Will allow user to get login ==============
     func_HandleLogin = async () => {
@@ -35,6 +42,20 @@ class Login extends Component {
             this.setState({ submit: true })
         }
 
+    }
+    handleGoogle = async () => {
+        const { idToken } = await GoogleSignin.signIn();
+        console.log(idToken)
+        // Get the users ID token
+
+        // Create a Google credential with the token
+        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+        console.log(googleCredential)
+        // Sign-in the user with the credential
+        auth().signInWithCredential(googleCredential)
+        .then((res)=>console.log(res))
+        .catch((err)=>console.log(err))
+        // console.log(client)
     }
 
     isEmailValid(email) {
@@ -93,12 +114,12 @@ class Login extends Component {
                             <View style={{ alignItems: 'center', marginTop: '5%' }}>
                                 <Button loading={this.props.user.loading} title='Login' onPress={() => this.func_HandleLogin()} />
                             </View>
-                            <View style={{ alignItems: 'center', marginTop: '5%' }}>
+                            <TouchableOpacity onPress={() => this.handleGoogle()} style={{ alignItems: 'center', marginTop: '5%' }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 5, borderWidth: 0.5, borderColor: 'red', height: 44, width: 180 }}>
                                     <Google />
                                     <Text style={{ marginLeft: '10%', fontFamily: 'Nunito-Regular', fontSize: 16 }}>Google</Text>
                                 </View>
-                            </View>
+                            </TouchableOpacity>
 
                         </ KeyboardAwareScrollView>
 
