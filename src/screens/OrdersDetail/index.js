@@ -87,48 +87,47 @@ class OrderDetail extends Component {
                                 <Text style={{ fontSize: 12, fontFamily: 'Roboto-Medium', color: "#102134", textTransform: 'capitalize' }}>{status}</Text>
                             </ProgressCircle>
                         </View>
-                        {status == 'Complete' ?
-
-                            rated ?
-                                <View style={{ marginHorizontal: '5%', paddingBottom: 3, }}>
-                                    <View style={[styles.itemQuantityContainer, { alignItems: 'center' }]}>
-                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: '5%' }}>
-                                            <StarRating
-                                                disabled={true}
-                                                containerStyle={{ justifyContent: 'space-between', }}
-                                                starStyle={{ paddingHorizontal: 2.5 }}
-                                                emptyStarColor={"#B5B5B5"}
-                                                maxStars={5}
-                                                starSize={25}
-                                                rating={starCount}
-                                                selectedStar={(rating) => this.onStarRatingPress(rating)}
-                                                fullStarColor={"#29B1DB"}
-                                            />
-                                            <View style={{ width: 10 }}></View>
+                        {
+                            status == 'Complete' ?
+                                rated ?
+                                    <View style={{ marginHorizontal: '5%', paddingBottom: 3, }}>
+                                        <View style={[styles.itemQuantityContainer, { alignItems: 'center' }]}>
+                                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: '5%' }}>
+                                                <StarRating
+                                                    disabled={true}
+                                                    containerStyle={{ justifyContent: 'space-between', }}
+                                                    starStyle={{ paddingHorizontal: 2.5 }}
+                                                    emptyStarColor={"#B5B5B5"}
+                                                    maxStars={5}
+                                                    starSize={25}
+                                                    rating={starCount}
+                                                    selectedStar={(rating) => this.onStarRatingPress(rating)}
+                                                    fullStarColor={"#29B1DB"}
+                                                />
+                                                <View style={{ width: 10 }}></View>
+                                            </View>
+                                            <View>
+                                                <Text style={{ fontFamily: 'Roboto-Light', fontSize: 12, color: '#8E9297', }}>{moment().format('DD/MM/YYYY')}</Text>
+                                            </View>
                                         </View>
                                         <View>
-                                            <Text style={{ fontFamily: 'Roboto-Light', fontSize: 12, color: '#8E9297', }}>{moment().format('DD/MM/YYYY')}</Text>
+                                            <Text style={{ fontFamily: 'Roboto-Regular', fontSize: 12, color: '#7A7A7A' }}>{review}</Text>
                                         </View>
                                     </View>
-                                    <View>
-                                        <Text style={{ fontFamily: 'Roboto-Regular', fontSize: 12, color: '#7A7A7A' }}>{review}</Text>
-                                    </View>
-                                </View>
+                                    :
+                                    <TouchableOpacity onPress={() => this.setState({ ratingModal: true })} style={{ marginHorizontal: '5%', borderBottomWidth: 0.3, paddingBottom: 3, marginBottom: 10, borderColor: '#7A7A7A' }}>
+                                        <View style={styles.itemQuantityContainer}>
+                                            <View>
+                                                <Text style={styles.listTextStyle}>Write a review</Text>
+                                            </View>
+                                            <View>
+                                                <Icon.MaterialIcons name="edit" color="#7A7A7A" size={12} />
+                                            </View>
+                                        </View>
+                                    </TouchableOpacity>
                                 :
-                                <TouchableOpacity onPress={() => this.setState({ ratingModal: true })} style={{ marginHorizontal: '5%', borderBottomWidth: 0.3, paddingBottom: 3, marginBottom: 10, borderColor: '#7A7A7A' }}>
-                                    <View style={styles.itemQuantityContainer}>
-                                        <View>
-                                            <Text style={styles.listTextStyle}>Write a review</Text>
-                                        </View>
-                                        <View>
-                                            <Icon.MaterialIcons name="edit" color="#7A7A7A" size={12} />
-                                        </View>
-                                    </View>
-
-                                </TouchableOpacity>
-                            : null
+                                null
                         }
-
                     </View>
                     <View style={styles.lowerContainer}>
                         <View style={styles.itemQuantityContainer}>
@@ -152,8 +151,8 @@ class OrderDetail extends Component {
                             <View>
                                 <Text style={styles.listTextStyle}>Address</Text>
                             </View>
-                            <View>
-                                <Text style={[styles.listTextStyle, { fontFamily: 'Roboto-Medium' }]}>{address}</Text>
+                            <View style={{ width: 180 }}>
+                                <Text style={[styles.listTextStyle, { fontFamily: 'Roboto-Medium', textAlign: "right" }]}>{address}</Text>
                             </View>
                         </View>
                         <View style={styles.itemQuantityContainer}>

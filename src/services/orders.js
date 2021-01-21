@@ -22,24 +22,25 @@ const Api = {
     },
     placeCustomerOrder: function (userData) {
         return axiosInstance.post('buyer/placeorder', {
-            "name": userData.name,
-            "email": userData.email,
-            "phone": userData.phone,
-            "customer_id": userData.customer_id,
-            "lat": userData.lat,
-            "long": userData.lng,
-            "day": userData.day,
-            "time": userData.time,
-            "totalPrice": userData.totalPrice,
-            "urgent": userData.urgent,
-            "grandTotal": userData.grandTotal,
-            "deliveryAddress": userData.deliveryAddress,
-            "city": userData.city,
-            "paymentMethod": userData.paymentMethod,
-            "transactionId": userData.transactionId,
-            "notes": userData.notes,
-            "products": userData.products
-        }, configToken(userData.token))
+            name: userData.name,
+            email: userData.email,
+            phone: userData.phone,
+            customer_id: userData.customer_id,
+            lat: `${userData.lat}`,
+            long: `${userData.lng}`,
+            day: userData.day,
+            time: userData.time,
+            totalPrice: userData.totalPrice,
+            urgent: userData.urgent,
+            grandTotal: userData.grandTotal,
+            deliveryAddress: userData.deliveryAddress,
+            city: userData.city,
+            paymentMethod: userData.paymentMethod,
+            transactionId: userData.transactionId,
+            notes: userData.notes,
+            coupon_id: userData.coupon_id ? userData.coupon_id : null,
+            products: userData.products
+        },configToken(userData.token))
     }
 
 

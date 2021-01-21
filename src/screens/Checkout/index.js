@@ -99,8 +99,8 @@ class Checkout extends Component {
         let array = [];
         this.props.cart.cart.map((item, index) => {
             array.push({
-                quantity: item.quantity,
-                unitPrice: item.price * item.quantity,
+                quantity: parseInt(item.quantity),
+                unitPrice: item.price * parseInt(item.quantity),
                 product_id: item.id
             })
         });
@@ -109,7 +109,7 @@ class Checkout extends Component {
     }
 
     handlePlaceOrder = () => {
-        const { lat, lng, day, time, totalPrice, address, urgent, paymentMethod, note, products, transactionId } = this.state;
+        const { lat, lng, day, time, totalPrice, address, urgent, paymentMethod, note, products, transactionId, activeTab } = this.state;
         let userData = {
             name: this.props.user.userData.fullName,
             email: this.props.user.userData.email,
@@ -122,23 +122,25 @@ class Checkout extends Component {
             totalPrice: totalPrice,
             urgent: urgent,
             grandTotal: urgent == '1' ? (totalPrice + 200) : (totalPrice + 50),
-            deliveryAddress: this.props.cart.address? this.props.cart.address: "",
+            deliveryAddress: this.props.cart.address ? this.props.cart.address : "",
             city: this.props.user.userData.city,
             paymentMethod: paymentMethod,
             transactionId: transactionId,
             notes: note,
+            coupon_id: null,
             products: products,
             token: this.props.user.userToken
         }
-        console.log(userData)
+        console.log('userData:', userData)
         OrdersServices.placeCustomerOrder(userData)
             .then((response) => {
-                console.log(response.data)
+                this.setState({ activeTab: activeTab + 1 })
+                console.log("response.data:", response.data)
                 this.props.cartActions.clear()
             })
             .catch((err) => {
                 console.log(err)
-                this.props.cartActions.clear()
+                // this.props.cartActions.clear()
             })
 
     }
@@ -238,10 +240,9 @@ class Checkout extends Component {
                                             marginHorizontal: '5%'
                                         }}>
                                             <View style={{ flexDirection: 'row', bottom: '5%', justifyContent: 'center', alignItems: 'center', }}>
-                                                <TouchableOpacity onPress={() => {
+                                                <TouchableOpacity onPress={async () => {
                                                     if (activeTab == 1) {
-                                                        this.handlePlaceOrder()
-                                                        this.setState({ activeTab: activeTab + 1 })
+                                                        await this.handlePlaceOrder()
                                                     }
                                                     else {
                                                         this.setState({ activeTab: activeTab + 1 })

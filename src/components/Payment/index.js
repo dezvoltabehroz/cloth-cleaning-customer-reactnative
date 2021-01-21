@@ -112,7 +112,7 @@ export default class Payment extends Component {
                                 <Text style={{ color: '#7A7A7A' }}>Your transaction ID <Text style={{ color: '#FF0000' }}>*</Text></Text>
                                 <Input
                                     value={transactionIdJazzCash}
-                                    onChangeText={(transactionIdJazzCash) => this.setState(transactionIdJazzCash)}
+                                    onChangeText={(transactionIdJazzCash) => this.setState({transactionIdJazzCash})}
                                     placeholder="0000-2233-0000-3455"
                                     onBlur={() => this.props.transactionId(transactionIdJazzCash)} />
                             </View>
@@ -133,7 +133,7 @@ export default class Payment extends Component {
                                 <Text style={{ color: '#7A7A7A' }}>Your transaction ID <Text style={{ color: '#FF0000' }}>*</Text></Text>
                                 <Input placeholder="0000-2233-0000-3455"
                                     value={transactionIdEasyPaisa}
-                                    onChangeText={(transactionIdEasyPaisa) => this.setState(transactionIdEasyPaisa)}
+                                    onChangeText={(transactionIdEasyPaisa) => this.setState({transactionIdEasyPaisa})}
                                     placeholder="0000-2233-0000-3455"
                                     onBlur={() => this.props.transactionId(transactionIdEasyPaisa)} />
                             </View>

@@ -27,17 +27,17 @@ class Pickup extends Component {
             address: '',
             shift: [
                 {
-                    shiftName: 'Morning',
+                    shiftName: 'morning',
                     timing: '8am-10am',
                     selected: false
                 },
                 {
-                    shiftName: 'Noon',
+                    shiftName: 'noon',
                     timing: '12pm-02pm',
                     selected: true
                 },
                 {
-                    shiftName: 'Afernoon',
+                    shiftName: 'afternoon',
                     timing: '04pm-06pm',
                     selected: false
                 }
@@ -63,7 +63,7 @@ class Pickup extends Component {
             phone: this.props.user.userData.phone
         })
         this.props.day('today');
-        this.props.time('Noon');
+        this.props.time('noon');
         this.props.urgent('0');
     }
 
@@ -191,7 +191,7 @@ class Pickup extends Component {
                                 </View>
                                 <View style={{ marginLeft: '5%' }}>
                                     <Text style={{ color: '#374B5C', fontFamily: 'Roboto-Medium', fontSize: 13, }}>Today</Text>
-                                    <Text style={{ color: '#7A7A7A', fontSize: 12, fontFamily: 'Roboto-Regular' }}>Pickup on {this.state.pickUpShift}, {moment().format('ll')}</Text>
+                                    <Text style={{ color: '#7A7A7A', fontSize: 12, fontFamily: 'Roboto-Regular', textTransform: 'capitalize' }}>Pickup on {this.state.pickUpShift}, {moment().format('ll')}</Text>
                                 </View>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => this.setState({ today: false, tommorrow: true }, this.props.day('tommorrow'))} style={{ flexDirection: 'row', alignItems: 'center', marginTop: '5%' }}>
@@ -200,7 +200,7 @@ class Pickup extends Component {
                                 </View>
                                 <View style={{ marginLeft: '5%' }}>
                                     <Text style={{ color: '#374B5C', fontFamily: 'Roboto-Medium', fontSize: 13, }}>Tomorrow</Text>
-                                    <Text style={{ color: '#7A7A7A', fontSize: 12, fontFamily: 'Roboto-Regular' }}>Pickup on {this.state.pickUpShift}, {moment().add(1, 'days').format('ll')}</Text>
+                                    <Text style={{ color: '#7A7A7A', fontSize: 12, fontFamily: 'Roboto-Regular', textTransform: 'capitalize' }}>Pickup on {this.state.pickUpShift}, {moment().add(1, 'days').format('ll')}</Text>
                                 </View>
                             </TouchableOpacity>
 
@@ -272,7 +272,7 @@ class Pickup extends Component {
                                                     <Icon.MaterialIcons name={item.selected ? "radio-button-checked" : "radio-button-unchecked"} color={item.selected ? '#0DA7DF' : '#707070'} size={20} />
                                                 </View>
                                                 <View style={{ marginLeft: '5%' }}>
-                                                    <Text style={{ color: "#7A7A7A", fontSize: 12, fontFamily: 'Roboto-Regular' }}>{item.shiftName} ({item.timing})</Text>
+                                                    <Text style={{ color: "#7A7A7A", fontSize: 12, fontFamily: 'Roboto-Regular', textTransform: 'capitalize' }}>{item.shiftName} ({item.timing})</Text>
                                                 </View>
                                             </TouchableOpacity>
                                         )
