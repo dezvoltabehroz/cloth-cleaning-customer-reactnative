@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator, useHeaderHeight } from '@react-navigation/stack';
 import { View, Text, StyleSheet, Image, TouchableOpacity, Alert, Dimensions, Platform } from 'react-native';
 import { Cart, Home, ProductDetail, Checkout, Orders, OrdersDetail, MapScreen, Search, Profile, About, ResetPassword } from '../../screens';
-import { withBadge, Icon as Icons } from 'react-native-elements'
+import { withBadge, Icon as Icons, Badge } from 'react-native-elements'
 import { Menu, MenuTrigger, MenuOptions, MenuOption } from 'react-native-popup-menu';
 import { Icon } from '../../components';
 import MapRoutes from '../Map';
@@ -27,8 +27,51 @@ function HomeRoutes(props) {
                     elevation: 0
                 },
                 headerLeft: () => (<TouchableOpacity onPress={() => navigation.toggleDrawer()} style={{ paddingLeft: 15 }}><Menus /></TouchableOpacity>),
-                headerRight: () => (<TouchableOpacity style={{ marginRight: 20 }} onPress={() => navigation.navigate('Cart')}><BadgedIcon type="feather" name="shopping-cart" size={25} color='white' /></TouchableOpacity>),
+                headerRight: () => (
+                    <TouchableOpacity style={{ marginRight: 20 }} onPress={() => navigation.navigate('Cart')}>
+                        <Icon.Feather name="shopping-cart" size={25} color='white' />
+                        <Badge containerStyle={{
+                            position: 'absolute',
+                            top: -8,
+                            right: -8,
+                        }} value={
+                            <View style={{
+                                justifyContent: 'center', alignItems: 'center',
+                                height: 16, width: 16, backgroundColor: 'white', borderRadius: 8,
+                            }}>
+                                <Text style={{ color: '#29B1DB', fontSize: 9 }}>{props.cart.cart != null ? props.cart.cart.length : 0}</Text>
+                            </View>
+                        } />
+                    </TouchableOpacity>
+                ),
                 headerTitle: () => (<View><Text style={styles.headerTitleStyle}></Text></View>),
+            })} />
+
+            <Stack.Screen name="ProductDetail" component={ProductDetail} options={({ navigation, route }) => ({
+                headerTitleAlign: 'center',
+                headerStyle: {
+                    backgroundColor: '#29B1DB',
+                    elevation: 0
+                },
+                headerLeft: () => (<TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingLeft: 15 }}><Icon.AntDesign name="arrowleft" color="white" size={25} /></TouchableOpacity>),
+                headerRight: () => (
+                    <TouchableOpacity style={{ marginRight: 20 }} onPress={() => navigation.navigate('Cart')}>
+                        <Icon.Feather name="shopping-cart" size={25} color='white' />
+                        <Badge containerStyle={{
+                            position: 'absolute',
+                            top: -8,
+                            right: -8,
+                        }} value={
+                            <View style={{
+                                justifyContent: 'center', alignItems: 'center',
+                                height: 16, width: 16, backgroundColor: 'white', borderRadius: 8,
+                            }}>
+                                <Text style={{ color: '#29B1DB', fontSize: 9 }}>{props.cart.cart != null ? props.cart.cart.length : 0}</Text>
+                            </View>
+                        } />
+                    </TouchableOpacity>
+                ),
+                headerTitle: () => (<View><Text style={styles.headerTitleStyle}>Product Detail</Text></View>),
             })} />
             <Stack.Screen name="Cart" component={Cart} options={({ navigation, route }) => ({
                 headerBackTitleVisible: false,
@@ -38,18 +81,12 @@ function HomeRoutes(props) {
                     elevation: 0
                 },
                 headerLeft: () => (<TouchableOpacity onPress={() => navigation.replace('Home')} style={{ paddingLeft: 15 }}><Icon.AntDesign name="arrowleft" color="white" size={25} /></TouchableOpacity>),
-                headerRight: () => (<TouchableOpacity onPress={() => props.cartActions.clear()} style={{ marginRight: 20 }}><Text style={styles.headerTextStyle}>Clear All</Text></TouchableOpacity>),
+                headerRight: () => (<TouchableOpacity onPress={async () => {
+                    let array = [];
+                    await props?.cartActions?.setCart(array);
+
+                }} style={{ marginRight: 20 }}><Text style={styles.headerTextStyle}>Clear All</Text></TouchableOpacity>),
                 headerTitle: () => (<View><Text style={styles.headerTitleStyle}>Cart</Text></View>),
-            })} />
-            <Stack.Screen name="ProductDetail" component={ProductDetail} options={({ navigation, route }) => ({
-                headerTitleAlign: 'center',
-                headerStyle: {
-                    backgroundColor: '#29B1DB',
-                    elevation: 0
-                },
-                headerLeft: () => (<TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingLeft: 15 }}><Icon.AntDesign name="arrowleft" color="white" size={25} /></TouchableOpacity>),
-                headerRight: () => (<TouchableOpacity style={{ marginRight: 20 }} onPress={() => navigation.navigate('Cart')}><CartIcon /></TouchableOpacity>),
-                headerTitle: () => (<View><Text style={styles.headerTitleStyle}>Product Detail</Text></View>),
             })} />
             <Stack.Screen name="Checkout" component={Checkout} options={({ navigation, route }) => ({
                 headerTitleAlign: 'center',
@@ -127,7 +164,7 @@ function HomeRoutes(props) {
                 headerLeft: () => (<TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingLeft: 15 }}><Icon.AntDesign name="arrowleft" color="white" size={25} /></TouchableOpacity>),
                 headerTitle: () => (<View><Text style={styles.headerTitleStyle}>Reset Password</Text></View>),
             })} />
-             <Stack.Screen name="PhoneVerification" component={PhoneVerification} options={{
+            <Stack.Screen name="PhoneVerification" component={PhoneVerification} options={{
                 headerShown: false
             }} />
         </Stack.Navigator>

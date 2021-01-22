@@ -19,7 +19,6 @@ class AuthLoadingScreen extends React.Component {
         const { replace } = this.props.navigation;
         const userToken = await AsyncStorage.getItem('USER');
         const data = await AsyncStorage.getItem('CART_ITEMS');
-        console.log(data)
         if (data) {
             let cartItems = JSON.parse(data)
             await this.props.cartActions.setCart(cartItems)

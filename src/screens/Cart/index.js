@@ -115,7 +115,7 @@ class Cart extends Component {
     handlePressDelete = async (item, index) => {
         let array = [...this.props.cart.cart];
         array = array.filter((obj => obj.id != item.id))
-        this.props.cartActions.setCart(array);
+        await this.props.cartActions.setCart(array);
         // await AsyncStorage.setItem('CARTITEMS', JSON.stringify(this.state.list))
         // await this.props.actions.updateBagdeCount(this.state.list.length)
         // if (this.state.list.length == 0) {
@@ -125,7 +125,6 @@ class Cart extends Component {
 
 
     _renderListItems = (item, index) => {
-        console.log(item)
         return (
             <>
                 <View style={styles.listContentContainer}>

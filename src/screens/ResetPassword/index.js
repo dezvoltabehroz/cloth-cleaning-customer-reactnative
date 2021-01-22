@@ -98,7 +98,6 @@ class ResetPassword extends Component {
                                         }
                                         AuthServices.updatePassword(userData)
                                             .then((res) => {
-                                                console.log(res.data)
                                                 this.setState({ buttonLoading: false })
                                                 Alert.alert('Success', 'Password Change Successfully', [
                                                     {

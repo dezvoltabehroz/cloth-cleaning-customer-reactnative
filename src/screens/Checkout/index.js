@@ -131,12 +131,11 @@ class Checkout extends Component {
             products: products,
             token: this.props.user.userToken
         }
-        console.log('userData:', userData)
         OrdersServices.placeCustomerOrder(userData)
             .then((response) => {
                 this.setState({ activeTab: activeTab + 1 })
-                console.log("response.data:", response.data)
-                this.props.cartActions.clear()
+                let array = [];
+                this.props.cartActions.setCart(array)
             })
             .catch((err) => {
                 console.log(err)

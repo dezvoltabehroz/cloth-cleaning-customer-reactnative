@@ -22,7 +22,6 @@ const setUserProfile = (userData, navigate) => {
     return async (dispatch) => {
         let token = await AsyncStorage.getItem('TOKEN')
         let data = JSON.parse(token)
-        console.log("userData:", userData)
         if (userData) {
             dispatch({ type: USER_LOGIN_SUCCESS, userData: userData, userToken: data, loading: false });
             if (navigate != null)
@@ -101,7 +100,6 @@ const sendVerificationCode = (userData, navigate) => {
                                 code: phoneAuthSnapshot.code,
                                 id: phoneAuthSnapshot.verificationId
                             }
-                            console.log('data:', data)
                             dispatch(verifyCode(data, navigate))
                         }
                         break;
@@ -371,8 +369,6 @@ const getFcmToken = async (userData, dispatch, navigate) => {
             fcmToken: fcmToken,
             token: userData.access_token
         }
-        console.log("data:", data)
-        console.log("userData:", userData)
         AuthServices.addFcmToken(data)
             .then((res) => {
                 if (res.data.success) {

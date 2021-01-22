@@ -46,7 +46,6 @@ class OrderDetail extends Component {
         }
         OrdersServices.getOrderDetails(userData)
             .then((res) => {
-                console.log(res.data.result)
                 this.setState({
                     address: res.data.result.deliveryAddress,
                     status: res.data.result.orderStatus,

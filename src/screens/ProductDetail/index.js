@@ -20,24 +20,44 @@ class ProductDetail extends Component {
             quantity: "",
             serivceType: "",
             description: "",
-            loading: true
+            loading: true,
+            AddToCart: true,
         }
     }
-    componentDidMount = () => {
+    componentWillMount = () => {
 
-        this.props.cart.cart.map((item, index) => {
-            if (item.id == this.props.route.params.product.id) {
-                this.setState({
-                    id: this.props.route.params.product.id,
-                    name: item.name,
-                    price: item.price,
-                    quantity: item.quantity,
-                    serivceType: item.productcategory.name,
-                    description: item.description,
-                    loading: false
-                })
-            }
-        })
+    }
+    componentDidMount = () => {
+        if (this.props.cart.cart.length != 0) {
+            this.props.cart.cart.map((item, index) => {
+                if (item.id == this.props.route.params.product.id) {
+                    this.setState({
+                        id: this.props.route.params.product.id,
+                        name: item.name,
+                        price: item.price,
+                        quantity: item.quantity,
+                        serivceType: item.productcategory.name,
+                        description: item.description,
+                        loading: false,
+                        AddToCart: false,
+                    })
+                }
+            })
+        }
+        else {
+            this.setState({
+                id: this.props.route.params.product.id,
+                name: this.props.route.params.product.name,
+                price: this.props.route.params.product.price,
+                quantity: this.props.route.params.product.quantity,
+                serivceType: this.props.route.params.product.productcategory.name,
+                description: this.props.route.params.product.description,
+                loading: false,
+                AddToCart: true,
+            })
+        }
+
+
     }
 
     handleAddQuantity = async () => {
@@ -59,10 +79,16 @@ class ProductDetail extends Component {
         let cartArray = [...this.props.cart.cart];
         cartArray.map((element, i) => {
             if (element.id == this.props.route.params.product.id) {
-                cartArray[i] = { ...cartArray[i], quantity: item.quantity == '1' ? item.quantity : (parseInt(element.quantity) - 1) };
+                if (element.quantity == '1') {
+                    cartArray = cartArray.filter(data => data.id != element.id)
+                }
+                else {
+                    cartArray[i] = { ...cartArray[i], quantity: element.quantity == "1" ? element.quantity : (parseInt(element.quantity) - 1) };
+                }
             }
         })
         await this.props.cartActions.setCart(cartArray);
+        this.setState({ AddToCart: true })
         setTimeout(() => {
             this.componentDidMount();
         }, 3000);
@@ -86,7 +112,7 @@ class ProductDetail extends Component {
     }
 
     render() {
-        const { name, price, quantity, description, serivceType } = this.state;
+        const { name, price, quantity, description, serivceType, AddToCart } = this.state;
         return (
             <View style={{ flex: 1, backgroundColor: 'white' }}>
                 <ScrollView contentContainerStyle={{ paddingBottom: 80 }} showsVerticalScrollIndicator={false}>
@@ -111,15 +137,60 @@ class ProductDetail extends Component {
                                 <Text style={styles.totalPriceTextStyle}>Rs. {price * quantity}</Text>
                             </View>
                         </View>
-                        <View style={styles.itemQuantityButtonContainer}>
-                            <TouchableOpacity style={styles.quantityButtonStyle} onPress={() => this.handleMinusQuantity()}>
-                                <Icon.Feather name='minus' size={10} color={'#fff'} />
-                            </TouchableOpacity>
-                            <Text style={{ color: '#0DA7DF' }}>{quantity}</Text>
-                            <TouchableOpacity style={styles.quantityButtonStyle} onPress={() => this.handleAddQuantity()}>
-                                <Icon.Feather name='plus' size={10} color={'#fff'} />
-                            </TouchableOpacity>
-                        </View>
+                        {
+                            AddToCart ?
+                                <TouchableOpacity onPress={async () => {
+                                    let array = [];
+                                    let dataItem = { ...this.props.route.params.product, check: '1' }
+                                    if (this.props.cart.cart == null || this.props.cart.cart.length == 0) {
+                                        array.push(dataItem)
+                                    }
+                                    else {
+                                        array = [...this.props.cart.cart];
+                                        array.map((element) => {
+                                            if (element.id == dataItem.id) {
+                                            }
+                                            else {
+                                                if (array.some(data => data.id === dataItem.id)) {
+                                                } else {
+                                                    array.push(dataItem)
+                                                }
+                                            }
+                                        })
+                                    }
+                                    await this.props.cartActions.setCart(array);
+                                    this.setState({ AddToCart: false })
+
+                                }}>
+                                    <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={{
+                                        justifyContent: 'center',
+                                        elevation: 2,
+                                        shadowColor: "#000",
+                                        shadowOffset: {
+                                            width: 0,
+                                            height: 1,
+                                        },
+                                        shadowOpacity: 0.20,
+                                        shadowRadius: 1.41,
+                                        marginTop: 10,
+                                        alignItems: 'center',
+                                        height: 25,
+                                        width: 105,
+                                        borderRadius: 20,
+                                    }}>
+                                        <Text style={{ fontSize: 11, color: 'white', textAlign: 'center', fontFamily: 'Roboto-Regular' }}>ADD TO CART</Text>
+                                    </LinearGradient>
+                                </TouchableOpacity>
+                                :
+                                <View style={styles.itemQuantityButtonContainer}>
+                                    <TouchableOpacity style={styles.quantityButtonStyle} onPress={() => this.handleMinusQuantity()}>
+                                        <Icon.Feather name='minus' size={10} color={'#fff'} />
+                                    </TouchableOpacity>
+                                    <Text style={{ color: '#0DA7DF' }}>{quantity}</Text>
+                                    <TouchableOpacity style={styles.quantityButtonStyle} onPress={() => this.handleAddQuantity()}>
+                                        <Icon.Feather name='plus' size={10} color={'#fff'} />
+                                    </TouchableOpacity>
+                                </View>}
                         <View style={{ marginTop: '2.5%' }}>
                             <Text style={styles.headingTitleStyle}>Service </Text>
                             <View style={styles.lineStyle}></View>

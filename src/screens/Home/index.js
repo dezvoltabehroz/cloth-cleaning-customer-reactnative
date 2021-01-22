@@ -155,7 +155,7 @@ class Home extends Component {
             })
         this.props.cartActions.setCart(cartArray);
         array[index] = { ...array[index], quantity: (parseInt(item.quantity) + 1) };
-        this.setState({ list: array }, () => console.log("handleAddQuantity:", this.props.cart.cart))
+        this.setState({ list: array })
         // this.handleTotalPrice(array)
     }
 
@@ -176,7 +176,7 @@ class Home extends Component {
             })
         this.props.cartActions.setCart(cartArray);
         array[index] = { ...array[index], quantity: item.quantity == '1' ? item.quantity : (parseInt(item.quantity) - 1) };
-        this.setState({ list: array }, () => console.log("handleMinusQuantity:", this.props.cart.cart));
+        this.setState({ list: array });
         // this.handleTotalPrice(array)
     }
 
@@ -207,7 +207,7 @@ class Home extends Component {
 
             }}>
                 <View style={{ flexDirection: 'row', margin: 0, backgroundColor: 'white', borderRadius: 10 }}>
-                    <View style={{
+                    <TouchableOpacity onPress={() => this.props.navigation.push('ProductDetail', { product: item })} style={{
                         justifyContent: 'center',
                         backgroundColor: 'white',
                         alignItems: 'center',
@@ -238,11 +238,11 @@ class Home extends Component {
                                                         <HandBag />
                                                         : <JNamaz />
                         } */}
-                    </View>
+                    </TouchableOpacity>
                     <View style={{ marginHorizontal: '5%', flexDirection: 'column', justifyContent: 'center' }}>
                         <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 13, height: 18 }}>{item.name}</Text>
                         <Text style={{ fontSize: 12, color: '#7A7A7A', fontFamily: 'Roboto-Regular', height: 16 }}>Rs. {item.price}</Text>
-                        {check == '1' || item.check == '1' ?
+                        {check == '1' && item.check == '1' ?
                             <View style={{
                                 flexDirection: 'row', marginLeft: -5,
                                 alignSelf: 'flex-start',
@@ -284,7 +284,6 @@ class Home extends Component {
                                         }
                                     })
                                 }
-                                console.log("array:", array);
                                 await this.props.cartActions.setCart(array);
                                 this.setState({ list: listArray })
                             }}>

@@ -23,7 +23,6 @@ class MapScreen extends Component {
     }
 
     handleDragFuntion = (e) => {
-        console.log(e.nativeEvent.coordinate)
         this.setState({
             region: {
                 latitude: e.nativeEvent.coordinate.latitude,

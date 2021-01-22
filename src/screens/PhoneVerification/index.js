@@ -26,7 +26,6 @@ class PhoneVerification extends Component {
             code: phoneAuthSnapshot.code,
             phoneAuthSnapshotId: phoneAuthSnapshot.verificationId
         }
-        console.log('data:', data)
         this.props.authActions.phoneVerifyCode(data, this.props.navigation.goBack())
     }
 

@@ -55,9 +55,6 @@ class Pickup extends Component {
     }
 
     componentDidMount = () => {
-        console.log("this.props.cart.region", this.props.cart.region)
-        console.log("this.props.cart.region", this.props.cart.address)
-
         this.setState({
             name: this.props.user.userData.fullName,
             phone: this.props.user.userData.phone

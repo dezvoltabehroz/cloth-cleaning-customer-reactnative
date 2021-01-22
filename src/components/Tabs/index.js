@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-nati
 import { Icon } from '..';
 
 const Tabs = ({ tabs, active, onTabChange }) => {
-    console.log('active:', active)
     return (
         <View style={styles.container}>
 

@@ -10,7 +10,6 @@ const Stack = createStackNavigator();
 
 const BadgedIcon = withBadge(1)(Icons);
 function MapRoutes(props) {
-    console.log(props.cart)
     return (
         <Stack.Navigator initialRouteName="Map">
             <Stack.Screen name="Map" component={MapScreen} options={({ navigation, route }) => {

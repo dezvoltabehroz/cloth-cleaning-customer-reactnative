@@ -5,12 +5,11 @@ import {
 
 const setCart = (cartArray) => {
     return async (dispatch) => {
-        dispatch({ type: CART_SUCCESS, cart: cartArray })
+        await dispatch({ type: CART_SUCCESS, cart: cartArray })
         await AsyncStorage.setItem('CART_ITEMS', JSON.stringify(cartArray))
     };
 }
 const setRegion = (userData) => {
-    console.log("userData:", userData)
     return (dispatch) => {
         dispatch({ type: REGION_SUCCESS, region: userData.region, address: userData.address })
     };

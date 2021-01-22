@@ -33,7 +33,6 @@ const Api = {
         }, configToken(userData.token))
     },
     updatePassword: function (userData) {
-        console.log(userData)
         return axiosInstance.put('buyer/updatepassword', {
             "id": userData.id,
             "oldPassword": `${userData.oldPassword}`,

@@ -57,14 +57,12 @@ class Profile extends Component {
             token: this.props.user.userToken,
             phoneVerification: true
         }
-        console.log(userData)
         if (this.props.user.userData.phone != phone) {
             await this.props.authActions.phoneVerificationCode(userData, this.props.navigation.replace);
         }
         else {
             AuthServices.updateUserProfile(userData)
                 .then(async (response) => {
-                    console.log(response.data)
                     await this.props.authActions.getUserProfile(userData, null)
                     this.setState({ updateContactInfo: false, buttonLoading: false }, () => setTimeout(() => {
                         this.componentDidMount()
@@ -83,7 +81,6 @@ class Profile extends Component {
         })
     };
     selectCountry(country) {
-        console.log(country)
         this.phoneRef.selectCountry(country.cca2);
         this.setState({ phone: "+" + country.callingCode, countryCode: country.cca2 })
 
@@ -108,7 +105,6 @@ class Profile extends Component {
     }
 
     disabled = () => {
-        console.log("false")
         const { phone, name, city, address } = this.state;
         if (this.isNameValid(name) && this.isPhoneValid(phone) && address.length && city.length) {
             this.setState({ disabled: false })
@@ -177,7 +173,7 @@ class Profile extends Component {
                                                     color: 'grey',
                                                 }}
                                                 returnKeyType="next"
-                                                blur={console.log('Hello')}
+                                                // blur={console.log('Hello')}
                                                 onChangePhoneNumber={(phone) => this.setState({ phone }, () => this.disabled())}
                                                 value={phone}
                                                 textProps={{

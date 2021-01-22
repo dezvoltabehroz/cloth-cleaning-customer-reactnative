@@ -51,7 +51,6 @@ class Signup extends Component {
         })
     };
     selectCountry(country) {
-        console.log(country)
         this.phoneRef.selectCountry(country.cca2);
         this.setState({ phone: "+" + country.callingCode, countryCode: country.cca2 })
 
@@ -75,18 +74,14 @@ class Signup extends Component {
         )
     }
     disabled = () => {
-        console.log("Function called")
         const { name, email, phonenumber, password, confirmPassword, submit } = this.state;
         if (this.isNameValid(name) && this.isEmailValid(email) && this.isPasswordValid(password) && this.isPhoneValid(phonenumber)) {
             if (password == confirmPassword && submit) {
-                console.log('true')
                 this.setState({ disabled: false })
             } else {
-                console.log('false1')
                 this.setState({ disabled: true })
             }
         } else {
-            console.log('false')
             this.setState({ disabled: true })
         }
 

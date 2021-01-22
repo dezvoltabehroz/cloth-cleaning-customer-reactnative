@@ -21,7 +21,6 @@ class Orders extends Component {
         }
         OrdersServices.getCustomerOrders(userData)
             .then((res) => {
-                console.log('res.data:', res.data.result.rows)
                 this.setState({ ordersList: res.data.result.rows, loading: false })
             })
             .catch((err) => {
