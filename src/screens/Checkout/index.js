@@ -25,7 +25,7 @@ class Checkout extends Component {
             code: '',
             orderList: [],
             urgent: 0,
-            discountValue: 50,
+            discountValue: null,
             discountModal: false,
             keyboardState: false,
             day: "",
@@ -39,7 +39,10 @@ class Checkout extends Component {
             region: {},
             addressLocation: "",
             location: {},
-            initialLoading: true
+            initialLoading: true,
+            percentage: null,
+            discountLoading: false
+
 
         }
     }
@@ -109,7 +112,7 @@ class Checkout extends Component {
     }
 
     handlePlaceOrder = () => {
-        const { lat, lng, day, time, totalPrice, address, urgent, paymentMethod, note, products, transactionId, activeTab } = this.state;
+        const { lat, lng, day, time, totalPrice, couponId, discountValue, urgent, paymentMethod, note, products, transactionId, activeTab } = this.state;
         let userData = {
             name: this.props.user.userData.fullName,
             email: this.props.user.userData.email,
@@ -121,21 +124,26 @@ class Checkout extends Component {
             time: time,
             totalPrice: totalPrice,
             urgent: urgent,
-            grandTotal: urgent == '1' ? (totalPrice + 200) : (totalPrice + 50),
+            grandTotal: urgent == '1' ? (totalPrice + 200 - discountValue) : (totalPrice + 50 - discountValue),
             deliveryAddress: this.props.cart.address ? this.props.cart.address : "",
             city: this.props.user.userData.city,
             paymentMethod: paymentMethod,
             transactionId: transactionId,
             notes: note,
-            coupon_id: null,
+            coupon_id: couponId,
             products: products,
             token: this.props.user.userToken
         }
+        console.log("userData:", userData)
         OrdersServices.placeCustomerOrder(userData)
             .then((response) => {
-                this.setState({ activeTab: activeTab + 1 })
-                let array = [];
-                this.props.cartActions.setCart(array)
+                console.log(response.data)
+                if (response.data.success) {
+                    this.setState({ activeTab: activeTab + 1, orderId: response.data.order_id })
+                    let array = [];
+                    this.props.cartActions.setCart(array)
+                }
+
             })
             .catch((err) => {
                 console.log(err)
@@ -144,8 +152,41 @@ class Checkout extends Component {
 
     }
 
+    handleCouponApply = () => {
+        this.setState({ discountLoading: true })
+        const { code } = this.state;
+        OrdersServices.validateCoupon(code)
+            .then((response) => {
+                console.log(response.data)
+                if (response.data.success) {
+                    this.setState({
+                        percentage: response.data.result.discount,
+                        couponId: response.data.result.id,
+                        discountModal: false,
+                    }, () => this.discountPercentage())
+
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+    discountPercentage = () => {
+        const { percentage, totalPrice, urgent } = this.state;
+        let discount = totalPrice + (urgent == '1' ? 200 : 50);
+        discount = (discount * parseFloat(percentage / 100));
+        this.setState({
+            discountValue: discount,
+            discountLoading: false,
+            discount: true,
+
+        })
+    }
+
+
     render() {
-        const { activeTab, discount, urgent, code, discountValue, keyboardState, initialLoading, addressLocation, location } = this.state;
+        const { activeTab, discount, urgent, code, discountValue, keyboardState, initialLoading, addressLocation, location, percentage } = this.state;
 
         return (
             <>
@@ -198,16 +239,16 @@ class Checkout extends Component {
                                                     <ThankYou />
                                                 </View>
                                                 <Text style={{ marginTop: '5%', color: '#374B5C', fontFamily: 'Roboto-Bold' }}>THANK YOU!</Text>
-                                                {/* <View style={{ marginTop: '2.5%' }}>
-                                            <View style={{ flexDirection: 'row' }}>
-                                                <Text style={{ color: '#7A7A7A', fontSize: 12, fontFamily: 'Roboto-Regular' }}>Order Number:</Text>
-                                                <Text style={{ color: '#374B5C', fontWeight: 'bold', fontSize: 12, fontFamily: 'Roboto-Medium' }}>  #00000456</Text>
-                                            </View>
-                                        </View>
-                                        <View style={{ marginTop: '2.5%' }}>
-                                            <Text style={{ color: '#7A7A7A', textAlign: 'center', fontSize: 12, fontFamily: 'Roboto-Regular' }}>Oder details will be send to your email address</Text>
-                                            <Text style={{ color: '#374B5C', textAlign: 'center', fontSize: 12, fontFamily: 'Roboto-Medium' }}>JohnDoe@example.com</Text>
-                                        </View> */}
+                                                <View style={{ marginTop: '2.5%' }}>
+                                                    <View style={{ flexDirection: 'row' }}>
+                                                        <Text style={{ color: '#7A7A7A', fontSize: 12, fontFamily: 'Roboto-Regular' }}>Order Number:</Text>
+                                                        <Text style={{ color: '#374B5C', fontWeight: 'bold', fontSize: 12, fontFamily: 'Roboto-Medium' }}>  #{this.state.orderId}</Text>
+                                                    </View>
+                                                </View>
+                                                <View style={{ marginTop: '2.5%' }}>
+                                                    <Text style={{ color: '#7A7A7A', textAlign: 'center', fontSize: 12, fontFamily: 'Roboto-Regular' }}>Oder details will be send to your email address</Text>
+                                                    {/* <Text style={{ color: '#374B5C', textAlign: 'center', fontSize: 12, fontFamily: 'Roboto-Medium' }}>JohnDoe@example.com</Text> */}
+                                                </View>
                                             </View>
                                             :
                                             null
@@ -264,7 +305,7 @@ class Checkout extends Component {
                                                                     <View style={{ backgroundColor: '#0DA7DF', alignItems: 'center', justifyContent: 'center', height: 20, width: 20, borderRadius: 10 }}>
                                                                         <Icon.Feather name="percent" size={15} color="white" />
                                                                     </View>
-                                                                    <Text style={{ color: 'white', fontSize: 12, marginLeft: '5%', fontFamily: 'Roboto-Medium' }}>{discount ? 'Get 10 discount' : 'Use coupon to get discount'}</Text>
+                                                                    <Text style={{ color: 'white', fontSize: 12, marginLeft: '5%', fontFamily: 'Roboto-Medium' }}>{discount ? `Get ${percentage} discount` : 'Use coupon to get discount'}</Text>
                                                                 </View>
                                                                 <View style={{ justifyContent: 'center' }}>
                                                                     {
@@ -302,7 +343,7 @@ class Checkout extends Component {
                                                                         <Text style={styles.checkoutTextStyle}>Discount</Text>
                                                                     </View>
                                                                     <View>
-                                                                        <Text style={styles.discountTextStyle}>Rs.{'50'}</Text>
+                                                                        <Text style={styles.discountTextStyle}>Rs.{discountValue}</Text>
                                                                     </View>
                                                                 </View>
                                                                 :
@@ -315,7 +356,7 @@ class Checkout extends Component {
                                                         <Text style={styles.totalTextStyle}>Total</Text>
                                                     </View>
                                                     <View>
-                                                        <Text style={styles.totalPriceTextStyle}>Rs. {activeTab == 0 ? this.state.totalPrice : discount ? this.state.totalPrice + (urgent == '0' ? 50 : 200) - discountValue : this.state.totalPrice + (urgent == '0' ? 50 : 200)}</Text>
+                                                        <Text style={styles.totalPriceTextStyle}>Rs. {activeTab == 0 ? this.state.totalPrice : discount ? (this.state.totalPrice - discountValue) + (urgent == '0' ? 50 : 200) : this.state.totalPrice + (urgent == '0' ? 50 : 200)}</Text>
                                                     </View>
                                                 </View>
                                             </View>
@@ -345,11 +386,20 @@ class Checkout extends Component {
                         <View style={{ marginTop: '5%' }}>
                             <Input placeholder="Discount code" value={code} onChangeText={(code) => this.setState({ code })} />
                         </View>
-                        <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => this.setState({ discount: true, discountModal: false })}>
+                        <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => {
+
+                            this.handleCouponApply()
+                            this.setState({ discount: true, discountModal: false })
+                        }}>
                             <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
                                 <Text style={styles.checkButtonTextStyle}>{'Apply'}</Text>
                             </LinearGradient>
                         </TouchableOpacity>
+                    </View>
+                </Modal>
+                <Modal isVisible={this.state.discountLoading}  >
+                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                        <ActivityIndicator size={40} color="#0DA7DF" />
                     </View>
                 </Modal>
             </>

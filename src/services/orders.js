@@ -38,9 +38,14 @@ const Api = {
             paymentMethod: userData.paymentMethod,
             transactionId: userData.transactionId,
             notes: userData.notes,
-            coupon_id: userData.coupon_id ? userData.coupon_id : null,
+            coupon_id: userData.coupon_id,
             products: userData.products
-        },configToken(userData.token))
+        }, configToken(userData.token))
+    },
+    validateCoupon: function (coupon) {
+        return axiosInstance.post('buyer/validatecoupon', {
+            coupon: coupon
+        }, config)
     }
 
 

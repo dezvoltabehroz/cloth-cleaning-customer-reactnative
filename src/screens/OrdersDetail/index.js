@@ -46,13 +46,14 @@ class OrderDetail extends Component {
         }
         OrdersServices.getOrderDetails(userData)
             .then((res) => {
+                console.log(res.data.result)
                 this.setState({
                     address: res.data.result.deliveryAddress,
                     status: res.data.result.orderStatus,
                     totalPrice: res.data.result.totalPrice,
                     grandTotal: res.data.result.grandTotal,
                     orders: res.data.result.orderedproduct,
-                    orderNumber: res.data.result.orderNumber ? res.data.result.orderNumber : "",
+                    orderNumber: res.data.result.id ? res.data.result.id : "",
                     date: res.data.result.deliveryDate ? res.data.result.deliveryDate : ""
                 })
             })
@@ -143,7 +144,7 @@ class OrderDetail extends Component {
                                 <Text style={styles.listTextStyle}>Your order number:</Text>
                             </View>
                             <View>
-                                <Text style={[styles.listTextStyle, { fontFamily: 'Roboto-Medium' }]}>{orderNumber}</Text>
+                                <Text style={[styles.listTextStyle, { fontFamily: 'Roboto-Medium' }]}>#{orderNumber}</Text>
                             </View>
                         </View>
                         <View style={styles.itemQuantityContainer}>
