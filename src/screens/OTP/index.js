@@ -43,7 +43,7 @@ class OTP extends Component {
 
     render() {
         const { value } = this.state;
-        const { userData } = this.props.route.params;
+        const { userData, password } = this.props.route.params;
         return (
             <View>
                 <ImageBackground resizeMode="cover" style={styles.backgroundStyle} source={require('../../assets/images/verification.png')}>
@@ -53,8 +53,8 @@ class OTP extends Component {
                                 <Logo />
                             </View>
                             <View style={{ marginTop: '5%', }}>
-                                <Text style={styles.headingTextStyle}>Lorem Verification code send to your phone number </Text>
-                                <Text style={styles.headingTextStyle1}>{userData.phone}</Text>
+                                <Text style={styles.headingTextStyle}>Lorem Verification code send to your {password ? 'email' : 'phone number'} </Text>
+                                <Text style={styles.headingTextStyle1}>{password ? "" : userData.phone}</Text>
                             </View>
                             <View style={styles.codeContainer}>
                                 <CodeInput
