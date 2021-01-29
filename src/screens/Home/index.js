@@ -218,7 +218,7 @@ class Home extends Component {
 
             }}>
                 <View style={{ flexDirection: 'row', margin: 0, backgroundColor: 'white', borderRadius: 10 }}>
-                    <View  style={{
+                    <View style={{
                         justifyContent: 'center',
                         backgroundColor: 'white',
                         alignItems: 'center',
@@ -253,7 +253,7 @@ class Home extends Component {
                     <View style={{ marginHorizontal: '5%', flexDirection: 'column', justifyContent: 'center' }}>
                         <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 13, height: 18 }}>{item.name}</Text>
                         <Text style={{ fontSize: 12, color: '#7A7A7A', fontFamily: 'Roboto-Regular', height: 16 }}>Rs. {item.price}</Text>
-                        {check == '1' && item.check == '1' ?
+                        {check == '1' ?
                             <View style={{
                                 flexDirection: 'row', marginLeft: -5,
                                 alignSelf: 'flex-start',
