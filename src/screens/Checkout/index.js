@@ -14,6 +14,7 @@ import { OrdersServices } from '../../services';
 import Geolocation from '@react-native-community/geolocation';
 import Geocoder from 'react-native-geocoder';
 import { ActivityIndicator } from 'react-native';
+import moment from 'moment';
 class Checkout extends Component {
     constructor(props) {
         super(props);
@@ -297,7 +298,15 @@ class Checkout extends Component {
                                                         await this.handlePlaceOrder()
                                                     }
                                                     else {
-                                                        this.setState({ activeTab: activeTab + 1 })
+                                                        if ((moment.duration(moment().format('HH:mm')).asHours() > moment.duration('10:00').asHours() && this.state.time == 'morning' && this.state.day == 'today')
+                                                            || (moment.duration(moment().format('HH:mm')).asHours() > moment.duration('14:00').asHours() && this.state.time == 'noon' && this.state.day == 'today')
+                                                            || (moment.duration(moment().format('HH:mm')).asHours() > moment.duration('18:00').asHours() && this.state.time == 'afternoon' && this.state.day == 'today')
+                                                        ) {
+                                                            Alert.alert('Attension', 'Please change your shift from pickup option')
+                                                        }
+                                                        else {
+                                                            this.setState({ activeTab: activeTab + 1 })
+                                                        }
                                                     }
                                                 }}>
                                                     <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
