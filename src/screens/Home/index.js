@@ -42,6 +42,7 @@ class Home extends Component {
             productLoading: true
 
         }
+        this.arrayHolder = this.state.list;
     }
 
     // ============== func_componentDidMount - Function Will get initial data from server ==============
@@ -70,13 +71,23 @@ class Home extends Component {
                         array.push(item);
                     }
                 });
-                this.setState({ list: array, productLoading: false })
+                this.setState({ list: array, productLoading: false });
+                this.arrayHolder = array;
             })
     }
 
     // ============== func_searchFilter - Function Will allow user to Search jobs ==============
     func_searchFilter = (text) => {
         this.setState({ value: text });
+        const newData = this.arrayHolder.filter(item => {
+            const itemData = `${item.name.toUpperCase()} ${item.name.toUpperCase()} ${item.name.toUpperCase()} `;
+            const textData = text.toUpperCase();
+            return itemData.indexOf(textData) > -1;
+        });
+        if (newData.length != 0) {
+            this.setState({ list: newData });
+        }
+
     }
 
     handleAddToCart = () => {
@@ -191,7 +202,7 @@ class Home extends Component {
                 }
             })
         return (
-            <View style={{
+            <TouchableOpacity onPress={() => this.props.navigation.push('ProductDetail', { product: item })} style={{
                 borderRadius: 10,
                 elevation: 2,
                 shadowColor: "#000",
@@ -207,7 +218,7 @@ class Home extends Component {
 
             }}>
                 <View style={{ flexDirection: 'row', margin: 0, backgroundColor: 'white', borderRadius: 10 }}>
-                    <TouchableOpacity onPress={() => this.props.navigation.push('ProductDetail', { product: item })} style={{
+                    <View  style={{
                         justifyContent: 'center',
                         backgroundColor: 'white',
                         alignItems: 'center',
@@ -238,7 +249,7 @@ class Home extends Component {
                                                         <HandBag />
                                                         : <JNamaz />
                         } */}
-                    </TouchableOpacity>
+                    </View>
                     <View style={{ marginHorizontal: '5%', flexDirection: 'column', justifyContent: 'center' }}>
                         <Text style={{ fontFamily: 'Roboto-Medium', fontSize: 13, height: 18 }}>{item.name}</Text>
                         <Text style={{ fontSize: 12, color: '#7A7A7A', fontFamily: 'Roboto-Regular', height: 16 }}>Rs. {item.price}</Text>
@@ -308,7 +319,7 @@ class Home extends Component {
                             </TouchableOpacity>}
                     </View>
                 </View>
-            </View>
+            </TouchableOpacity>
         )
     }
 

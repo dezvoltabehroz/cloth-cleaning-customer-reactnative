@@ -5,6 +5,7 @@ import styles from './style';
 import { connect } from 'react-redux';
 import moment from 'moment'
 import { ActivityIndicator } from 'react-native';
+import { RefreshControl } from 'react-native';
 class Orders extends Component {
     constructor(props) {
         super(props);
@@ -15,6 +16,7 @@ class Orders extends Component {
     }
 
     componentDidMount = () => {
+        this.setState({ loading: true })
         let userData = {
             id: this.props.user.userData.id,
             token: this.props.user.userData.token
@@ -91,6 +93,14 @@ class Orders extends Component {
                                         </View>
                                         <View style={styles.listContainer}>
                                             <FlatList
+                                                refreshControl={
+                                                    <RefreshControl
+                                                        refreshing={this.state.loading}
+                                                        onRefresh={() => this.componentDidMount()}
+                                                        tintColor={'#0DA7DF'}
+                                                        colors={['#0DA7DF']}
+                                                    />
+                                                }
                                                 data={ordersList}
                                                 contentContainerStyle={{ paddingBottom: 80 }}
                                                 showsVerticalScrollIndicator={false}
