@@ -27,7 +27,7 @@ const Api = {
             phone: userData.phone,
             customer_id: userData.customer_id,
             lat: `${userData.lat}`,
-            long: `${userData.lng}`,
+            long: `${userData.long}`,
             day: userData.day,
             time: userData.time,
             totalPrice: userData.totalPrice,
