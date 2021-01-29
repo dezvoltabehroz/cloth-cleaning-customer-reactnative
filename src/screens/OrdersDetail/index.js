@@ -88,10 +88,10 @@ class OrderDetail extends Component {
                                     tintColor={'#0DA7DF'}
                                     colors={['#0DA7DF']}
                                 />
-                            } contentContainerStyle={{ paddingBottom: 80 }}>
+                            } contentContainerStyle={{  }}>
                                 <View style={styles.upperContainer}>
                                 </View>
-                                <View style={styles.imageContainer}>
+                                <View style={[styles.imageContainer, { bottom: '7%' }]}>
                                     <View style={{ marginTop: 10, alignItems: 'center' }}>
                                         <ProgressCircle
                                             percent={status == 'approved' ? 50 : 100}
@@ -105,7 +105,7 @@ class OrderDetail extends Component {
                                         </ProgressCircle>
                                     </View>
                                     {
-                                        status == 'Complete' ?
+                                        status == 'delivered' ?
                                             rated ?
                                                 <View style={{ marginHorizontal: '5%', paddingBottom: 3, }}>
                                                     <View style={[styles.itemQuantityContainer, { alignItems: 'center' }]}>
