@@ -75,7 +75,7 @@ class Signup extends Component {
     }
     disabled = () => {
         const { name, email, phonenumber, password, confirmPassword, submit } = this.state;
-        if (this.isNameValid(name) && this.isEmailValid(email) && this.isPasswordValid(password) && this.isPhoneValid(phonenumber)) {
+        if (this.isNameValid(name) && this.isEmailValid(email) && this.isPhoneValid(phonenumber)) {
             if (password == confirmPassword && submit) {
                 this.setState({ disabled: false })
             } else {
@@ -95,9 +95,9 @@ class Signup extends Component {
         return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)
     }
 
-    isPasswordValid(password) {
-        return /^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(password)
-    }
+    // isPasswordValid(password) {
+    //     return /^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(password)
+    // }
 
     isPhoneValid = (phone) => {
         return /^\+[0-9]{10,13}$/.test(phone)
@@ -205,9 +205,9 @@ class Signup extends Component {
                         {
                             submit && !password ? <Text style={[styles.errorText]}>Please fill this field</Text> : null
                         }
-                        {
+                        {/* {
                             submit && password.length && !this.isPasswordValid(password) ? <Text style={[styles.errorText]}>Password should have at least 1 uppercase, 1 lowercase, 1 digit and 1 special character and length range 6-16 characters</Text> : null
-                        }
+                        } */}
                     </View>
                     <View style={{ marginHorizontal: '5%', marginTop: '3%' }}>
                         <Input
