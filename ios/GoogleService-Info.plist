@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>929459102958-0k7ffmt6qfdhu70b8njnmtm1ao0ahage.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.929459102958-0k7ffmt6qfdhu70b8njnmtm1ao0ahage</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>929459102958-vd36hmdog9nuqrnrqjp67lhsejmnejc7.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB59uqiussgIS9Sq661lf2MYfNZ86SMNT0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>929459102958</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.infinitybits.dhobiuncle</string>
+	<key>PROJECT_ID</key>
+	<string>dhobi-uncle</string>
+	<key>STORAGE_BUCKET</key>
+	<string>dhobi-uncle.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:929459102958:ios:08a4f5de2cfc152d293fff</string>
+</dict>
+</plist>
