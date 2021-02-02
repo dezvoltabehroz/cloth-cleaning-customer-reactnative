@@ -28,15 +28,22 @@ class Signup extends Component {
 
     // ============== func_HandleSignUp - Function Will allow user to register himself ==============
     func_HandleSignUp = () => {
-        let userData = {
-            full_name: this.state.name,
-            email: this.state.email,
-            phone: this.state.phonenumber,
-            password: this.state.password,
-            confirmPassword: this.state.confirmPassword
-        }
-        const { replace } = this.props.navigation
-        this.props.authActions.sendVerificationCode(userData, replace)
+        const { name, phonenumber, email, password, confirmPassword, loading, isVisible, submit, disabled } = this.state;
+        this.setState({ submit: true }, () => {
+            let userData = {
+                full_name: this.state.name,
+                email: this.state.email,
+                phone: this.state.phonenumber,
+                password: this.state.password,
+                confirmPassword: this.state.confirmPassword
+            }
+            if (submit && this.isNameValid(name) && this.isPhoneValid(phonenumber) && this.isEmailValid(email) && password == confirmPassword) {
+                const { replace } = this.props.navigation
+                this.props.authActions.sendVerificationCode(userData, replace)
+            }
+
+        })
+
     }
 
     onPressFlag() {
@@ -123,8 +130,8 @@ class Signup extends Component {
                         <Input
                             placeholder="Name *"
                             value={name}
-                            onBlur={() => this.disabled()}
-                            onFocus={() => this.setState({ submit: true })}
+                            // onBlur={() => this.disabled()}
+                            // onFocus={() => this.setState({ submit: true })}
                             onChangeText={(name) => this.setState({ name: name }, () => this.disabled())}
                         />
                         {
@@ -224,7 +231,9 @@ class Signup extends Component {
                         }
                     </View>
                     <View style={{ alignItems: 'center', marginVertical: '5%' }}>
-                        <Button loading={this.props.user.loading} disabled={disabled} title='Signup' onPress={() => this.func_HandleSignUp()} />
+                        <Button loading={this.props.user.loading}
+                            // disabled={disabled}
+                            title='Signup' onPress={() => this.func_HandleSignUp()} />
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: '5%', justifyContent: 'center' }}>
                         <Text style={{ color: '#707070', opacity: 0.7, fontFamily: 'Nunito-Regular', }}>Already have an account?</Text>

@@ -51,7 +51,28 @@ const Api = {
             "phone": `${userData.phone}`,
             "fullName": `${userData.fullName}`
         }, configToken(userData.token))
+    },
+    resetpasswordmail: function (email) {
+        return axiosInstance.post('buyer/resetpasswordmail', {
+            "email": email
+        }, config)
+    },
+    resetpasswordtokencheck: function (userData) {
+        return axiosInstance.post('buyer/resetpasswordtokencheck', {
+            "email": userData.email,
+            "resetToken": userData.resetToken
+        }, configToken(userData.token))
+    },
+    resetpassword: function (userData) {
+        return axiosInstance.post('buyer/resetpassword', {
+            "email": userData.email,
+            "resetToken": userData.resetToken,
+            "password": userData.password,
+            "password2": userData.password2
+        }, configToken(userData.token))
     }
+
+
 };
 
 export default Api;
