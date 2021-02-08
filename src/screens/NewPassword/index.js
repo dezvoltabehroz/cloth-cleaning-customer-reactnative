@@ -11,18 +11,32 @@ export default class NewPassword extends Component {
         super(props);
         this.state = {
             password: '',
-            confirmPassword: ''
+            confirmPassword: '',
+            loading: false
         };
     }
 
     // ============== func_HandleSetNewPassword - Function Will allow user to update his/her password ==============
     func_HandleSetNewPassword = () => {
-        this.props.navigation.replace('Login')
+        this.setState({ loading: true })
+        let userData = {
+            email: this.props.route.params.email,
+            resetToken: this.props.route.params.token,
+            password: this.state.password,
+            password2: this.state.confirmPassword
+        }
+        AuthServices.resetpassword(userData)
+            .then((response) => {
+                if (response.data.success) {
+                    this.props.navigation.replace('Login')
+                }
+            })
+            .catch((error) => console.log(error))
     }
 
 
     render() {
-        const { password, confirmPassword } = this.state;
+        const { password, confirmPassword, loading } = this.state;
         return (
             <>
                 <KeyboardAwareScrollView showsVerticalScrollIndicator={false}>
@@ -55,7 +69,7 @@ export default class NewPassword extends Component {
 
                         </View>
                         <View style={{ alignItems: 'center', marginTop: '5%' }}>
-                            <Button disabled={password && confirmPassword && password == confirmPassword ? false : true} title='Confirm' onPress={() => this.func_HandleSetNewPassword()} />
+                            <Button loading={loading} disabled={password && confirmPassword && password == confirmPassword ? false : true} title='Confirm' onPress={() => this.func_HandleSetNewPassword()} />
                         </View>
                     </ImageBackground>
                 </KeyboardAwareScrollView>

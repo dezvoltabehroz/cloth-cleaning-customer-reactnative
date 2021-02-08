@@ -9,6 +9,7 @@ import Logo from '../../assets/svg/logo.svg';
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import { authActions } from '../../redux/actions/auth';
+import { Alert } from 'react-native';
 
 class OTP extends Component {
     constructor(props) {
@@ -22,7 +23,22 @@ class OTP extends Component {
     func_HandleSubmitVerificationCode = () => {
         const { password, userData, phoneAuthSnapshot } = this.props.route.params;
         if (password) {
-            this.props.navigation.replace('NewPassword')
+            this.setState({ loading: true })
+            let userData = {
+                email: this.props.route.params.email,
+                resetToken: this.state.value,
+            }
+            AuthServices.resetpasswordtokencheck(userData)
+                .then((response) => {
+                    if (response.data.success) {
+                        this.props.navigation.replace('NewPassword', { token: this.state.value, email: this.props.route.params.email, })
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                    Alert.alert("", "Invaid Token!");
+                    this.setState({ loading: false })
+                })
         }
         else {
             let data = {
@@ -43,7 +59,7 @@ class OTP extends Component {
 
     render() {
         const { value } = this.state;
-        const { userData, password } = this.props.route.params;
+        const { userData, password, loading } = this.props.route.params;
         return (
             <View>
                 <ImageBackground resizeMode="cover" style={styles.backgroundStyle} source={require('../../assets/images/verification.png')}>
@@ -64,7 +80,7 @@ class OTP extends Component {
                                     cellBorderWidth={1}
                                     activeColor={'lightgray'}
                                     inactiveColor={'lightgray'}
-                                    keyboardType='numeric'
+                                    keyboardType={password ? 'name-phone-pad' : 'numeric'}
                                     className="border-box"
                                     inputPosition='center'
                                     value={value}
@@ -77,7 +93,7 @@ class OTP extends Component {
                         </View>
                         <View style={{ flex: 0.8, justifyContent: 'flex-end', marginBottom: '5%' }} >
                             <View style={{ alignItems: 'center', marginTop: '5%' }}>
-                                <Button disabled={value != '' ? false : true} loading={this.props.user.loading} title='Verify' onPress={this.func_HandleSubmitVerificationCode} />
+                                <Button disabled={value != '' ? false : true} loading={password ? loading : this.props.user.loading} title='Verify' onPress={this.func_HandleSubmitVerificationCode} />
                             </View>
                             <TouchableOpacity onPress={this.func_HandleResendCode} style={{ alignItems: 'center', marginTop: '5%' }} >
                                 <Text style={{ color: '#707070', fontFamily: 'Roboto-Regular', }}>Resend Code</Text>

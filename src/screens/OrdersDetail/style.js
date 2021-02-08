@@ -7,11 +7,11 @@ export default StyleSheet.create({
         flex: 1
     },
     upperContainer: {
-        height: 80,
+        height: 90,
         backgroundColor: '#29B1DB'
     },
     imageContainer: {
-        marginTop: 5,
+        marginTop:5 ,
         backgroundColor: 'white',
         marginHorizontal: '5%',
         paddingVertical: '2.5%',
@@ -28,7 +28,7 @@ export default StyleSheet.create({
         // height: 140,
         borderColor: "#EEE",
         borderWidth: 1,
-        bottom: '12%'
+       
     },
     imageStyle: {
         height: 146,
@@ -47,7 +47,7 @@ export default StyleSheet.create({
         fontSize: 16
     },
     lowerContainer: {
-        marginTop: '5%',
+        marginTop: '15%',
         backgroundColor: 'white',
         marginHorizontal: '5%',
         borderRadius: 10,

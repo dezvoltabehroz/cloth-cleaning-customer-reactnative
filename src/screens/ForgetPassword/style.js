@@ -41,7 +41,7 @@ export default StyleSheet.create({
         width: screenWidth
     },
     backgroundStyle: {
-        height: screenHeight ,
+        height: screenHeight,
         width: screenWidth
     },
     innerImageContainer: {
@@ -56,5 +56,11 @@ export default StyleSheet.create({
         height: 90,
         width: 306
     },
-
+    errorText: {
+        paddingTop: "1%",
+        paddingLeft: 8,
+        color: '#c30000',
+        fontSize: 12,
+        marginLeft: 5
+    },
 })

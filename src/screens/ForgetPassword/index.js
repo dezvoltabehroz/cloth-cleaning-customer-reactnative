@@ -4,30 +4,40 @@ import { Button, Input, ClearButton } from '../../components';
 import styles from './style';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scrollview';
 import { AuthServices } from '../../services';
-import Logo from '../../assets/svg/logo.svg'
-export default class ForgetPassword extends Component {
+import Logo from '../../assets/svg/logo.svg';
+import { connect } from 'react-redux';
+class ForgetPassword extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: ''
+            email: '', loading: false, submit: false
         };
     }
 
     // ============== func_HandleResetPassword - Function Will allow user to reset his/her password ==============
-    func_HandleResetPassword = () => {
-        this.props.navigation.replace('OTP', { password: true })
-        // AuthServices.getCodeForResetPass(this.state.email)
-        //     .then((response) => {
-        //         console.log(response.data);
-        //         this.props.navigation.replace('VerifyCode', { token: response.data.login_token, email: this.state.email })
+    func_HandleResetPassword = async () => {
+        await this.setState({ submit: true })
+        const { email, submit } = this.state;
+        if (submit && this.isEmailValid(email)) {
+            this.setState({ loading: true })
+            AuthServices.resetpasswordmail(email)
+                .then((response) => {
+                    if (response.data.success) {
+                        this.props.navigation.replace('OTP', { email: email, password: true })
+                    }
 
-        //     })
-        //     .catch((err) => console.log(err))
+                })
+                .catch((err) => console.log(err))
+        }
+
     }
 
+    isEmailValid(email) {
+        return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)
+    }
 
     render() {
-        const { email } = this.state;
+        const { email, submit, loading } = this.state;
         return (
             <>
                 <View style={{ flex: 0.95 }}>
@@ -46,9 +56,15 @@ export default class ForgetPassword extends Component {
                                         value={email}
                                         onChangeText={(email) => this.setState({ email: email })}
                                     />
+                                    {
+                                        submit && !email ? <Text style={[styles.errorText]}>Please fill this field</Text> : null
+                                    }
+                                    {
+                                        submit && email.length && !this.isEmailValid(email) ? <Text style={[styles.errorText]}>Email is invalid</Text> : null
+                                    }
                                 </View>
                                 <View style={{ alignItems: 'center', marginTop: '5%' }}>
-                                    <Button title='Confirm' onPress={() => this.func_HandleResetPassword()} />
+                                    <Button loading={loading} title='Confirm' onPress={() => this.func_HandleResetPassword()} />
                                 </View>
                             </View>
                         </View>
@@ -58,3 +74,11 @@ export default class ForgetPassword extends Component {
         );
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        user: state.authReducer || {}
+    };
+};
+
+
+export default connect(mapStateToProps)(ForgetPassword)

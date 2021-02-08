@@ -14,6 +14,7 @@ import { OrdersServices } from '../../services';
 import Geolocation from '@react-native-community/geolocation';
 import Geocoder from 'react-native-geocoder';
 import { ActivityIndicator } from 'react-native';
+import moment from 'moment';
 class Checkout extends Component {
     constructor(props) {
         super(props);
@@ -157,22 +158,34 @@ class Checkout extends Component {
         const { code } = this.state;
         OrdersServices.validateCoupon(code)
             .then((response) => {
-                console.log(response.data)
                 if (response.data.success) {
                     this.setState({
                         percentage: response.data.result.discount,
                         couponId: response.data.result.id,
                         discountModal: false,
                     }, () => this.discountPercentage())
-
                 }
             })
             .catch((error) => {
+                Alert.alert(
+                    'Invalid Code',
+                    '',
+                    [
+                        {
+                            text: 'OK', onPress: () => this.setState({
+                                discountLoading: false, discountModal: false, percentage: null,
+                                couponId: null, code: ''
+                            })
+                        },
+                    ]
+                )
+
                 console.log(error)
             })
     }
 
     discountPercentage = () => {
+        console.log('called')
         const { percentage, totalPrice, urgent } = this.state;
         let discount = totalPrice + (urgent == '1' ? 200 : 50);
         discount = (discount * parseFloat(percentage / 100));
@@ -285,7 +298,15 @@ class Checkout extends Component {
                                                         await this.handlePlaceOrder()
                                                     }
                                                     else {
-                                                        this.setState({ activeTab: activeTab + 1 })
+                                                        if ((moment.duration(moment().format('HH:mm')).asHours() > moment.duration('10:00').asHours() && this.state.time == 'morning' && this.state.day == 'today')
+                                                            || (moment.duration(moment().format('HH:mm')).asHours() > moment.duration('14:00').asHours() && this.state.time == 'noon' && this.state.day == 'today')
+                                                            || (moment.duration(moment().format('HH:mm')).asHours() > moment.duration('18:00').asHours() && this.state.time == 'afternoon' && this.state.day == 'today')
+                                                        ) {
+                                                            Alert.alert('Attension', 'Please change your shift from pickup option')
+                                                        }
+                                                        else {
+                                                            this.setState({ activeTab: activeTab + 1 })
+                                                        }
                                                     }
                                                 }}>
                                                     <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
@@ -389,7 +410,7 @@ class Checkout extends Component {
                         <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => {
 
                             this.handleCouponApply()
-                            this.setState({ discount: true, discountModal: false })
+                            this.setState({ discountModal: false })
                         }}>
                             <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
                                 <Text style={styles.checkButtonTextStyle}>{'Apply'}</Text>

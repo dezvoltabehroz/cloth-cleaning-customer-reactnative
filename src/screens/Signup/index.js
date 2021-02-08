@@ -28,15 +28,22 @@ class Signup extends Component {
 
     // ============== func_HandleSignUp - Function Will allow user to register himself ==============
     func_HandleSignUp = () => {
-        let userData = {
-            full_name: this.state.name,
-            email: this.state.email,
-            phone: this.state.phonenumber,
-            password: this.state.password,
-            confirmPassword: this.state.confirmPassword
-        }
-        const { replace } = this.props.navigation
-        this.props.authActions.sendVerificationCode(userData, replace)
+        const { name, phonenumber, email, password, confirmPassword, loading, isVisible, submit, disabled } = this.state;
+        this.setState({ submit: true }, () => {
+            let userData = {
+                full_name: this.state.name,
+                email: this.state.email,
+                phone: this.state.phonenumber,
+                password: this.state.password,
+                confirmPassword: this.state.confirmPassword
+            }
+            if (submit && this.isNameValid(name) && this.isPhoneValid(phonenumber) && this.isEmailValid(email) && password == confirmPassword) {
+                const { replace } = this.props.navigation
+                this.props.authActions.sendVerificationCode(userData, replace)
+            }
+
+        })
+
     }
 
     onPressFlag() {
@@ -75,7 +82,7 @@ class Signup extends Component {
     }
     disabled = () => {
         const { name, email, phonenumber, password, confirmPassword, submit } = this.state;
-        if (this.isNameValid(name) && this.isEmailValid(email) && this.isPasswordValid(password) && this.isPhoneValid(phonenumber)) {
+        if (this.isNameValid(name) && this.isEmailValid(email) && this.isPhoneValid(phonenumber)) {
             if (password == confirmPassword && submit) {
                 this.setState({ disabled: false })
             } else {
@@ -95,9 +102,9 @@ class Signup extends Component {
         return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)
     }
 
-    isPasswordValid(password) {
-        return /^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(password)
-    }
+    // isPasswordValid(password) {
+    //     return /^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(password)
+    // }
 
     isPhoneValid = (phone) => {
         return /^\+[0-9]{10,13}$/.test(phone)
@@ -123,8 +130,8 @@ class Signup extends Component {
                         <Input
                             placeholder="Name *"
                             value={name}
-                            onBlur={() => this.disabled()}
-                            onFocus={() => this.setState({ submit: true })}
+                            // onBlur={() => this.disabled()}
+                            // onFocus={() => this.setState({ submit: true })}
                             onChangeText={(name) => this.setState({ name: name }, () => this.disabled())}
                         />
                         {
@@ -205,9 +212,9 @@ class Signup extends Component {
                         {
                             submit && !password ? <Text style={[styles.errorText]}>Please fill this field</Text> : null
                         }
-                        {
+                        {/* {
                             submit && password.length && !this.isPasswordValid(password) ? <Text style={[styles.errorText]}>Password should have at least 1 uppercase, 1 lowercase, 1 digit and 1 special character and length range 6-16 characters</Text> : null
-                        }
+                        } */}
                     </View>
                     <View style={{ marginHorizontal: '5%', marginTop: '3%' }}>
                         <Input
@@ -224,7 +231,9 @@ class Signup extends Component {
                         }
                     </View>
                     <View style={{ alignItems: 'center', marginVertical: '5%' }}>
-                        <Button loading={this.props.user.loading} disabled={disabled} title='Signup' onPress={() => this.func_HandleSignUp()} />
+                        <Button loading={this.props.user.loading}
+                            // disabled={disabled}
+                            title='Signup' onPress={() => this.func_HandleSignUp()} />
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: '5%', justifyContent: 'center' }}>
                         <Text style={{ color: '#707070', opacity: 0.7, fontFamily: 'Nunito-Regular', }}>Already have an account?</Text>

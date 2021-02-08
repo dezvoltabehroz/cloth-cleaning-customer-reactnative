@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, View, Image, Text, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
+import { FlatList, View, Image, Text, TouchableOpacity, Dimensions, ScrollView, Alert } from 'react-native';
 import { Icon } from '../../components';
 import styles from './style';
 import LinearGradient from 'react-native-linear-gradient';
@@ -16,6 +16,7 @@ import { cartActions } from '../../redux/actions/cart';
 import { bindActionCreators } from "redux";
 import Geolocation from '@react-native-community/geolocation';
 import Geocoder from 'react-native-geocoder';
+import { Linking } from 'react-native';
 const screenWidth = Dimensions.get('window').width;
 
 class Cart extends Component {
@@ -209,7 +210,9 @@ class Cart extends Component {
                     })
                     .catch(error => alert(error));
             },
-            (error) => console.log(error)
+            (error) => {
+                console.log(error)
+            }
         );
     };
 
@@ -272,7 +275,19 @@ class Cart extends Component {
                                     marginHorizontal: '5%'
                                 }}>
                                     <View style={{ flexDirection: 'row', bottom: '5%', justifyContent: 'center', alignItems: 'center', }}>
-                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Checkout', { totalPrice: this.state.totalPrice })}>
+                                        <TouchableOpacity onPress={() => {
+                                            if (this.props.cart.region != null) { this.props.navigation.navigate('Checkout', { totalPrice: this.state.totalPrice }) } else {
+
+                                                Alert.alert("", "Please enable your location from device settings", [{
+                                                    "text": "Ok",
+                                                    onPress: () => {
+                                                        Linking.openSettings();
+                                                        this.props.navigation.goBack();
+                                                    }
+                                                }])
+
+                                            }
+                                        }}>
                                             <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
                                                 <Text style={styles.checkButtonTextStyle}>Checkout</Text>
                                             </LinearGradient>
