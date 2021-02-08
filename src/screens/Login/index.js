@@ -26,7 +26,6 @@ class Login extends Component {
         };
     }
 
-
     // ============== func_HandleLogin - Function Will allow user to get login ==============
     func_HandleLogin = async () => {
         const { replace } = this.props.navigation;
@@ -41,21 +40,25 @@ class Login extends Component {
         else {
             this.setState({ submit: true })
         }
-
     }
+
     handleGoogle = async () => {
         const { idToken } = await GoogleSignin.signIn();
-        console.log(idToken)
-        // Get the users ID token
-
-        // Create a Google credential with the token
-        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-        console.log(googleCredential)
-        // Sign-in the user with the credential
-        auth().signInWithCredential(googleCredential)
-        .then((res)=>console.log(res))
-        .catch((err)=>console.log(err))
-        // console.log(client)
+        let userData = {
+            token: idToken,
+            client_id: '929459102958-4arbgpufia94rno2f65tjmi4hc28iimk.apps.googleusercontent.com'
+        }
+        AuthServices.googleLogin(userData)
+            .then(async (response) => {
+                if (response.data.success) {
+                    let userCredentials = {
+                        user: response.data.result.user
+                    }
+                    AsyncStorage.setItem('TOKEN', JSON.stringify(response.data.result.access_token))
+                    await this.props.authActions.getUserProfile(userCredentials, this.props.navigation.replace)
+                }
+            })
+            .catch((err) => console.log(err))
     }
 
     isEmailValid(email) {

@@ -17,6 +17,12 @@ const Api = {
             password: userData.password
         }, config)
     },
+    googleLogin: function (userData) {
+        return axiosInstance.post('buyer/logingoogle', {
+            idToken: userData.token,
+            client_id: userData.client_id
+        }, config)
+    },
     userSignUp: function (userData) {
         return axiosInstance.post('buyer/signup', {
             fullName: userData.full_name,
