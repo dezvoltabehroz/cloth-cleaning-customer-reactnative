@@ -28,7 +28,6 @@ function MainRoutes(props) {
 function CustomDrawerContent({ navigation, props }) {
     const dispatch = useDispatch();
     let title = props?.user?.userData?.fullName.split(' ');
-    console.log(title.length)
     return (
         <>
             <View style={{ flex: 1 }} >
