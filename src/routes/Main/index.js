@@ -28,6 +28,7 @@ function MainRoutes(props) {
 function CustomDrawerContent({ navigation, props }) {
     const dispatch = useDispatch();
     let title = props?.user?.userData?.fullName.split(' ');
+    console.log(title.length)
     return (
         <>
             <View style={{ flex: 1 }} >
@@ -35,7 +36,7 @@ function CustomDrawerContent({ navigation, props }) {
                     <TouchableOpacity onPress={() => navigation.replace('Home')} style={styles.upperContainer}>
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-start', paddingLeft: '10%', alignItems: 'center' }}>
                             <View>
-                                <Avatar containerStyle={{ backgroundColor: 'white' }} size={50} title={title ? title[0][0] + title[1][0] : ""} titleStyle={{ color: '#0092C7', fontSize: 16 }} rounded={true} />
+                                <Avatar containerStyle={{ backgroundColor: 'white' }} size={50} title={title ? title.length == 1 ? title[0][0] : title[0][0] + title.length > 1 ? title[1][0] : "" : ""} titleStyle={{ color: '#0092C7', fontSize: 16 }} rounded={true} />
                             </View>
                             <View style={{ justifyContent: 'center', marginLeft: '5%' }}>
                                 <Text style={{ color: "white", marginLeft: "10%", fontFamily: 'Roboto-Bold', }} >{props?.user?.userData?.fullName}</Text>
