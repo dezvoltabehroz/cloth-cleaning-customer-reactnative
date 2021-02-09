@@ -42,7 +42,8 @@ class Checkout extends Component {
             location: {},
             initialLoading: true,
             percentage: null,
-            discountLoading: false
+            discountLoading: false,
+            couponId: null
 
 
         }
@@ -77,6 +78,7 @@ class Checkout extends Component {
 
     componentWillMount() {
         // this.findCoordinates();
+        console.log("this.props.user.userData.city:", this.props.user.userData.city)
         this.setState({ initialLoading: false })
         this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
         this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
@@ -113,6 +115,7 @@ class Checkout extends Component {
     }
 
     handlePlaceOrder = () => {
+
         const { lat, lng, day, time, totalPrice, couponId, discountValue, urgent, paymentMethod, note, products, transactionId, activeTab } = this.state;
         let userData = {
             name: this.props.user.userData.fullName,
@@ -127,7 +130,7 @@ class Checkout extends Component {
             urgent: urgent,
             grandTotal: urgent == '1' ? (totalPrice + 200 - discountValue) : (totalPrice + 50 - discountValue),
             deliveryAddress: this.props.cart.address ? this.props.cart.address : "",
-            city: this.props.user.userData.city,
+            city: this.props.user.userData.city != null ? this.props.user.userData.city : "",
             paymentMethod: paymentMethod,
             transactionId: transactionId,
             notes: note,

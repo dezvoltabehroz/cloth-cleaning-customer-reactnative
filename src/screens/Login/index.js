@@ -89,7 +89,6 @@ class Login extends Component {
                                 <Input
                                     placeholder="Phone Number / Email"
                                     value={email}
-                                    onFocus={() => this.setState({ submit: true })}
                                     onChangeText={(email) => this.setState({ email: email })}
 
                                 />
@@ -115,9 +114,9 @@ class Login extends Component {
                                 <Text style={{ fontFamily: 'Nunito-Regular' }} >Forget Password?</Text>
                             </TouchableOpacity>
                             <View style={{ alignItems: 'center', marginTop: '5%' }}>
-                                <Button loading={this.props.user.loading} title='Login' onPress={() => this.func_HandleLogin()} />
+                                <Button loading={this.props.user.loading} title='Login' onPress={() => { this.setState({ submit: true }, () => this.func_HandleLogin()); }} />
                             </View>
-                            <TouchableOpacity onPress={() => this.handleGoogle()} style={{ alignItems: 'center', marginTop: '5%' }}>
+                            <TouchableOpacity onPress={() => { this.handleGoogle() }} style={{ alignItems: 'center', marginTop: '5%' }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 5, borderWidth: 0.5, borderColor: 'red', height: 44, width: 180 }}>
                                     <Google />
                                     <Text style={{ marginLeft: '10%', fontFamily: 'Nunito-Regular', fontSize: 16 }}>Google</Text>
