@@ -43,12 +43,14 @@ class Checkout extends Component {
             initialLoading: true,
             percentage: null,
             discountLoading: false,
-            couponId: null
+            couponId: null,
+            fetchingLocation: false
 
 
         }
     }
     findCoordinates = () => {
+        this.setState({ fetchingLocation: true })
         Geolocation.getCurrentPosition(
             position => {
                 Geocoder.geocodePosition({
@@ -67,12 +69,25 @@ class Checkout extends Component {
                         }
                         await this.props.cartActions.setRegion(userData)
                         setTimeout(() => {
-                            this.setState({ initialLoading: false })
+                            this.setState({ fetchingLocation: false })
                         }, 5000);
                     })
                     .catch(error => alert(error));
             },
-            (error) => console.log(error)
+            (error) => {
+                console.log(error)
+                console.log(error.PERMISSION_DENIED)
+                if (error.PERMISSION_DENIED == "1") {
+                    this.setState({ fetchingLocation: false })
+                    Alert.alert("", "To proceed forward please enable your GPS service from device settings or app setting", [{
+                        "text": "Ok",
+                        onPress: () => {
+                            // Linking.openSettings();
+                            // this.props.navigation.goBack();
+                        }
+                    }])
+                }
+            }
         );
     };
 
@@ -203,7 +218,7 @@ class Checkout extends Component {
 
     render() {
         const { activeTab, discount, urgent, code, discountValue, keyboardState, initialLoading, addressLocation, location, percentage } = this.state;
-
+        console.log(this.props.cart.region, this.props.cart.address)
         return (
             <>
                 { initialLoading ?
@@ -306,6 +321,8 @@ class Checkout extends Component {
                                                             || (moment.duration(moment().format('HH:mm')).asHours() > moment.duration('18:00').asHours() && this.state.time == 'afternoon' && this.state.day == 'today')
                                                         ) {
                                                             Alert.alert('Attension', 'Please change your shift from pickup option')
+                                                        } else if (this.props.cart.region == null && this.props.cart.address == null) {
+                                                            this.findCoordinates()
                                                         }
                                                         else {
                                                             this.setState({ activeTab: activeTab + 1 })
@@ -422,6 +439,11 @@ class Checkout extends Component {
                     </View>
                 </Modal>
                 <Modal isVisible={this.state.discountLoading}  >
+                    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                        <ActivityIndicator size={40} color="#0DA7DF" />
+                    </View>
+                </Modal>
+                <Modal isVisible={this.state.fetchingLocation}  >
                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                         <ActivityIndicator size={40} color="#0DA7DF" />
                     </View>

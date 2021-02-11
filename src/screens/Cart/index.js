@@ -85,7 +85,7 @@ class Cart extends Component {
         }
     }
     componentDidMount = () => {
-        this.findCoordinates()
+        // this.findCoordinates()
         this.handleTotalPrice(this.props.cart.cart)
     }
 
@@ -276,17 +276,18 @@ class Cart extends Component {
                                 }}>
                                     <View style={{ flexDirection: 'row', bottom: '5%', justifyContent: 'center', alignItems: 'center', }}>
                                         <TouchableOpacity onPress={() => {
-                                            if (this.props.cart.region != null) { this.props.navigation.navigate('Checkout', { totalPrice: this.state.totalPrice }) } else {
+                                            // if (this.props.cart.region != null) {
+                                            this.props.navigation.navigate('Checkout', { totalPrice: this.state.totalPrice })
+                                            //  } else {
 
-                                                Alert.alert("", "Please enable your location from device settings", [{
-                                                    "text": "Ok",
-                                                    onPress: () => {
-                                                        Linking.openSettings();
-                                                        this.props.navigation.goBack();
-                                                    }
-                                                }])
-
-                                            }
+                                            // Alert.alert("", "Please enable your location from device settings", [{
+                                            //     "text": "Ok",
+                                            //     onPress: () => {
+                                            //         Linking.openSettings();
+                                            //         this.props.navigation.goBack();
+                                            //     }
+                                            // }])
+                                            // }
                                         }}>
                                             <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
                                                 <Text style={styles.checkButtonTextStyle}>Checkout</Text>

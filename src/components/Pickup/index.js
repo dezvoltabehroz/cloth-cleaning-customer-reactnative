@@ -90,57 +90,63 @@ class Pickup extends Component {
         return (
             <>
                 <View style={{ flex: 1 }}>
-                    <View style={{ marginTop: '5%', }}>
-                        <View style={styles.upperContainer}>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                <View>
-                                    <Text style={{ fontFamily: 'Roboto-Medium', color: '#1E2123' }}>Your Address</Text>
-                                </View>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('Map', {
-                                    screen: 'Map'
-                                })}>
-                                    <Icon.MaterialIcons name="edit" color={'#7A7A7A'} size={20} />
-                                </TouchableOpacity>
-                            </View>
-                            <View style={{ marginTop: '5%', borderRadius: 10, overflow: 'hidden' }}>
-                                <MapView
-                                    style={{ height: screenHeight * 0.2 }}
-                                    region={{
-                                        latitude: this.props.cart.region.latitude,
-                                        longitude: this.props.cart.region.longitude,
-                                        latitudeDelta: this.props.cart.region.latitudeDelta,
-                                        longitudeDelta: this.props.cart.region.longitudeDelta,
-                                    }}
-                                >
-                                    <Marker.Animated
-                                        opacity={0.5}
-                                        style={{ width: 20, height: 20 }}
-                                        coordinate={new AnimatedRegion({
-                                            latitude: parseFloat(this.props.cart.region.latitude),
-                                            longitude: parseFloat(this.props.cart.region.longitude),
-                                            latitudeDelta: 0.005,
-                                            longitudeDelta: 0.005,
-                                        })}
-                                    ></Marker.Animated>
-                                </MapView>
-                            </View>
-                            <View style={{ flex: 1, flexDirection: 'row', justifyContent: "space-between" }}>
-                                <View style={{ flex: 0.5, flexDirection: 'column', marginTop: '2%' }}>
-                                    <Text style={{ color: '#7A7A7A', fontFamily: 'Roboto-Regular', }}>{this.truncateString(this.props.cart.address, 28)}</Text>
-                                </View>
-                                <View style={{ flex: 0.5, flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-end' }}>
-                                    <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
+
+                    {
+                        this.props.cart.region != null ?
+                            <View style={{ marginTop: '5%', }}>
+                                <View style={styles.upperContainer}>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                         <View>
-                                            <Icon.AntDesign name="checkcircle" color={'#0DA7DF'} size={20} />
+                                            <Text style={{ fontFamily: 'Roboto-Medium', color: '#1E2123' }}>Your Address</Text>
                                         </View>
-                                        <View style={{ marginLeft: '5%' }}>
-                                            <Text style={{ color: '#7A7A7A', fontFamily: 'Roboto-Regular', fontSize: 12 }}>Delivery Address</Text>
+                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Map', {
+                                            screen: 'Map'
+                                        })}>
+                                            <Icon.MaterialIcons name="edit" color={'#7A7A7A'} size={20} />
+                                        </TouchableOpacity>
+                                    </View>
+                                    <View style={{ marginTop: '5%', borderRadius: 10, overflow: 'hidden' }}>
+                                        <MapView
+                                            style={{ height: screenHeight * 0.2 }}
+                                            region={{
+                                                latitude: this.props.cart.region.latitude,
+                                                longitude: this.props.cart.region.longitude,
+                                                latitudeDelta: this.props.cart.region.latitudeDelta,
+                                                longitudeDelta: this.props.cart.region.longitudeDelta,
+                                            }}
+                                        >
+                                            <Marker.Animated
+                                                opacity={0.5}
+                                                style={{ width: 20, height: 20 }}
+                                                coordinate={new AnimatedRegion({
+                                                    latitude: parseFloat(this.props.cart.region.latitude),
+                                                    longitude: parseFloat(this.props.cart.region.longitude),
+                                                    latitudeDelta: 0.005,
+                                                    longitudeDelta: 0.005,
+                                                })}
+                                            ></Marker.Animated>
+                                        </MapView>
+                                    </View>
+                                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: "space-between" }}>
+                                        <View style={{ flex: 0.5, flexDirection: 'column', marginTop: '2%' }}>
+                                            <Text style={{ color: '#7A7A7A', fontFamily: 'Roboto-Regular', }}>{this.truncateString(this.props.cart.address, 28)}</Text>
+                                        </View>
+                                        <View style={{ flex: 0.5, flexDirection: 'column', alignItems: 'flex-end', justifyContent: 'flex-end' }}>
+                                            <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
+                                                <View>
+                                                    <Icon.AntDesign name="checkcircle" color={'#0DA7DF'} size={20} />
+                                                </View>
+                                                <View style={{ marginLeft: '5%' }}>
+                                                    <Text style={{ color: '#7A7A7A', fontFamily: 'Roboto-Regular', fontSize: 12 }}>Delivery Address</Text>
+                                                </View>
+                                            </View>
                                         </View>
                                     </View>
                                 </View>
                             </View>
-                        </View>
-                    </View>
+                            : null
+                    }
+
                     <View style={{ marginTop: '5%', }}>
                         <View style={styles.upperContainer}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
