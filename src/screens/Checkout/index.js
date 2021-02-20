@@ -44,7 +44,8 @@ class Checkout extends Component {
             percentage: null,
             discountLoading: false,
             couponId: null,
-            fetchingLocation: false
+            fetchingLocation: false,
+            phone: ""
 
 
         }
@@ -93,7 +94,7 @@ class Checkout extends Component {
 
     componentWillMount() {
         // this.findCoordinates();
-        console.log("this.props.user.userData.city:", this.props.user.userData.city)
+        console.log("this.props.user.userData.city:", this.props.user.userData)
         this.setState({ initialLoading: false })
         this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
         this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
@@ -131,11 +132,11 @@ class Checkout extends Component {
 
     handlePlaceOrder = () => {
 
-        const { lat, lng, day, time, totalPrice, couponId, discountValue, urgent, paymentMethod, note, products, transactionId, activeTab } = this.state;
+        const { lat, lng, day, time, phone, totalPrice, couponId, discountValue, urgent, paymentMethod, note, products, transactionId, activeTab } = this.state;
         let userData = {
             name: this.props.user.userData.fullName,
             email: this.props.user.userData.email,
-            phone: this.props.user.userData.phone,
+            phone: this.props.user.userData.phone == undefined ? phone : this.props.user.userData.phone,
             customer_id: this.props.user.userData.id,
             lat: this.props.cart.region.latitude ? this.props.cart.region.latitude : "",
             long: this.props.cart.region.longitude ? this.props.cart.region.longitude : "",
@@ -248,6 +249,7 @@ class Checkout extends Component {
                                                 time={(time) => this.setState({ time })}
                                                 urgent={(urgent) => this.setState({ urgent })}
                                                 note={(note) => this.setState({ note })}
+                                                phone={(phone) => this.setState({ phone })}
                                                 navigation={this.props.navigation} route={this.props.route.params} />
                                             :
                                             null
@@ -316,11 +318,14 @@ class Checkout extends Component {
                                                         await this.handlePlaceOrder()
                                                     }
                                                     else {
+                                                        if (this.props.user.userData.phone == undefined && this.state.phone == '') {
+                                                            Alert.alert('Attention', 'Please enter your phone number')
+                                                        }
                                                         if ((moment.duration(moment().format('HH:mm')).asHours() > moment.duration('10:00').asHours() && this.state.time == 'morning' && this.state.day == 'today')
                                                             || (moment.duration(moment().format('HH:mm')).asHours() > moment.duration('14:00').asHours() && this.state.time == 'noon' && this.state.day == 'today')
                                                             || (moment.duration(moment().format('HH:mm')).asHours() > moment.duration('18:00').asHours() && this.state.time == 'afternoon' && this.state.day == 'today')
                                                         ) {
-                                                            Alert.alert('Attension', 'Please change your shift from pickup option')
+                                                            Alert.alert('Attention', 'Please change your shift from pickup option')
                                                         } else if (this.props.cart.region == null && this.props.cart.address == null) {
                                                             this.findCoordinates()
                                                         }

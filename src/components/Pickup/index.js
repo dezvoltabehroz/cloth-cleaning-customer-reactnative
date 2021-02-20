@@ -50,14 +50,15 @@ class Pickup extends Component {
             name: "",
             phone: "",
             deliveryCharges: 50,
-            note: ""
+            note: "",
+            editPhone: false,
         }
     }
 
     componentDidMount = () => {
         this.setState({
             name: this.props.user.userData.fullName,
-            phone: this.props.user.userData.phone
+            phone: this.props.user.userData.phone != undefined ? this.props.user.userData.phone : ""
         })
         this.props.day('today');
         this.props.time('noon');
@@ -169,13 +170,18 @@ class Pickup extends Component {
                                 <View>
                                     <Text style={{ fontFamily: 'Roboto-Medium', color: '#1E2123' }}>Phone number</Text>
                                 </View>
-                                <View>
-                                    {/* <Icon.MaterialIcons name="edit" color={'#7A7A7A'} size={20} /> */}
-                                </View>
+                                <TouchableOpacity onPress={() => this.setState({ editPhone: true })}>
+                                    <Icon.MaterialIcons name="edit" color={'#7A7A7A'} size={20} />
+                                </TouchableOpacity>
                             </View>
-                            <View style={{ marginTop: '2%' }}>
+                            {phone != 0 ? <View style={{ marginTop: '2%' }}>
                                 <Text style={{ color: '#7A7A7A', fontFamily: 'Roboto-Regular', fontSize: 12 }}>{phone}</Text>
                             </View>
+                                :
+                                <View style={{ marginTop: '2%' }}>
+                                    <Text style={{ color: '#7A7A7A', fontFamily: 'Roboto-Regular', fontSize: 12 }}>Please enter your phone number</Text>
+                                </View>
+                            }
                         </View>
                     </View>
                     <View style={{ marginTop: '5%', }}>
@@ -290,6 +296,25 @@ class Pickup extends Component {
                         })}>
                             <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
                                 <Text style={styles.checkButtonTextStyle}>{'Apply'}</Text>
+                            </LinearGradient>
+                        </TouchableOpacity>
+                    </View>
+                </Modal>
+                <Modal isVisible={this.state.editPhone}>
+                    <View style={styles.content}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: '5%' }}>
+                            <Text style={styles.headingText}>Enter your phone</Text>
+                            <TouchableOpacity onPress={() => this.setState({ editPhone: false })} style={styles.iconContainer}>
+                                <Icon.Ionicons name='close-outline' size={15} color={'#7A7A7A'} />
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.lineStyle}></View>
+                        <View style={{ marginTop: '5%' }}>
+                            <Input value={phone} placeholder="phone number..." onChangeText={(phone) => this.setState({ phone })} onBlur={() => this.props.phone(phone)} />
+                        </View>
+                        <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => this.setState({ editPhone: false })}>
+                            <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
+                                <Text style={styles.checkButtonTextStyle}>{'Done'}</Text>
                             </LinearGradient>
                         </TouchableOpacity>
                     </View>
