@@ -45,7 +45,8 @@ class Checkout extends Component {
             discountLoading: false,
             couponId: null,
             fetchingLocation: false,
-            phone: ""
+            phone: "",
+            placeLoading: false
 
 
         }
@@ -159,7 +160,7 @@ class Checkout extends Component {
             .then((response) => {
                 console.log(response.data)
                 if (response.data.success) {
-                    this.setState({ activeTab: activeTab + 1, orderId: response.data.order_id })
+                    this.setState({ activeTab: activeTab + 1, orderId: response.data.order_id, fetchingLocation: false })
                     let array = [];
                     this.props.cartActions.setCart(array)
                 }
@@ -167,6 +168,8 @@ class Checkout extends Component {
             })
             .catch((err) => {
                 console.log(err)
+                Alert.alert("Request Timeout","Please try again")
+                this.setState({ fetchingLocation: false })
                 // this.props.cartActions.clear()
             })
 
@@ -315,22 +318,25 @@ class Checkout extends Component {
                                             <View style={{ flexDirection: 'row', bottom: '5%', justifyContent: 'center', alignItems: 'center', }}>
                                                 <TouchableOpacity onPress={async () => {
                                                     if (activeTab == 1) {
+                                                        this.setState({ fetchingLocation: true })
                                                         await this.handlePlaceOrder()
                                                     }
                                                     else {
                                                         if (this.props.user.userData.phone == undefined && this.state.phone == '') {
                                                             Alert.alert('Attention', 'Please enter your phone number')
                                                         }
-                                                        if ((moment.duration(moment().format('HH:mm')).asHours() > moment.duration('10:00').asHours() && this.state.time == 'morning' && this.state.day == 'today')
-                                                            || (moment.duration(moment().format('HH:mm')).asHours() > moment.duration('14:00').asHours() && this.state.time == 'noon' && this.state.day == 'today')
-                                                            || (moment.duration(moment().format('HH:mm')).asHours() > moment.duration('18:00').asHours() && this.state.time == 'afternoon' && this.state.day == 'today')
-                                                        ) {
-                                                            Alert.alert('Attention', 'Please change your shift from pickup option')
-                                                        } else if (this.props.cart.region == null && this.props.cart.address == null) {
-                                                            this.findCoordinates()
-                                                        }
                                                         else {
-                                                            this.setState({ activeTab: activeTab + 1 })
+                                                            if ((moment.duration(moment().format('HH:mm')).asHours() > moment.duration('10:00').asHours() && this.state.time == 'morning' && this.state.day == 'today')
+                                                                || (moment.duration(moment().format('HH:mm')).asHours() > moment.duration('14:00').asHours() && this.state.time == 'noon' && this.state.day == 'today')
+                                                                || (moment.duration(moment().format('HH:mm')).asHours() > moment.duration('18:00').asHours() && this.state.time == 'afternoon' && this.state.day == 'today')
+                                                            ) {
+                                                                Alert.alert('Attention', 'Please change your shift from pickup option')
+                                                            } else if (this.props.cart.region == null && this.props.cart.address == null) {
+                                                                this.findCoordinates()
+                                                            }
+                                                            else {
+                                                                this.setState({ activeTab: activeTab + 1 })
+                                                            }
                                                         }
                                                     }
                                                 }}>

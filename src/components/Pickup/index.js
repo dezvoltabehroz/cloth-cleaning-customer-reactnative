@@ -310,7 +310,7 @@ class Pickup extends Component {
                         </View>
                         <View style={styles.lineStyle}></View>
                         <View style={{ marginTop: '5%' }}>
-                            <Input value={phone} placeholder="phone number..." onChangeText={(phone) => this.setState({ phone })} onBlur={() => this.props.phone(phone)} />
+                            <Input value={phone} keyboardType={"number-pad"} placeholder="phone number..." onChangeText={(phone) => this.setState({ phone })} onBlur={() => this.props.phone(phone)} />
                         </View>
                         <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={() => this.setState({ editPhone: false })}>
                             <LinearGradient colors={['#0DA7DF', '#27C2FA']} style={styles.checkoutButtonContainer}>
